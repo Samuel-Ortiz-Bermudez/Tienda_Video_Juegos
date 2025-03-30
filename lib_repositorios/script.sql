@@ -16,7 +16,7 @@ CREATE TABLE [Empleados] (
 	[Id] INT PRIMARY KEY IDENTITY (1,1),
 	[Nombre] NVARCHAR (100),
 	[Cedula] NVARCHAR (100),
-	[Salaio] DECIMAL(10,2),
+	[Salario] DECIMAL(10,2),
 	[Telefono] NVARCHAR (100),
 );
 
@@ -46,8 +46,6 @@ CREATE TABLE [DetallesCompras] (
 	[Compra] INT NOT NULL REFERENCES [Compras]([Id]),
 );
 
-
-
 CREATE TABLE [Inventarios] (
 	[Id] INT PRIMARY KEY IDENTITY (1,1),
 	[Cantidad] INT,
@@ -62,7 +60,7 @@ CREATE TABLE [Proveedores] (
 	[Telefono] NVARCHAR (100),
 );
 
-CREATE TABLE [Suministro] (
+CREATE TABLE [Suministros] (
 	[Id] INT PRIMARY KEY IDENTITY (1,1),
 	[FechaSuministro] DATE,
 	[Proveedor] INT NOT NULL REFERENCES [Proveedores]([Id]),
@@ -80,7 +78,7 @@ VALUES
 ('Miguel', 'C004', 'Calle 32', '159'),
 ('Sara', 'C005', 'Carrera 27', '753');
 
-INSERT INTO [Empleados] ([Nombre], [Cedula], [Salaio], [Telefono]) 
+INSERT INTO [Empleados] ([Nombre], [Cedula], [Salario], [Telefono]) 
 VALUES 
 ('Juan', 'C006', 500, '126'),
 ('Esteban', 'C007', 450, '459'),
@@ -131,7 +129,7 @@ VALUES
 ('G2A', 'Carrera 89', '963'),
 ('BGS', 'Avenida 16', '486');
 
-INSERT INTO [Suministro] ([Proveedor], [Videojuego], [FechaSuministro]) 
+INSERT INTO [Suministros] ([Proveedor], [Videojuego], [FechaSuministro]) 
 VALUES 
 (1, 1, '2020-01-20'),
 (2, 2, '2020-01-23'),
@@ -145,6 +143,8 @@ Select * FROM [Clientes]
 Select * FROM [Compras]
 Select * FROM [DetallesCompras];
 Select * FROM [Proveedores];
-Select * FROM [Suministro];
+Select * FROM [Suministros];
 Select * FROM [Inventarios];
+Select * FROM [Empleados];
+
 

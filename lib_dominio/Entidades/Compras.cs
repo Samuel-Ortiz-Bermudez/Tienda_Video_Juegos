@@ -7,7 +7,7 @@ namespace lib_dominio.Entidades
         public int Id { get; set; }
         public DateTime FechaVenta { get; set; }
         public string? MetodoPago { get; set; }
-        public double Total { get; set; }
+        public decimal Total { get; set; }
 
         public int Cliente { get; set; }
         public Clientes? _Cliente { get; set; }

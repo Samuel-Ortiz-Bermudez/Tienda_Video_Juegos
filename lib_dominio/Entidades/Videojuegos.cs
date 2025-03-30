@@ -5,7 +5,7 @@ namespace lib_dominio.Entidades
     {
         public int Id { get; set; }
         public string? Nombre { get; set; }
-        public double Precio { get; set; }
+        public decimal Precio { get; set; }
         public string? Desarrolladora { get; set; }
     }
 }

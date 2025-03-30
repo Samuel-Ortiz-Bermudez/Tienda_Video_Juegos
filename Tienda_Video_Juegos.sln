@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nucleo", "Nucleo", "{F32AC663-DB85-4976-A7CD-C402C98CD927}"
 EndProject
@@ -14,6 +14,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lib_dominio", "lib_dominio\lib_dominio.csproj", "{4C52C832-9576-457C-81A5-AB2A2FD02BF0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lib_repositorios", "lib_repositorios\lib_repositorios.csproj", "{045674E7-AD21-4F1A-830A-7D7EB19F3804}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ut_presentacion", "ut_presentacion\ut_presentacion.csproj", "{774B4504-17E6-4C73-9AFD-E4FFBFBA4D9A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F2F0D0A1-40C7-445C-A69E-BBC9DD00A955}"
+	ProjectSection(SolutionItems) = preProject
+		Secretos.Json = Secretos.Json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +36,10 @@ Global
 		{045674E7-AD21-4F1A-830A-7D7EB19F3804}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{045674E7-AD21-4F1A-830A-7D7EB19F3804}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{045674E7-AD21-4F1A-830A-7D7EB19F3804}.Release|Any CPU.Build.0 = Release|Any CPU
+		{774B4504-17E6-4C73-9AFD-E4FFBFBA4D9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{774B4504-17E6-4C73-9AFD-E4FFBFBA4D9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{774B4504-17E6-4C73-9AFD-E4FFBFBA4D9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{774B4504-17E6-4C73-9AFD-E4FFBFBA4D9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,5 +47,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{4C52C832-9576-457C-81A5-AB2A2FD02BF0} = {F32AC663-DB85-4976-A7CD-C402C98CD927}
 		{045674E7-AD21-4F1A-830A-7D7EB19F3804} = {28BE80EC-BADF-4ADA-A984-5252887727B1}
+		{774B4504-17E6-4C73-9AFD-E4FFBFBA4D9A} = {699E266A-B719-4C04-B070-1BFC6FC0AE44}
 	EndGlobalSection
 EndGlobal

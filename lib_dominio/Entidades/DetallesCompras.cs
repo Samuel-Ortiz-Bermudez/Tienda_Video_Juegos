@@ -6,7 +6,7 @@ namespace lib_dominio.Entidades
     {
         public int Id { get; set; }
         public int Cantidad { get; set; }
-        public double Subtotal { get; set; }
+        public decimal Subtotal { get; set; }
 
         public int Videojuego { get; set; }
         public Videojuegos? _Videojuego { get; set; }
