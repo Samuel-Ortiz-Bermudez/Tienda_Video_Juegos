@@ -1,5 +1,7 @@
 ﻿
 
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace lib_dominio.Entidades
 {
     public class DetallesCompras
@@ -9,8 +11,12 @@ namespace lib_dominio.Entidades
         public decimal Subtotal { get; set; }
 
         public int Videojuego { get; set; }
-        public Videojuegos? _Videojuego { get; set; }
+        //public Videojuegos? _Videojuego { get; set; }
+        [ForeignKey("Videojuego")] public Videojuegos? _Videojuego { get; set; }
+
         public int Compra { get; set; }
-        public Compras? _Compra { get; set; }
+        //public Compras? _Compra { get; set; }
+        [ForeignKey("Compra")] public Compras? _Compra { get; set; }
+
     }
 }

@@ -139,8 +139,8 @@ VALUES
 
 
 Select * FROM [Videojuegos];
-Select * FROM [Clientes]
-Select * FROM [Compras]
+Select * FROM [Clientes];
+Select * FROM [Compras];
 Select * FROM [DetallesCompras];
 Select * FROM [Proveedores];
 Select * FROM [Suministros];

@@ -1,4 +1,6 @@
 ﻿using lib_dominio.Entidades;
+using lib_repositorios.Implementaciones;
+using lib_repositorios.Interfaces;
 
 namespace ut_presentacion.Nucleo
 {
@@ -42,10 +44,40 @@ namespace ut_presentacion.Nucleo
             entidad.Precio = 1200.0m;
             entidad.Desarrolladora = "Desarrollador p";
 
-            //var entidad2 = new Videojuegos();
-            //entidad.Nombre = "Prueba Videojuego";
-            //entidad.Precio = 1200.0m;
-            //entidad.Desarrolladora = "Desarrollador p";
+            return entidad;
+        }
+ 
+        //realizar la prueba unitaria haciendo que traiga el objeto con el id referencia
+        public static Compras? Compras()
+        {
+            
+            var entidad = new Compras();
+            entidad.MetodoPago = "Tarjeta prueba";
+            entidad.FechaVenta = DateTime.Now;
+            entidad.Total = 12.0m;
+
+            entidad.Cliente = 1;
+            entidad.Empleado = 1;
+
+            return entidad;
+        }
+
+        //realizar la prueba de detallesCompras 
+
+        public static Inventarios? Inventarios()
+        {
+            var entidad = new Inventarios();
+            entidad.Cantidad = 15;
+            entidad.Videojuego = 2;
+            return entidad;
+        }
+
+        public static Suministros? Suministros()
+        {
+            var entidad = new Suministros();
+            entidad.FechaSuministro = new DateTime(2025, 3, 30);
+            entidad.Videojuego = 2;
+            entidad.Proveedor = 1;
             return entidad;
         }
     }

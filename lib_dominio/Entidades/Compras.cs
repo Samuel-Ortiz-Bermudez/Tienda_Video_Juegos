@@ -1,5 +1,7 @@
 ﻿
 
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace lib_dominio.Entidades
 {
     public class Compras
@@ -10,9 +12,13 @@ namespace lib_dominio.Entidades
         public decimal Total { get; set; }
 
         public int Cliente { get; set; }
-        public Clientes? _Cliente { get; set; }
+        //public Clientes? _Cliente { get; set; }
+        [ForeignKey("Cliente")] public Clientes? _Cliente { get; set; }
         public int Empleado { get; set; }
-        public Empleados? _Empleado { get; set; }
+        //public Empleados? _Empleado { get; set; }
+        [ForeignKey("Empleado")] public Empleados? _Empleado { get; set; }
         public List<DetallesCompras>? DetallesCompra { get; set; }
+
+        
     }
 }
