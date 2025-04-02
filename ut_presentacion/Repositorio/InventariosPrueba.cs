@@ -12,6 +12,9 @@ namespace ut_presentacion.Repositorio
         private readonly IConexion? iConexion;
         private List<Inventarios>? listaInventarios;
         private Inventarios? entidad;
+
+        private Videojuegos? juego;
+
         public InventariosPrueba()
         {
             iConexion = new Conexion();
@@ -26,15 +29,10 @@ namespace ut_presentacion.Repositorio
             Assert.AreEqual(true, Borrar());
         }
 
-        public bool Consultar()
+        public void Consultar()
         {
-            var _Videojuego = this.iConexion?.Videojuegos!.FirstOrDefault(x => x.Id == entidad!.Videojuego);
-            if (_Videojuego != null)
-            {
-                entidad!._Videojuego = _Videojuego;
-                return true;
-            }
-            return false;
+            entidad!._Videojuego = juego;
+            entidad!.Videojuego = this.iConexion!.Videojuegos!.FirstOrDefault(x => x.Nombre == juego!.Nombre)!.Id;
         }
         public bool Listar()
         {
@@ -45,18 +43,22 @@ namespace ut_presentacion.Repositorio
         {
             this.entidad = EntidadesNucleo.Inventarios()!;
             this.iConexion!.Inventarios!.Add(this.entidad);
-            this.listaInventarios = this.iConexion!.Inventarios!.ToList();
+
+            this.juego = EntidadesNucleo.Videojuegos();
+            this.iConexion!.Videojuegos!.Add(this.juego!);
             
+            this.listaInventarios = this.iConexion!.Inventarios!.ToList();
+            this.iConexion!.SaveChanges();
+
             Consultar();
             
-            this.iConexion!.SaveChanges();
             return true;
         }
 
         public bool Modificar()
         {
             this.entidad!.Cantidad = 30;
-            this.entidad!.Videojuego = 3;
+
             var entry = this.iConexion!.Entry<Inventarios>(this.entidad);
             entry.State = EntityState.Modified;
 
@@ -69,6 +71,8 @@ namespace ut_presentacion.Repositorio
         public bool Borrar()
         {
             this.iConexion!.Inventarios!.Remove(this.entidad!);
+            this.iConexion!.Videojuegos!.Remove(this.juego!);
+
             this.iConexion!.SaveChanges();
             return true;
         }

@@ -41,28 +41,32 @@ namespace ut_presentacion.Nucleo
         {
             var entidad = new Videojuegos();
             entidad.Nombre = "Prueba Videojuego";
-            entidad.Precio = 1200.0m;
+            entidad.Precio = 120.0m;
             entidad.Desarrolladora = "Desarrollador p";
 
             return entidad;
         }
  
-        //realizar la prueba unitaria haciendo que traiga el objeto con el id referencia
         public static Compras? Compras()
-        {
-            
+        {           
             var entidad = new Compras();
             entidad.MetodoPago = "Tarjeta prueba";
             entidad.FechaVenta = DateTime.Now;
             entidad.Total = 12.0m;
-
             entidad.Cliente = 1;
             entidad.Empleado = 1;
 
             return entidad;
         }
+        public static DetallesCompras? DetallesCompras()
+        {
+            var entidad = new DetallesCompras();
+            entidad.Cantidad = 3;
+            entidad.Videojuego = 1;
+            entidad.Compra = 1;
 
-        //realizar la prueba de detallesCompras 
+            return entidad;
+        }
 
         public static Inventarios? Inventarios()
         {

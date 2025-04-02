@@ -12,6 +12,10 @@ namespace ut_presentacion.Repositorio
         private readonly IConexion? iConexion;
         private List<Suministros>? listaSuministros;
         private Suministros? entidad;
+        
+        private Videojuegos? juego;
+        private Proveedores? proveedor;
+
         public SuministrosPrueba()
         {
             iConexion = new Conexion();
@@ -26,18 +30,12 @@ namespace ut_presentacion.Repositorio
             Assert.AreEqual(true, Borrar());
         }
 
-        public bool Consultar()
+        public void Consultar()
         {
-            var _Videojuego = this.iConexion?.Videojuegos!.FirstOrDefault(x => x.Id == entidad!.Videojuego);
-            var _Proveedor = this.iConexion?.Proveedores!.FirstOrDefault(x => x.Id == entidad!.Proveedor);
-
-            if (_Videojuego != null && _Proveedor != null)
-            {
-                entidad!._Videojuego = _Videojuego;
-                entidad!._Proveedor = _Proveedor;
-                return true;
-            }
-            return false;
+            entidad!._Proveedor = proveedor;
+            entidad!.Proveedor = this.iConexion!.Proveedores!.FirstOrDefault(x => x.Nombre == proveedor!.Nombre)!.Id;
+            entidad!._Videojuego = juego;
+            entidad!.Videojuego = this.iConexion!.Videojuegos!.FirstOrDefault(x => x.Nombre == juego!.Nombre)!.Id;
         }
         public bool Listar()
         {
@@ -50,20 +48,24 @@ namespace ut_presentacion.Repositorio
             this.iConexion!.Suministros!.Add(this.entidad);
             this.listaSuministros = this.iConexion!.Suministros!.ToList();
 
-            Consultar();
+            this.proveedor = EntidadesNucleo.Proveedores();
+            this.iConexion!.Proveedores!.Add(this.proveedor!);
+            this.juego = EntidadesNucleo.Videojuegos();
+            this.iConexion!.Videojuegos!.Add(this.juego!);
 
             this.iConexion!.SaveChanges();
+            
+            Consultar();
+
             return true;
         }
 
         public bool Modificar()
         {
             this.entidad!.FechaSuministro = new DateTime(2025, 4, 12);
-            this.entidad!.Proveedor = 4;
-            this.entidad!.Videojuego = 5;
+            entidad!._Proveedor!.Nombre = "Prueba Proveedor-mod";
+            entidad!._Videojuego!.Nombre = "Prueba Videojuego-mod";
 
-            Consultar();
-            
             var entry = this.iConexion!.Entry<Suministros>(this.entidad);
             entry.State = EntityState.Modified;
             this.iConexion!.SaveChanges();
@@ -73,6 +75,8 @@ namespace ut_presentacion.Repositorio
         public bool Borrar()
         {
             this.iConexion!.Suministros!.Remove(this.entidad!);
+            this.iConexion!.Videojuegos!.Remove(this.juego!);
+            this.iConexion!.Proveedores!.Remove(this.proveedor!);
             this.iConexion!.SaveChanges();
             return true;
         }
