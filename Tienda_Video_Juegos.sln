@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Secretos.Json = Secretos.Json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lib_aplicaciones", "lib_aplicaciones\lib_aplicaciones.csproj", "{25CC6362-1CAD-4592-861E-82DCBE2E0327}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{774B4504-17E6-4C73-9AFD-E4FFBFBA4D9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{774B4504-17E6-4C73-9AFD-E4FFBFBA4D9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{774B4504-17E6-4C73-9AFD-E4FFBFBA4D9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25CC6362-1CAD-4592-861E-82DCBE2E0327}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25CC6362-1CAD-4592-861E-82DCBE2E0327}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25CC6362-1CAD-4592-861E-82DCBE2E0327}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25CC6362-1CAD-4592-861E-82DCBE2E0327}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,5 +54,6 @@ Global
 		{4C52C832-9576-457C-81A5-AB2A2FD02BF0} = {F32AC663-DB85-4976-A7CD-C402C98CD927}
 		{045674E7-AD21-4F1A-830A-7D7EB19F3804} = {28BE80EC-BADF-4ADA-A984-5252887727B1}
 		{774B4504-17E6-4C73-9AFD-E4FFBFBA4D9A} = {699E266A-B719-4C04-B070-1BFC6FC0AE44}
+		{25CC6362-1CAD-4592-861E-82DCBE2E0327} = {28BE80EC-BADF-4ADA-A984-5252887727B1}
 	EndGlobalSection
 EndGlobal
