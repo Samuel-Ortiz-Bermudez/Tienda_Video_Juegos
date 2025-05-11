@@ -43,6 +43,7 @@ namespace ut_presentacion.Nucleo
             entidad.Nombre = "Prueba Videojuego";
             entidad.Precio = 120.0m;
             entidad.Desarrolladora = "Desarrollador p";
+            entidad.Codigo = "VJ00P";
 
             return entidad;
         }
@@ -55,6 +56,7 @@ namespace ut_presentacion.Nucleo
             entidad.Total = 12.0m;
             entidad.Cliente = 1;
             entidad.Empleado = 1;
+            entidad.Codigo = "C00P";
 
             return entidad;
         }
@@ -64,6 +66,7 @@ namespace ut_presentacion.Nucleo
             entidad.Cantidad = 3;
             entidad.Videojuego = 1;
             entidad.Compra = 1;
+            entidad.Codigo = "DC00P";
 
             return entidad;
         }
@@ -73,6 +76,8 @@ namespace ut_presentacion.Nucleo
             var entidad = new Inventarios();
             entidad.Cantidad = 15;
             entidad.Videojuego = 2;
+            entidad.Codigo = "INV00P";
+
             return entidad;
         }
 
@@ -82,6 +87,8 @@ namespace ut_presentacion.Nucleo
             entidad.FechaSuministro = new DateTime(2025, 3, 30);
             entidad.Videojuego = 2;
             entidad.Proveedor = 1;
+            entidad.Codigo = "SUM00P";
+
             return entidad;
         }
     }
