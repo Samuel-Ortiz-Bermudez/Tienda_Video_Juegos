@@ -25,7 +25,8 @@ CREATE TABLE [Compras] (
 	[MetodoPago] NVARCHAR (100),
 	[FechaVenta] DATE,
 	[Total] DECIMAL (10,2),
-	
+	[Codigo] NVARCHAR (100),
+
 	[Cliente] INT NOT NULL REFERENCES [Clientes]([Id]),
 	[Empleado] INT NOT NULL REFERENCES [Empleados]([Id]),
 );
@@ -35,12 +36,15 @@ CREATE TABLE [Videojuegos] (
 	[Nombre] NVARCHAR (100),
 	[Precio] DECIMAL (10,2),
 	[Desarrolladora] NVARCHAR (100),
+	[Codigo] NVARCHAR (100),
+	[Estado] BIT
 );
 
 CREATE TABLE [DetallesCompras] (
 	[Id] INT PRIMARY KEY IDENTITY (1,1),
 	[Cantidad] INT,
 	[Subtotal] DECIMAL (10,2),
+	[Codigo] NVARCHAR (100),
 	
 	[Videojuego] INT NOT NULL REFERENCES [Videojuegos]([Id]),
 	[Compra] INT NOT NULL REFERENCES [Compras]([Id]),
@@ -49,6 +53,7 @@ CREATE TABLE [DetallesCompras] (
 CREATE TABLE [Inventarios] (
 	[Id] INT PRIMARY KEY IDENTITY (1,1),
 	[Cantidad] INT,
+	[Codigo] NVARCHAR (100),
 
 	[Videojuego] INT NOT NULL REFERENCES [Videojuegos]([Id]),
 );
@@ -63,12 +68,11 @@ CREATE TABLE [Proveedores] (
 CREATE TABLE [Suministros] (
 	[Id] INT PRIMARY KEY IDENTITY (1,1),
 	[FechaSuministro] DATE,
+	[Codigo] NVARCHAR (100),
+
 	[Proveedor] INT NOT NULL REFERENCES [Proveedores]([Id]),
 	[Videojuego] INT NOT NULL REFERENCES [Videojuegos]([Id]),
 );
-
-
-
 
 INSERT INTO [Clientes] ([Nombre], [Cedula], [Direccion], [Telefono]) 
 VALUES 
@@ -84,43 +88,43 @@ VALUES
 ('Esteban', 'C007', 450, '459'),
 ('Alex', 'C008', 650, '786');
 
-INSERT INTO [Videojuegos] ([Nombre], [Desarrolladora], [Precio]) 
+INSERT INTO [Videojuegos] ([Nombre], [Desarrolladora], [Precio], [Codigo], [Estado]) 
 VALUES 
-('Factorio', 'Steam', 60),
-('Satisfactory', 'Epicgames', 50),
-('FIFA', 'EA', 50),
-('Sims4', 'EA', 60),
-('EFT', 'BSG', 120);
+('Factorio', 'Steam', 60, 'VJ001', 1),
+('Satisfactory', 'Epicgames', 50, 'VJ002', 1),
+('FIFA', 'EA', 50, 'VJ003', 1),
+('Sims4', 'EA', 60, 'VJ004', 1),
+('EFT', 'BSG', 120, 'VJ005', 1);
 
-INSERT INTO [Compras] ([Cliente], [FechaVenta], [MetodoPago], [Empleado], [Total]) 
+INSERT INTO [Compras] ([Cliente], [FechaVenta], [MetodoPago], [Empleado], [Total], [Codigo]) 
 VALUES 
-(1, '2025-02-24', 'Efectivo', 1, 220),
-(2, '2025-02-25', 'Tarjeta', 2, 180),
-(3, '2025-02-25', 'Tarjeta', 1, 120),
-(4, '2025-02-25', 'Efectivo', 2, 110),
-(5, '2025-02-27', 'Tarjeta', 3, 240),
-(1, '2025-02-28', 'Tarjeta', 3, 290);
+(1, '2025-02-24', 'Efectivo', 1, 220, 'C001'),
+(2, '2025-02-25', 'Tarjeta', 2, 180, 'C002'),
+(3, '2025-02-25', 'Tarjeta', 1, 120, 'C003'),
+(4, '2025-02-25', 'Efectivo', 2, 110, 'C004'),
+(5, '2025-02-27', 'Tarjeta', 3, 240, 'C005'),
+(1, '2025-02-28', 'Tarjeta', 3, 290, 'C006');
 
-INSERT INTO [DetallesCompras] ([Compra], [Videojuego], [Cantidad], [Subtotal]) 
+INSERT INTO [DetallesCompras] ([Compra], [Videojuego], [Cantidad], [Subtotal], [Codigo]) 
 VALUES 
-(1, 1, 2, 120),
-(1, 2, 1, 50),
-(1, 3, 1, 50),
-(2, 4, 3, 180),
-(3, 5, 1, 120),
-(4, 3, 1, 50),
-(4, 1, 1, 60),
-(5, 5, 2, 240),
-(6, 3, 1, 50),
-(6, 5, 2, 240);
+(1, 1, 2, 120, 'DC001'),
+(1, 2, 1, 50, 'DC002'),
+(1, 3, 1, 50, 'DC003'),
+(2, 4, 3, 180, 'DC004'),
+(3, 5, 1, 120, 'DC005'),
+(4, 3, 1, 50, 'DC006'),
+(4, 1, 1, 60, 'DC007'),
+(5, 5, 2, 240, 'DC008'),
+(6, 3, 1, 50, 'DC009'),
+(6, 5, 2, 240, 'DC010');
 
-INSERT INTO [Inventarios] ([Videojuego], [Cantidad]) 
+INSERT INTO [Inventarios] ([Videojuego], [Cantidad], [Codigo]) 
 VALUES 
-(1, 20),
-(2, 27),
-(3, 18),
-(4, 12),
-(5, 60);
+(1, 20, 'INV001'),
+(2, 27, 'INV002'),
+(3, 18, 'INV003'),
+(4, 12, 'INV004'),
+(5, 60, 'INV005');
 
 INSERT INTO [Proveedores] ([Nombre], [Direccion], [Telefono]) 
 VALUES 
@@ -129,14 +133,13 @@ VALUES
 ('G2A', 'Carrera 89', '963'),
 ('BGS', 'Avenida 16', '486');
 
-INSERT INTO [Suministros] ([Proveedor], [Videojuego], [FechaSuministro]) 
+INSERT INTO [Suministros] ([Proveedor], [Videojuego], [FechaSuministro], [Codigo]) 
 VALUES 
-(1, 1, '2020-01-20'),
-(2, 2, '2020-01-23'),
-(3, 3, '2020-01-24'),
-(4, 5, '2020-01-25'),
-(1, 4, '2020-01-26');
-
+(1, 1, '2020-01-20', 'SUM001'),
+(2, 2, '2020-01-23', 'SUM002'),
+(3, 3, '2020-01-24', 'SUM003'),
+(4, 5, '2020-01-25', 'SUM004'),
+(1, 4, '2020-01-26', 'SUM005');
 
 Select * FROM [Videojuegos];
 Select * FROM [Clientes];
