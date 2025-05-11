@@ -48,10 +48,10 @@ namespace lib_aplicaciones.Implementaciones
             return this.IConexion!.Videojuegos!.Take(20).ToList();
         }
 
-        public List<Videojuegos> PorNombre(Videojuegos? entidad)
+        public List<Videojuegos> PorCodigo(Videojuegos? entidad)
         {
             return this.IConexion!.Videojuegos!
-                .Where(x => x.Nombre!.Contains(entidad!.Nombre!))
+                .Where(x => x.Codigo!.Contains(entidad!.Codigo!))
                 .ToList();
         }
 

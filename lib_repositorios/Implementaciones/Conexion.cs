@@ -1,5 +1,6 @@
 ﻿using System.Net.NetworkInformation;
 using lib_dominio.Entidades;
+using lib_dominio.Entidades.Auditorias;
 using lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -21,5 +22,6 @@ namespace lib_repositorios.Implementaciones
         public DbSet<Proveedores>? Proveedores { get; set; }
         public DbSet<Suministros>? Suministros { get; set; }
         public DbSet<Videojuegos>? Videojuegos { get; set; }
+        public DbSet<AuditoriaClientes>? AuditoriaClientes { get; set; }
     }
 }

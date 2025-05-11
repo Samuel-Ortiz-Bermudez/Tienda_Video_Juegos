@@ -48,10 +48,10 @@ namespace lib_aplicaciones.Implementaciones
             return this.IConexion!.Suministros!.Take(20).ToList();
         }
 
-        public List<Suministros> PorProveedor(Suministros? entidad)
+        public List<Suministros> PorCodigo(Suministros? entidad)
         {
             return this.IConexion!.Suministros!
-                .Where(x => x._Proveedor!.Nombre!.Contains(entidad!._Proveedor!.Nombre!))
+                .Where(x => x.Codigo!.Contains(entidad!.Codigo!))
                 .ToList();
         }
 
