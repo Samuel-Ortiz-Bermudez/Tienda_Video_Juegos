@@ -1,4 +1,7 @@
+using System.ComponentModel.DataAnnotations;
+using lib_dominio.Entidades;
 using lib_dominio.Nucleo;
+using lib_presentaciones.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -6,21 +9,48 @@ namespace asp_presentacion.Pages.Ventanas
 {
     public class IniciarSesionModel : PageModel
     {
-        public bool EstaLogueado = false; 
-        [BindProperty] public string? Email { get; set; }
+        private ICuentasClientesPresentacion? iPresentacionClientes = null;
+        private ICuentasEmpleadosPresentacion? iPresentacionEmpleados = null;
+        public IniciarSesionModel(ICuentasEmpleadosPresentacion iPresentacionEmpleados, ICuentasClientesPresentacion iPresentacionClientes)
+        {
+            try
+            {
+                this.iPresentacionEmpleados = iPresentacionEmpleados;
+                EmpleadoSesion = new CuentasEmpleados();
+
+                this.iPresentacionClientes = iPresentacionClientes;
+                ClienteSesion = new CuentasClientes();
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
+
+        public bool EstaLogueado = false;
+        [BindProperty] public string? Correo { get; set; }
         [BindProperty] public string? Contrasena { get; set; }
+        [BindProperty] public string? Mensaje { get; set; }
+        [BindProperty] public Enumerables.Ventanas Accion { get; set; }
+        [BindProperty] public CuentasClientes? ClienteSesion { get; set; }
+        [BindProperty] public CuentasEmpleados? EmpleadoSesion { get; set; }
+        [BindProperty] public List<CuentasEmpleados>? EmpleadoCuenta { get; set; }
+        [BindProperty] public List<CuentasClientes>? ClienteCuenta { get; set; }
+
         public void OnGet() 
         { 
             var variable_session = HttpContext.Session.GetString("Usuario"); 
             if (!String.IsNullOrEmpty(variable_session)) 
-            { EstaLogueado = true; return; } 
+            { EstaLogueado = true; return; }
+
+            OnPostBtnInicio();
         }
 
         public void OnPostBtnClean()
         {
             try
             {
-                Email = string.Empty;
+                Correo = string.Empty;
                 Contrasena = string.Empty;
             }
             catch (Exception ex)
@@ -29,28 +59,91 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public void OnPostBtnInicio()
+        public async void OnPostBtnInicio()
         {
             try
             {
-                if (string.IsNullOrEmpty(Email) && string.IsNullOrEmpty(Contrasena)) 
+                if (string.IsNullOrEmpty(Correo) && string.IsNullOrEmpty(Contrasena)) 
                 {
                     OnPostBtnClean(); 
                     return; 
                 }
 
-                Console.WriteLine(Email);
-                Console.WriteLine(Contrasena);
+                string[] partes = Correo!.Split('@');
 
-                //Realizar la tabla de usuarios y realizar las validaciones
-                if ("admin@hola.com,123" != Email + "," + Contrasena) 
+
+                //Validacion de que sea cuenta de empleado
+                if (partes[1] == "tienda.com") 
                 {
-                    OnPostBtnClean(); 
+                    EmpleadoSesion!.Correo = this.Correo;
+                    EmpleadoSesion!.Contrasena = this.Contrasena;
+                    Accion = Enumerables.Ventanas.Listas;
+                    var taskEmpleadosSesion = this.iPresentacionEmpleados!.PorCorreo(EmpleadoSesion!);
+                    taskEmpleadosSesion.Wait();
+                    EmpleadoCuenta = taskEmpleadosSesion.Result;
+
+                    //Validacion de credenciales
+
+                    if (EmpleadoCuenta == null)
+                    {
+                        EmpleadoSesion = null;
+                        return;
+                    }
+
+                    if ((EmpleadoSesion.Correo != EmpleadoCuenta[0].Correo) || (EmpleadoSesion.Contrasena != EmpleadoCuenta[0].Contrasena))
+                    {
+                        EmpleadoSesion = null;
+                        OnPostBtnClean();
+                        Mensaje = "Contraseña o Correo incorrectos.";
+                        return;
+                    }
+                    if ((EmpleadoSesion.Correo == EmpleadoCuenta[0].Correo) && (EmpleadoSesion.Contrasena == EmpleadoCuenta[0].Contrasena))
+                    {
+                        ViewData["Logged"] = true;
+                        HttpContext.Session.SetString(partes[0], Correo!);
+                        EstaLogueado = true;
+                        HttpContext.Response.Redirect("/Ventanas/Videojuegos");
+                    }
                     return; 
                 }
-                ViewData["Logged"] = true; 
-                HttpContext.Session.SetString("Usuario", Email!); 
-                EstaLogueado = true;
+
+                if (partes[1] == "gmail.com")
+                {
+                    ClienteSesion!.Correo = this.Correo;
+                    ClienteSesion!.Contrasena = this.Contrasena;
+                    Accion = Enumerables.Ventanas.Listas;
+                    var taskClientesSesion = this.iPresentacionClientes!.PorCorreo(ClienteSesion!);
+                    taskClientesSesion.Wait();
+                    ClienteCuenta = taskClientesSesion.Result;
+
+                    if (ClienteCuenta == null)
+                    {
+                        ClienteSesion = null;
+                        return;
+                    }
+
+
+                    if ((ClienteSesion.Correo != ClienteCuenta[0].Correo) || (ClienteSesion.Contrasena != ClienteCuenta[0].Contrasena))
+                    {
+                        ClienteSesion = null;
+                        OnPostBtnClean();
+                        Mensaje = "Contraseña o Correo incorrectos.";
+                        return;
+                    }
+
+                    if ((ClienteSesion.Correo == ClienteCuenta[0].Correo) && (ClienteSesion.Contrasena == ClienteCuenta[0].Contrasena))
+                    {
+                        ViewData["Logged"] = true;
+                        HttpContext.Session.SetString(partes[0], Correo!);
+                        EstaLogueado = true;
+                        HttpContext.Response.Redirect("/Ventanas/Videojuegos");
+                    }
+
+                    return;
+                }
+
+                HttpContext.Response.Redirect("/Ventanas/RegistroUsuario");
+
                 OnPostBtnClean();
             }
             catch (Exception ex) { 

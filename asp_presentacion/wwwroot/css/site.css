@@ -25,7 +25,7 @@
         color: #2069ff;
         margin-bottom: 20px;
     }
-    .sesion_form p {
+    .sesion_form label {
         margin-left: 12px;
         margin-bottom: 0.5rem;
     }
@@ -61,6 +61,13 @@
     justify-content: center;
     align-items: center;
     height: 83vh;
+}
+
+.InicioSesion p{
+    color: red;
+/*    font-weight: bold;*/
+    margin: 10px 0;
+    margin-left: 12px;
 }
 
 input[type="number"] {
