@@ -22,6 +22,12 @@ namespace lib_repositorios.Implementaciones
         public DbSet<Proveedores>? Proveedores { get; set; }
         public DbSet<Suministros>? Suministros { get; set; }
         public DbSet<Videojuegos>? Videojuegos { get; set; }
+        public DbSet<CuentasEmpleados>? CuentasEmpleados{ get; set; }
+        public DbSet<CuentasClientes>? CuentasClientes{ get; set; }
+
+
+
+        //Auditorias
         public DbSet<AuditoriaClientes>? AuditoriaClientes { get; set; }
     }
 }

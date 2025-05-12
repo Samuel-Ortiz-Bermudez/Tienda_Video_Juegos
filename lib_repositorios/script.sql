@@ -10,7 +10,6 @@ CREATE TABLE [Clientes] (
 	[Cedula] NVARCHAR (100),
 	[Direccion] NVARCHAR (100),
 	[Telefono] NVARCHAR (100),
-	[Cuenta] INT
 );
 
 CREATE TABLE [Empleados] (
@@ -19,7 +18,6 @@ CREATE TABLE [Empleados] (
 	[Cedula] NVARCHAR (100),
 	[Salario] DECIMAL(10,2),
 	[Telefono] NVARCHAR (100),
-	[Cuenta] INT
 );
 
 CREATE TABLE [Compras] (
@@ -79,7 +77,7 @@ CREATE TABLE [Suministros] (
 CREATE TABLE [CuentasEmpleados] (
 	[Id] INT PRIMARY KEY IDENTITY (1,1),
 	[Correo] NVARCHAR (100),
-	[Contraseña] NVARCHAR (100),
+	[Contrasena] NVARCHAR (100),
 	[Rol] NVARCHAR (100),
 	
 	[Empleado] INT NOT NULL REFERENCES [Empleados]([Id])
@@ -88,24 +86,24 @@ CREATE TABLE [CuentasEmpleados] (
 CREATE TABLE [CuentasClientes] (
 	[Id] INT PRIMARY KEY IDENTITY (1,1),
 	[Correo] NVARCHAR (100),
-	[Contraseña] NVARCHAR (100),
+	[Contrasena] NVARCHAR (100),
 	
 	[Cliente] INT NOT NULL REFERENCES [Clientes]([Id])
 )
 
-INSERT INTO [Clientes] ([Nombre], [Cedula], [Direccion], [Telefono], [Cuenta]) 
+INSERT INTO [Clientes] ([Nombre], [Cedula], [Direccion], [Telefono]) 
 VALUES 
-('Andres', '231542', 'Calle 13', '123', 1),
-('Alejandra', '326541', 'Carrera 24', '456', 2),
-('Tomas', '74125', 'Avenida 54', '789', 3),
-('Miguel', '124578', 'Calle 32', '159', 4),
-('Sara', '12356', 'Carrera 27', '753', 5);
+('Andres', '231542', 'Calle 13', '123'),
+('Alejandra', '326541', 'Carrera 24', '456'),
+('Tomas', '74125', 'Avenida 54', '789'),
+('Miguel', '124578', 'Calle 32', '159'),
+('Sara', '12356', 'Carrera 27', '753');
 
-INSERT INTO [Empleados] ([Nombre], [Cedula], [Salario], [Telefono], [Cuenta]) 
+INSERT INTO [Empleados] ([Nombre], [Cedula], [Salario], [Telefono]) 
 VALUES 
-('Juan', 'C006', 500, '126', 1),
-('Esteban', 'C007', 450, '459', 2),
-('Alex', 'C008', 650, '786', 3);
+('Juan', 'C006', 500, '126'),
+('Esteban', 'C007', 450, '459'),
+('Alex', 'C008', 650, '786');
 
 INSERT INTO [Videojuegos] ([Nombre], [Desarrolladora], [Precio], [Codigo], [Estado]) 
 VALUES 
@@ -160,7 +158,7 @@ VALUES
 (4, 5, '2020-01-25', 'SUM-004'),
 (1, 4, '2020-01-26', 'SUM-005');
 
-INSERT INTO CuentasClientes ( [Correo], [Contraseña], [Cliente])
+INSERT INTO CuentasClientes ( [Correo], [Contrasena], [Cliente])
 VALUES 
 ( 'andres@gmail.com', '4561', 1),
 ( 'alejandra@gmail.com', '12547', 2),
@@ -168,7 +166,7 @@ VALUES
 ( 'miguel@gmail.com', '12032', 4),
 ( 'sara@gmail.com', '02147', 5);
 
-INSERT INTO CuentasEmpleados ( [Correo], [Contraseña], [Empleado], [Rol])
+INSERT INTO CuentasEmpleados ( [Correo], [Contrasena], [Empleado], [Rol])
 VALUES 
 ( 'juan@tienda.com', '1234', 1, 'Admin'),
 ( 'esteban@tienda.com', '12567', 2, 'Empleado'),
