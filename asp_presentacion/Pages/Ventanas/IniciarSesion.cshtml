@@ -7,7 +7,7 @@
 
 <content class="InicioSesion">
     <div class="sesion_form">
-        <form method="post" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             <h3>
                 Iniciar Sesion
@@ -17,13 +17,13 @@
                 <p>
                     Correo.
                 </p>
-                <input type="email" name="Correo" placeholder="Escribir correo" class="sesion_form_inputs"/>
+                <input type="email" name="Correo" placeholder="Escribir correo" class="sesion_form_inputs" onchange="keyUp(this)" asp-for="@Model.Email"/>
             </div>
             <div>
             <p>
                 Contraseña.
             </p>
-                <input type="password" name="Contraseña" placeholder="Escribir contraseña" class="sesion_form_inputs"/>
+                <input type="password" name="Contraseña" placeholder="Escribir contraseña" class="sesion_form_inputs" onchange="keyUp(this)" asp-for="@Model.Contrasena" />
             </div>
             <button type="submit" class="sesion_form_buttons">Iniciar Sesion</button>
             <button asp-page="/Ventanas/RegistroUsuario" class="sesion_form_buttons" asp-page-handler="BtnInicio">Registrarse</button>

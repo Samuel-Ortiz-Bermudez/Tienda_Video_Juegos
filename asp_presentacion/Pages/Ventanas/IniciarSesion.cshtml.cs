@@ -16,38 +16,42 @@ namespace asp_presentacion.Pages.Ventanas
             { EstaLogueado = true; return; } 
         }
 
-        public void OnPostBtnInicio()
+        public void OnPostBtnClean()
         {
             try
-            { 
-                Email = string.Empty; 
-                Contrasena = string.Empty; 
+            {
+                Email = string.Empty;
+                Contrasena = string.Empty;
             }
-            catch (Exception ex) { 
-                LogConversor.Log(ex, ViewData!); 
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
             }
         }
 
-        public void OnPostBtEnter()
+        public void OnPostBtnInicio()
         {
             try
             {
                 if (string.IsNullOrEmpty(Email) && string.IsNullOrEmpty(Contrasena)) 
                 {
-                    OnPostBtnInicio(); 
+                    OnPostBtnClean(); 
                     return; 
                 }
+
+                Console.WriteLine(Email);
+                Console.WriteLine(Contrasena);
 
                 //Realizar la tabla de usuarios y realizar las validaciones
                 if ("admin@hola.com,123" != Email + "," + Contrasena) 
                 {
-                    OnPostBtnInicio(); 
+                    OnPostBtnClean(); 
                     return; 
                 }
                 ViewData["Logged"] = true; 
                 HttpContext.Session.SetString("Usuario", Email!); 
                 EstaLogueado = true;
-                OnPostBtnInicio();
+                OnPostBtnClean();
             }
             catch (Exception ex) { 
                 LogConversor.Log(ex, ViewData!); 
