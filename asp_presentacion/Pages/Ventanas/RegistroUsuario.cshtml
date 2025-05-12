@@ -1,0 +1,55 @@
+﻿@page
+@model asp_presentacion.Pages.Ventanas.RegistroUsuarioModel
+@{
+}
+
+<content class="Registrarse">
+    <div class="sesion_form">
+        <form method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <h3>
+                Registrarse
+            </h3>
+
+            <div>
+                <p>
+                    Nombre Completo.
+                </p>
+                <input type="text" name="Nombre" placeholder="Escribir Nombre" class="sesion_form_inputs" />
+            </div>
+            <div>
+                <p>
+                    Cedula.
+                </p>
+                <input type="number" name="Cedula" placeholder="Escribir Cedula" class="sesion_form_inputs" />
+            </div>
+            <div>
+                <p>
+                    Direccion.
+                </p>
+                <input type="text" name="Direccion" placeholder="Escribir Direccion" class="sesion_form_inputs" />
+            </div>
+            <div>
+                <p>
+                    Telefono.
+                </p>
+                <input type="number" name="Telefono" placeholder="Escribir Telefono" class="sesion_form_inputs" />
+            </div>
+            <div>
+                <p>
+                    Correo.
+                </p>
+                <input type="email" name="Correo" placeholder="Escribir correo" class="sesion_form_inputs" />
+            </div>
+            <div>
+                <p>
+                    Contraseña.
+                </p>
+                <input type="password" name="Contraseña" placeholder="Escribir contraseña" class="sesion_form_inputs" />
+            </div>
+            
+            <button type="submit" class="sesion_form_buttons">Registrarse</button>
+
+        </form>
+    </div>
+</content>

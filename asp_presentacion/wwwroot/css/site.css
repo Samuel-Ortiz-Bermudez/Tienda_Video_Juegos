@@ -1,0 +1,76 @@
+
+/*Inicio de sesion*/
+
+/* Contenedor principal */
+.InicioSesion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+}
+
+/* Formulario */
+.sesion_form {
+    width: 350px;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    /* Título */
+    .sesion_form h3 {
+        text-align: center;
+        color: #2069ff;
+        margin-bottom: 20px;
+    }
+    .sesion_form p {
+        margin-left: 12px;
+        margin-bottom: 0.5rem;
+    }
+
+    .sesion_form_inputs {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    /* Botón */
+    .sesion_form_buttons {
+        width: 100%;
+        padding: 10px;
+        background-color: #2069ff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-bottom: 25px;
+        text-decoration: none;
+    }
+
+        .InicioSesion_form_buttons:hover {
+            background-color: #104fbb;
+        }
+
+.Registrarse {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 83vh;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; 
+    -webkit-appearance: none; 
+    appearance: none; 
+}
+    
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

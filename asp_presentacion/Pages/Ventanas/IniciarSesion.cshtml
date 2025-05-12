@@ -1,0 +1,33 @@
+﻿@page
+@model asp_presentacion.Pages.Ventanas.IniciarSesionModel
+@{
+    ViewData["Titulo"] = "Inicio Sesion";
+}
+
+
+<content class="InicioSesion">
+    <div class="sesion_form">
+        <form method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <h3>
+                Iniciar Sesion
+            </h3>    
+         
+            <div>
+                <p>
+                    Correo.
+                </p>
+                <input type="email" name="Correo" placeholder="Escribir correo" class="sesion_form_inputs"/>
+            </div>
+            <div>
+            <p>
+                Contraseña.
+            </p>
+                <input type="password" name="Contraseña" placeholder="Escribir contraseña" class="sesion_form_inputs"/>
+            </div>
+            <button type="submit" class="sesion_form_buttons">Iniciar Sesion</button>
+            <button asp-page="/Ventanas/RegistroUsuario" class="sesion_form_buttons" asp-page-handler="BtnInicio">Registrarse</button>
+
+        </form>
+    </div>
+</content >
