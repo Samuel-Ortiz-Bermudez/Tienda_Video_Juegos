@@ -28,14 +28,15 @@ namespace asp_presentacion.Pages.Ventanas
         }
 
         public bool EstaLogueado = false;
+        [BindProperty] public string? Mensaje { get; set; }
         [BindProperty] public string? Correo { get; set; }
         [BindProperty] public string? Contrasena { get; set; }
-        [BindProperty] public string? Mensaje { get; set; }
-        [BindProperty] public Enumerables.Ventanas Accion { get; set; }
+
         [BindProperty] public CuentasClientes? ClienteSesion { get; set; }
+        [BindProperty] public List<CuentasClientes>? ClienteCuenta { get; set; }
+
         [BindProperty] public CuentasEmpleados? EmpleadoSesion { get; set; }
         [BindProperty] public List<CuentasEmpleados>? EmpleadoCuenta { get; set; }
-        [BindProperty] public List<CuentasClientes>? ClienteCuenta { get; set; }
 
         public void OnGet() 
         { 
@@ -69,7 +70,7 @@ namespace asp_presentacion.Pages.Ventanas
                     return; 
                 }
 
-                string[] partes = Correo!.Split('@');
+                string[] partes = this.Correo!.Split('@');
 
 
                 //Validacion de que sea cuenta de empleado
@@ -77,7 +78,6 @@ namespace asp_presentacion.Pages.Ventanas
                 {
                     EmpleadoSesion!.Correo = this.Correo;
                     EmpleadoSesion!.Contrasena = this.Contrasena;
-                    Accion = Enumerables.Ventanas.Listas;
                     var taskEmpleadosSesion = this.iPresentacionEmpleados!.PorCorreo(EmpleadoSesion!);
                     taskEmpleadosSesion.Wait();
                     EmpleadoCuenta = taskEmpleadosSesion.Result;
@@ -111,7 +111,6 @@ namespace asp_presentacion.Pages.Ventanas
                 {
                     ClienteSesion!.Correo = this.Correo;
                     ClienteSesion!.Contrasena = this.Contrasena;
-                    Accion = Enumerables.Ventanas.Listas;
                     var taskClientesSesion = this.iPresentacionClientes!.PorCorreo(ClienteSesion!);
                     taskClientesSesion.Wait();
                     ClienteCuenta = taskClientesSesion.Result;

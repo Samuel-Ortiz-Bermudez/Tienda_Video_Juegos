@@ -65,7 +65,12 @@
 
 .InicioSesion p{
     color: red;
-/*    font-weight: bold;*/
+    margin: 10px 0;
+    margin-left: 12px;
+}
+
+.Registrarse p {
+    color: red;
     margin: 10px 0;
     margin-left: 12px;
 }

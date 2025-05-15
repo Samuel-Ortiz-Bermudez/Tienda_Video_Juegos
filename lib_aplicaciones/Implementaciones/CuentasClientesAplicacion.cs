@@ -39,6 +39,13 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("lbYaSeGuardo");
 
+
+            int idCliente = this.IConexion!.Clientes!
+                              .OrderByDescending(x => x.Id)
+                              .FirstOrDefault()?.Id ?? 0;
+
+            entidad.Cliente = idCliente;
+
             this.IConexion!.CuentasClientes!.Add(entidad);
             this.IConexion.SaveChanges();
             return entidad;
