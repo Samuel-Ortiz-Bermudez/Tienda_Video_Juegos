@@ -107,42 +107,38 @@ namespace asp_presentacion.Pages.Ventanas
                     return; 
                 }
 
-                if (partes[1] == "gmail.com")
+                
+                ClienteSesion!.Correo = this.Correo;
+                ClienteSesion!.Contrasena = this.Contrasena;
+                var taskClientesSesion = this.iPresentacionClientes!.PorCorreo(ClienteSesion!);
+                taskClientesSesion.Wait();
+                ClienteCuenta = taskClientesSesion.Result;
+
+                if (ClienteCuenta == null)
                 {
-                    ClienteSesion!.Correo = this.Correo;
-                    ClienteSesion!.Contrasena = this.Contrasena;
-                    var taskClientesSesion = this.iPresentacionClientes!.PorCorreo(ClienteSesion!);
-                    taskClientesSesion.Wait();
-                    ClienteCuenta = taskClientesSesion.Result;
-
-                    if (ClienteCuenta == null)
-                    {
-                        ClienteSesion = null;
-                        return;
-                    }
+                    ClienteSesion = null;
+                    return;
+                }
 
 
-                    if ((ClienteSesion.Correo != ClienteCuenta[0].Correo) || (ClienteSesion.Contrasena != ClienteCuenta[0].Contrasena))
-                    {
-                        ClienteSesion = null;
-                        OnPostBtnClean();
-                        Mensaje = "Contraseña o Correo incorrectos.";
-                        return;
-                    }
+                if ((ClienteSesion.Correo != ClienteCuenta[0].Correo) || (ClienteSesion.Contrasena != ClienteCuenta[0].Contrasena))
+                {
+                    ClienteSesion = null;
+                    OnPostBtnClean();
+                    Mensaje = "Contraseña o Correo incorrectos.";
+                    return;
+                }
 
-                    if ((ClienteSesion.Correo == ClienteCuenta[0].Correo) && (ClienteSesion.Contrasena == ClienteCuenta[0].Contrasena))
-                    {
-                        ViewData["Logged"] = true;
-                        HttpContext.Session.SetString(partes[0], Correo!);
-                        EstaLogueado = true;
-                        HttpContext.Response.Redirect("/Ventanas/Videojuegos");
-                    }
-
+                if ((ClienteSesion.Correo == ClienteCuenta[0].Correo) && (ClienteSesion.Contrasena == ClienteCuenta[0].Contrasena))
+                {
+                    ViewData["Logged"] = true;
+                    HttpContext.Session.SetString(partes[0], Correo!);
+                    EstaLogueado = true;
+                    HttpContext.Response.Redirect("/Ventanas/Videojuegos");
                     return;
                 }
 
                 HttpContext.Response.Redirect("/Ventanas/RegistroUsuario");
-
                 OnPostBtnClean();
             }
             catch (Exception ex) { 
