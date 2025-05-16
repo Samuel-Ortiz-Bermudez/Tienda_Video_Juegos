@@ -5,6 +5,12 @@ using lib_presentaciones.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
+
+
 namespace asp_presentacion.Pages.Ventanas
 {
     public class IniciarSesionModel : PageModel
@@ -101,7 +107,16 @@ namespace asp_presentacion.Pages.Ventanas
                     {
                         ViewData["Logged"] = true;
                         HttpContext.Session.SetString(partes[0], Correo!);
-                        EstaLogueado = true;
+
+                        var claims = new List<Claim> {
+                            new Claim(ClaimTypes.Name, partes[0]),
+                            new Claim("Correo", EmpleadoSesion.Correo),
+                            new Claim(ClaimTypes.Role, EmpleadoCuenta[0].Rol!)
+                        };
+
+                        var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimIdentity));
+
                         HttpContext.Response.Redirect("/Ventanas/Videojuegos");
                     }
                     return; 
@@ -133,7 +148,17 @@ namespace asp_presentacion.Pages.Ventanas
                 {
                     ViewData["Logged"] = true;
                     HttpContext.Session.SetString(partes[0], Correo!);
-                    EstaLogueado = true;
+                    
+                    var claims = new List<Claim> {
+                        new Claim(ClaimTypes.Name, partes[0]),
+                        new Claim("Correo", ClienteSesion.Correo),
+                        new Claim(ClaimTypes.Role, "Cliente")
+                    };
+
+                    var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimIdentity));
+                    
+                    
                     HttpContext.Response.Redirect("/Ventanas/Videojuegos");
                     return;
                 }

@@ -1,7 +1,17 @@
+@media (min-width: 1400px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+        max-width: 85%;
+    }
+}
+
+.error_mensaje {
+    color: red;
+    margin: 10px 0;
+    margin-left: 12px;
+}
+
 
 /*Inicio de sesion*/
-
-/* Contenedor principal */
 .InicioSesion {
     display: flex;
     justify-content: center;
@@ -9,7 +19,6 @@
     height: 60vh;
 }
 
-/* Formulario */
 .sesion_form {
     width: 350px;
     padding: 20px;
@@ -19,7 +28,6 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-    /* Título */
     .sesion_form h3 {
         text-align: center;
         color: #2069ff;
@@ -38,7 +46,6 @@
         border-radius: 5px;
     }
 
-    /* Botón */
     .sesion_form_buttons {
         width: 100%;
         padding: 10px;
@@ -56,6 +63,7 @@
             background-color: #104fbb;
         }
 
+/*Registro de usuarios*/
 .Registrarse {
     display: flex;
     justify-content: center;
@@ -85,4 +93,99 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+/*Perfil de cliente*/
+.perfil_cliente {
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    width: 100%;
+    justify-content: space-around;
+}
+    .perfil_cliente form {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5vh;
+    }
+
+.panel_cliente {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.datos_cliente {
+    padding: 5vh 0vh;
+    font-size: 24px;
+    gap: 2.5vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.datos_cliente p{
+    margin: 0;
+    
+}
+
+.acciones_cliente {
+    display: flex;
+    flex-direction: row;
+    padding: 0vh 20vh 5vh 20vh;
+    font-size: 20px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+.acciones_cliente_actualizar_cerrar {
+    border: none;
+    border-radius: 5px;
+    width: 25vh;
+    height: 5vh;
+    background-color: #2069ff;
+    color: #fff;
+    cursor: pointer;
+}
+    .acciones_cliente_actualizar_cerrar:hover {
+        background-color: #104fbb;
+    }
+
+.acciones_cliente_eliminar {
+    border: none;
+    border-radius: 5px;
+    width: 25vh;
+    height: 5vh;
+    background-color: red;
+    color: #fff;
+    cursor: pointer;
+}
+    .acciones_cliente_eliminar:hover {
+        background-color: darkred;
+    }
+
+/*Compras del perfil del usuario*/
+.compras_cliente {
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
+    height: 35vh;
+    align-items: center;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(204, 204, 204);
+    border-image: initial;
+    border-radius: 10px;
+    padding: 0px 30px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.compras_cliente h4 {
+    margin: 3vh;
+}
+.tb_data {
+    width: 100%;
+    border-radius: 10px;
 }

@@ -45,13 +45,18 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<Compras> Listar()
         {
-            return this.IConexion!.Compras!.Take(20).ToList();
+            return this.IConexion!.Compras!.Take(20)
+                .Include(x => x._Cliente)
+                .Include(x => x._Empleado)
+                .ToList();
         }
 
         public List<Compras> PorCodigo(Compras? entidad)
         {
             return this.IConexion!.Compras!
                 .Where(x => x.Codigo!.Contains(entidad!.Codigo!))
+                .Include(x => x._Cliente)
+                .Include(x => x._Empleado)
                 .ToList();
         }
 

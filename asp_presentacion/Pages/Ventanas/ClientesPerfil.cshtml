@@ -1,0 +1,94 @@
+﻿@page
+@model asp_presentacion.Pages.Ventanas.ClientesPerfilModel
+@{
+    ViewData["Titulo"] = "Perfil";
+}
+
+<content class="perfil_cliente">
+    <form method="POST">
+        @Html.AntiForgeryToken()
+        <div class="panel_cliente">
+            <div id="datos-cliente" class="datos_cliente">
+                <p>Usuario: @ViewData["Usuario"]</p>
+                <p>Nombre: @Model.Cliente!.Nombre</p>
+                <p>Cedula: @Model.Cliente!.Cedula</p>
+                <p>Telefono: @Model.Cliente!.Telefono</p>
+                <p>Direccion: @Model.Cliente!.Direccion</p>
+            </div>
+            <div class="acciones_cliente">
+                <button type="submit" class="acciones_cliente_actualizar_cerrar" asp-page-handler="BtnCerrarSesion" name="CerrarSesion">Cerrar sesion.</button>
+                <button class="acciones_cliente_actualizar_cerrar">Actualizar datos.</button>
+                <button class="acciones_cliente_eliminar">Eliminar Cuenta.</button>
+            </div>
+        </div>
+
+
+        <div id="datos-compras-cliente" class="compras_cliente">
+            <div style="display: flex">
+                <h4>Compras realizadas.</h4>
+                @if(!Model.lista!.Any()) {
+                    <h4 class="error_mensaje">No se han realizado compras.</h4>
+                }
+
+            </div>
+            
+            <table class="tb_data table table-striped table-bordered table-hover">
+                <tr>
+                    <th>
+                        Codigo de compra.
+                    </th>
+                    <th>
+                        Total de compra.
+                    </th>
+                    <th class="cl_hidden">
+                        Fecha de compra.
+                    </th>
+                    <th class="cl_actions">
+                        Metodo de pago.
+                    </th>
+                    <th class="cl_actions">
+                        Empleado.
+                    </th>
+                    <th>
+                        Detalles de compra
+                    </th>
+                </tr>
+                @if(Model.lista!.Any()){
+                    @foreach (var compra in Model.lista!)
+                    {
+                        <tr>
+                            <td>
+                                @compra.Codigo
+                            </td>
+                            <td>
+                                @compra.Total
+                            </td>
+                            <td class="cl_hidden">
+                                @compra.FechaVenta
+                            </td>
+                            <td class="cl_hidden">
+                                @compra.MetodoPago
+                            </td>
+                            <td class="cl_hidden">
+                                @compra._Empleado!.Nombre
+                            </td>
+
+                            <td>
+                                <input type="submit"
+                                       value="detalles"
+                                       asp-page-handler="BtnDetalles"
+                                       class="btn btn-secondary" />
+                            </td>
+                        </tr>
+                    }
+                }
+
+
+        </div>
+    </form>
+</content>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

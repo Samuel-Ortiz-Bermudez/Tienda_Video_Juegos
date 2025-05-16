@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using lib_dominio.Entidades;
 using lib_presentaciones.Interfaces;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 
 namespace asp_presentacion.Pages.Ventanas
@@ -123,6 +126,16 @@ namespace asp_presentacion.Pages.Ventanas
 
                 ViewData["Logged"] = true;
                 HttpContext.Session.SetString(partes[0], Correo!);
+
+                var claims = new List<Claim> {
+                    new Claim(ClaimTypes.Name, partes[0]),
+                    new Claim("Correo", Cuenta.Correo),
+                    new Claim(ClaimTypes.Role, "Cliente")
+                };
+
+                var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimIdentity));
+
                 HttpContext.Response.Redirect("/Ventanas/Videojuegos");
                 return;
             }

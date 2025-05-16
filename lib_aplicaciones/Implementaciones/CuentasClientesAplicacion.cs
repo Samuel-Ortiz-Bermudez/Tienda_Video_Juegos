@@ -53,13 +53,16 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<CuentasClientes> Listar()
         {
-            return this.IConexion!.CuentasClientes!.Take(20).ToList();
+            return this.IConexion!.CuentasClientes!.Take(20)
+                .Include(x => x._Cliente)
+                .ToList();
         }
 
         public List<CuentasClientes> PorCorreo(CuentasClientes? entidad)
         {
             return this.IConexion!.CuentasClientes!
                 .Where(x => x.Correo!.Contains(entidad!.Correo!))
+                .Include(x => x._Cliente)
                 .ToList();
         }
 

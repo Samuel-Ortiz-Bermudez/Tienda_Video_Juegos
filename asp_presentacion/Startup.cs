@@ -29,6 +29,7 @@ namespace asp_presentacion
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddRazorPages();
+            
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
