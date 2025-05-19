@@ -37,7 +37,8 @@ CREATE TABLE [Videojuegos] (
 	[Precio] DECIMAL (10,2),
 	[Desarrolladora] NVARCHAR (100),
 	[Codigo] NVARCHAR (100),
-	[Estado] BIT
+	[Estado] BIT,
+	[ImagenUrl] NVARCHAR (100)
 );
 
 CREATE TABLE [DetallesCompras] (
@@ -105,13 +106,28 @@ VALUES
 ('Esteban', 'C007', 450, '459'),
 ('Alex', 'C008', 650, '786');
 
-INSERT INTO [Videojuegos] ([Nombre], [Desarrolladora], [Precio], [Codigo], [Estado]) 
+INSERT INTO [Clientes] ([Nombre], [Cedula], [Direccion], [Telefono]) 
 VALUES 
-('Factorio', 'Steam', 60, 'VJ-001', 1),
-('Satisfactory', 'Epicgames', 50, 'VJ-002', 1),
-('FIFA', 'EA', 50, 'VJ-003', 1),
-('Sims4', 'EA', 60, 'VJ-004', 1),
-('EFT', 'BSG', 120, 'VJ-005', 1);
+('Andres', '231542', 'Calle 13', '123'),
+('Alejandra', '326541', 'Carrera 24', '456'),
+('Tomas', '74125', 'Avenida 54', '789'),
+('Miguel', '124578', 'Calle 32', '159'),
+('Sara', '12356', 'Carrera 27', '753');
+
+INSERT INTO [Empleados] ([Nombre], [Cedula], [Salario], [Telefono]) 
+VALUES 
+('Juan', 'C006', 500, '126'),
+('Esteban', 'C007', 450, '459'),
+('Alex', 'C008', 650, '786');
+
+INSERT INTO [Videojuegos] ([Nombre], [Desarrolladora], [Precio], [Codigo], [Estado], [ImagenUrl]) 
+VALUES 
+('Factorio', 'Steam', 60, 'VJ-001', 1, '/images/factorio.jpg'),
+('Satisfactory', 'Epicgames', 50, 'VJ-002', 1, '/images/satisfactory.jpeg'),
+('FIFA', 'EA', 50, 'VJ-003', 1, '/images/fifa.jpg'), 
+('Sims4', 'EA', 60, 'VJ-004', 1, '/images/sims4.jpg'),
+('EFT', 'BSG', 120, 'VJ-005', 1,'/images/placeholder.jpg'); 
+
 
 INSERT INTO [Compras] ([Cliente], [FechaVenta], [MetodoPago], [Empleado], [Total], [Codigo]) 
 VALUES 
@@ -183,72 +199,12 @@ Select * FROM [Empleados];
 Select * FROM [CuentasClientes];
 Select * FROM [CuentasEmpleados];
 
---Tablas de auditorias
+--Tablas de auditoria
 
-CREATE TABLE [AuditoriaClientes] (
+CREATE TABLE [Auditorias] (
 	[Id] INT PRIMARY KEY IDENTITY (1,1),
 	[Fecha] DATETIME,
 	[Accion] NVARCHAR (50),
-	[Cliente] NVARCHAR (50),
-)
-
-CREATE TABLE [AuditoriaEmpleados] (
-	[Id] INT PRIMARY KEY IDENTITY (1,1),
-	[Fecha] DATETIME,
-	[Accion] NVARCHAR (50),
-	[Empleado] NVARCHAR (50),
-)
-
-CREATE TABLE [AuditoriaCompras] (
-	[Id] INT PRIMARY KEY IDENTITY (1,1),
-	[Fecha] DATETIME,
-	[Accion] NVARCHAR (50),
-	[Compra] NVARCHAR (50),
-)
-
-CREATE TABLE [AuditoriaDetallesCompras] (
-	[Id] INT PRIMARY KEY IDENTITY (1,1),
-	[Fecha] DATETIME,
-	[Accion] NVARCHAR (50),
-	[DetalleCompra] NVARCHAR (50),
-)
-
-CREATE TABLE [AuditoriaVideojuegos] (
-	[Id] INT PRIMARY KEY IDENTITY (1,1),
-	[Fecha] DATETIME,
-	[Accion] NVARCHAR (50),
-	[Videojuego] NVARCHAR (50),
-)
-
-CREATE TABLE [AuditoriaSuministros] (
-	[Id] INT PRIMARY KEY IDENTITY (1,1),
-	[Fecha] DATETIME,
-	[Accion] NVARCHAR (50),
-	[Suministro] NVARCHAR (50),
-)
-
-CREATE TABLE [AuditoriaProveedores] (
-	[Id] INT PRIMARY KEY IDENTITY (1,1),
-	[Fecha] DATETIME,
-	[Accion] NVARCHAR (50),
-	[Proveedor] NVARCHAR (50),
-)
-
-CREATE TABLE [AuditoriaInventarios] (
-	[Id] INT PRIMARY KEY IDENTITY (1,1),
-	[Fecha] DATETIME,
-	[Accion] NVARCHAR (50),
-	[Inventario] NVARCHAR (50),
-)
-CREATE TABLE [AuditoriaCuentasEmpleados] (
-	[Id] INT PRIMARY KEY IDENTITY (1,1),
-	[Fecha] DATETIME,
-	[Accion] NVARCHAR (50),
-	[CuentaEmpleado] NVARCHAR (50),
-)
-CREATE TABLE [AuditoriaCuentasClientes] (
-	[Id] INT PRIMARY KEY IDENTITY (1,1),
-	[Fecha] DATETIME,
-	[Accion] NVARCHAR (50),
-	[CuentaCliente] NVARCHAR (50),
+	[Tabla]NVARCHAR (50),
+	[Usuario]NVARCHAR (50),
 )
