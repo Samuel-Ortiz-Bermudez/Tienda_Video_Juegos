@@ -1,0 +1,67 @@
+﻿@page
+@model asp_presentacion.Pages.Ventanas.RegistroUsuarioModel
+@{
+    ViewData["Titulo"] = "Registrarse";
+}
+
+<content class="Registrarse">
+    <div class="sesion_form">
+        <form method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <h3>
+                Registrarse
+            </h3>
+
+            @if (!string.IsNullOrEmpty(Model.Mensaje))
+            {
+                <p class="error_mensaje">
+                    @Model.Mensaje
+                </p>
+            }
+
+            <div>
+                <label>
+                    Nombre Completo.
+                </label>
+                <input type="text" name="Nombre" placeholder="Escribir Nombre" class="sesion_form_inputs" asp-for="@Model.Nombre"/>
+            </div>
+            <div>
+                <label>
+                    Cedula.
+                </label>
+                <input type="number" name="Cedula" placeholder="Escribir Cedula" class="sesion_form_inputs" asp-for="@Model.Cedula" />
+            </div>
+            <div>
+                <label>
+                    Direccion.
+                </label>
+                <input type="text" name="Direccion" placeholder="Escribir Direccion" class="sesion_form_inputs" asp-for="@Model.Direccion" />
+            </div>
+            <div>
+                <label>
+                    Telefono.
+                </label>
+                <input type="number" name="Telefono" placeholder="Escribir Telefono" class="sesion_form_inputs" asp-for="@Model.Telefono" />
+            </div>
+            <div>
+                <label>
+                    Correo.
+                </label>
+                <input type="email" name="Correo" placeholder="Escribir correo" class="sesion_form_inputs" asp-for="@Model.Correo" />
+            </div>
+            <div>
+                <label>
+                    Contraseña.
+                </label>
+                <input type="text" name="Contrasena" placeholder="Escribir contraseña" class="sesion_form_inputs" asp-for="@Model.Contrasena" />
+            </div>
+            
+            <button type="submit" class="sesion_form_buttons" asp-page-handler="BtnRegistrar">Registrarse</button>
+
+        </form>
+    </div>
+</content>
+
+@section Scripts {
+    <spanartial name="_ValidationScriptsPartial" />
+}

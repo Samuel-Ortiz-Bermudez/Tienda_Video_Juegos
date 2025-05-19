@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using lib_repositorios.Implementaciones;
+using Microsoft.EntityFrameworkCore;
+
 
 using asp_presentacion;
 

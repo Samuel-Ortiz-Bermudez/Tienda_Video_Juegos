@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+=======
 <Project Sdk="Microsoft.NET.Sdk.Web">
+>>>>>>> 9272f2e857581019aa630405d16f40c13304ff8b
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -9,6 +13,16 @@
   <ItemGroup>
     <ProjectReference Include="..\lib_dominio\lib_dominio.csproj" />
     <ProjectReference Include="..\lib_presentaciones\lib_presentaciones.csproj" />
+<<<<<<< HEAD
+    <ProjectReference Include="..\lib_repositorios\lib_repositorios.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.5" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.5" />
+=======
+>>>>>>> 9272f2e857581019aa630405d16f40c13304ff8b
   </ItemGroup>
 
 </Project>

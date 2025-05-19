@@ -1,5 +1,9 @@
 ﻿using lib_presentaciones.Implementaciones;
+using asp_presentacion.Datos;
 using lib_presentaciones.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
+
 
 namespace asp_presentacion
 {
@@ -15,6 +19,7 @@ namespace asp_presentacion
         public void ConfigureServices(WebApplicationBuilder builder, IServiceCollection services)
         {
             // Presentaciones
+            services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("TiendaConnection")));
             services.AddScoped<IClientesPresentacion, ClientesPresentacion>();
             services.AddScoped<IComprasPresentacion, ComprasPresentacion>();
             services.AddScoped<IDetallesComprasPresentacion, DetallesComprasPresentacion>();
