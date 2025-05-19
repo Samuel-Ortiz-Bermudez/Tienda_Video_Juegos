@@ -105,7 +105,7 @@ VALUES
 ('Juan', '006', 500, '126'),
 ('Esteban', '007', 450, '459'),
 ('Alex', '008', 650, '786'),
-('Alex', '009', 1000, '1234')
+('Admin', '009', 1000, '1234')
 
 INSERT INTO [Videojuegos] ([Nombre], [Desarrolladora], [Precio], [Codigo], [Estado], [ImagenUrl]) 
 VALUES 
@@ -174,7 +174,7 @@ VALUES
 ( 'juan@tienda.com', '1234', 1, 'Admin'),
 ( 'esteban@tienda.com', '12567', 2, 'Empleado'),
 ( 'Alex@tienda.com', '12035', 3, 'Empleado'),
-( 'Admin@tienda.com', '12035', 4, 'Admin');
+( 'Admin@tienda.com', '123', 4, 'Admin');
 
 Select * FROM [Videojuegos];
 Select * FROM [Clientes];
