@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace asp_presentacion.Pages.Ventanas
 {
     public class VideojuegosModel : PageModel
     {
+
         private readonly ApplicationDbContext _context;
 
         public VideojuegosModel(ApplicationDbContext context)
@@ -28,6 +30,7 @@ namespace asp_presentacion.Pages.Ventanas
                 query = query.Where(v => v.Desarrolladora == Desarrolladora);
 
             ListaVideojuegos = await query.ToListAsync();
+
         }
     }
 }

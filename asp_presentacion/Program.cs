@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using lib_repositorios.Implementaciones;
 using Microsoft.EntityFrameworkCore;
 
+
 using asp_presentacion;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +14,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         option.ExpireTimeSpan = TimeSpan.FromMinutes(30);
         option.AccessDeniedPath = "/Pages/Index";
     });
-    
 
 
 var startup = new Startup(builder.Configuration);
