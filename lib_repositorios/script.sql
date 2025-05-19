@@ -440,66 +440,7 @@ CREATE TABLE [AuditoriaClientes] (
 	[Id] INT PRIMARY KEY IDENTITY (1,1),
 	[Fecha] DATETIME,
 	[Accion] NVARCHAR (50),
-	[Cliente] NVARCHAR (50),
-)
+	[Tabla]NVARCHAR (50),
+	[Usuario]NVARCHAR (50),
 
-CREATE TABLE [AuditoriaEmpleados] (
-	[Id] INT PRIMARY KEY IDENTITY (1,1),
-	[Fecha] DATETIME,
-	[Accion] NVARCHAR (50),
-	[Empleado] NVARCHAR (50),
-)
-
-CREATE TABLE [AuditoriaCompras] (
-	[Id] INT PRIMARY KEY IDENTITY (1,1),
-	[Fecha] DATETIME,
-	[Accion] NVARCHAR (50),
-	[Compra] NVARCHAR (50),
-)
-
-CREATE TABLE [AuditoriaDetallesCompras] (
-	[Id] INT PRIMARY KEY IDENTITY (1,1),
-	[Fecha] DATETIME,
-	[Accion] NVARCHAR (50),
-	[DetalleCompra] NVARCHAR (50),
-)
-
-CREATE TABLE [AuditoriaVideojuegos] (
-	[Id] INT PRIMARY KEY IDENTITY (1,1),
-	[Fecha] DATETIME,
-	[Accion] NVARCHAR (50),
-	[Videojuego] NVARCHAR (50),
-)
-
-CREATE TABLE [AuditoriaSuministros] (
-	[Id] INT PRIMARY KEY IDENTITY (1,1),
-	[Fecha] DATETIME,
-	[Accion] NVARCHAR (50),
-	[Suministro] NVARCHAR (50),
-)
-
-CREATE TABLE [AuditoriaProveedores] (
-	[Id] INT PRIMARY KEY IDENTITY (1,1),
-	[Fecha] DATETIME,
-	[Accion] NVARCHAR (50),
-	[Proveedor] NVARCHAR (50),
-)
-
-CREATE TABLE [AuditoriaInventarios] (
-	[Id] INT PRIMARY KEY IDENTITY (1,1),
-	[Fecha] DATETIME,
-	[Accion] NVARCHAR (50),
-	[Inventario] NVARCHAR (50),
-)
-CREATE TABLE [AuditoriaCuentasEmpleados] (
-	[Id] INT PRIMARY KEY IDENTITY (1,1),
-	[Fecha] DATETIME,
-	[Accion] NVARCHAR (50),
-	[CuentaEmpleado] NVARCHAR (50),
-)
-CREATE TABLE [AuditoriaCuentasClientes] (
-	[Id] INT PRIMARY KEY IDENTITY (1,1),
-	[Fecha] DATETIME,
-	[Accion] NVARCHAR (50),
-	[CuentaCliente] NVARCHAR (50),
 )
