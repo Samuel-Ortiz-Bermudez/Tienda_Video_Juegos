@@ -102,23 +102,10 @@ VALUES
 
 INSERT INTO [Empleados] ([Nombre], [Cedula], [Salario], [Telefono]) 
 VALUES 
-('Juan', 'C006', 500, '126'),
-('Esteban', 'C007', 450, '459'),
-('Alex', 'C008', 650, '786');
-
-INSERT INTO [Clientes] ([Nombre], [Cedula], [Direccion], [Telefono]) 
-VALUES 
-('Andres', '231542', 'Calle 13', '123'),
-('Alejandra', '326541', 'Carrera 24', '456'),
-('Tomas', '74125', 'Avenida 54', '789'),
-('Miguel', '124578', 'Calle 32', '159'),
-('Sara', '12356', 'Carrera 27', '753');
-
-INSERT INTO [Empleados] ([Nombre], [Cedula], [Salario], [Telefono]) 
-VALUES 
-('Juan', 'C006', 500, '126'),
-('Esteban', 'C007', 450, '459'),
-('Alex', 'C008', 650, '786');
+('Juan', '006', 500, '126'),
+('Esteban', '007', 450, '459'),
+('Alex', '008', 650, '786'),
+('Alex', '009', 1000, '1234')
 
 INSERT INTO [Videojuegos] ([Nombre], [Desarrolladora], [Precio], [Codigo], [Estado], [ImagenUrl]) 
 VALUES 
@@ -174,7 +161,7 @@ VALUES
 (4, 5, '2020-01-25', 'SUM-004'),
 (1, 4, '2020-01-26', 'SUM-005');
 
-INSERT INTO CuentasClientes ( [Correo], [Contrasena], [Cliente])
+INSERT INTO [CuentasClientes] ( [Correo], [Contrasena], [Cliente])
 VALUES 
 ( 'andres@gmail.com', '4561', 1),
 ( 'alejandra@gmail.com', '12547', 2),
@@ -182,11 +169,12 @@ VALUES
 ( 'miguel@gmail.com', '12032', 4),
 ( 'sara@gmail.com', '02147', 5);
 
-INSERT INTO CuentasEmpleados ( [Correo], [Contrasena], [Empleado], [Rol])
+INSERT INTO [CuentasEmpleados] ( [Correo], [Contrasena], [Empleado], [Rol])
 VALUES 
 ( 'juan@tienda.com', '1234', 1, 'Admin'),
 ( 'esteban@tienda.com', '12567', 2, 'Empleado'),
-( 'Alex@tienda.com', '12035', 3, 'Empleado');
+( 'Alex@tienda.com', '12035', 3, 'Empleado'),
+( 'Admin@tienda.com', '12035', 4, 'Admin');
 
 Select * FROM [Videojuegos];
 Select * FROM [Clientes];

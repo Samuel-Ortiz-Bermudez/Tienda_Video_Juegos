@@ -33,14 +33,23 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark"
                                    asp-area=""
-                                   asp-page="/Ventanas/ClientesPerfil">
+                                   asp-page="/Ventanas/Perfiles/ClientesPerfil">
+                                    Perfil
+                                </a>
+                            </li>
+                        }
+                        @if(User.IsInRole("Admin") || User.IsInRole("Empleado")){
+                            <li class="nav-item">
+                                <a class="nav-link text-dark"
+                                   asp-area=""
+                                   asp-page="/Ventanas/Perfiles/EmpleadosPerfil">
                                     Perfil
                                 </a>
                             </li>
                         }
                     </ul>
                 </div>
-                <a class="navbar-brand" asp-area="" asp-page="/Ventanas/IniciarSesion">Iniciar Sesion</a>
+                <a class="navbar-brand" asp-area="" asp-page="/Ventanas/Loggins/IniciarSesion">Iniciar Sesion</a>
             </div>
         </nav>
     </header>

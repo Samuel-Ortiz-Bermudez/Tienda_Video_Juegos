@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 
 
-namespace asp_presentacion.Pages.Ventanas
+namespace asp_presentacion.Pages.Ventanas.Loggins
 {
     public class RegistroUsuarioModel : PageModel
     {

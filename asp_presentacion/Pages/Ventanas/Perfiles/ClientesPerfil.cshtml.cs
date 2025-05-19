@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using lib_presentaciones.Interfaces;
 using lib_dominio.Entidades;
 
-namespace asp_presentacion.Pages.Ventanas
+namespace asp_presentacion.Pages.Ventanas.Perfiles
 {
     [Authorize]
     public class ClientesPerfilModel : PageModel
@@ -110,8 +110,8 @@ namespace asp_presentacion.Pages.Ventanas
         {
             try
             {
-                OnPostIngreso();
                 Accion = Enumerables.Ventanas.Borrar;
+                OnPostIngreso();
 
             }
             catch (Exception ex)

@@ -1,14 +1,14 @@
 ﻿@page
-@model asp_presentacion.Pages.Ventanas.ClientesPerfilModel
+@model asp_presentacion.Pages.Ventanas.Perfiles.ClientesPerfilModel
 @{
     ViewData["Titulo"] = "Perfil";
 }
 
-<content class="perfil_cliente">
+<content class="perfil_Usuario">
     <form method="POST">
         @Html.AntiForgeryToken()
-        <div class="panel_cliente">
-            <div id="datos-cliente" class="datos_cliente">
+        <div class="panel_Usuario">
+            <div id="datos-cliente" class="datos_Usuario">
                 @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)
                 {
                     <p>Usuario: @Model.Usuario</p>
@@ -18,23 +18,23 @@
                     <p>Direccion: @Model.Cliente!.Direccion</p>
                 }
             </div>
-            <div class="acciones_cliente">
+            <div class="acciones_Usuario">
                 @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas){
                     <button 
-                    type="submit" 
-                    class="acciones_cliente_actualizar_cerrar" 
+                    type="submit"
+                    class="acciones_Usuario_btns"
                     asp-page-handler="BtnCerrarSesion" 
                     name="CerrarSesion"
                     >Cerrar sesion.</button>
                     <button 
-                    type="submit" 
-                    class="acciones_cliente_actualizar_cerrar" 
+                    type="submit"
+                    class="acciones_Usuario_btns"
                     asp-page-handler="BtnCambiar" 
                     name="CambiarDatos"
                     >Actualizar datos.</button>
                     <button 
                     type="submit"
-                    class="acciones_cliente_eliminar"
+                    class="acciones_Usuario_btn_cerrar"
                     asp-page-handler="BtnEliminar"
                     >Eliminar Cuenta.</button>
                 }
@@ -42,8 +42,8 @@
                 @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar) {
                     <center>
                         <button 
-                        type="submit" 
-                        class="acciones_cliente_actualizar_cerrar" 
+                        type="submit"
+                        class="acciones_Usuario_btn_cerrar"
                         asp-page-handler="BtnGuardar" 
                         name="GuardarCambios"
                         >Guardar cambios.</button>
@@ -203,9 +203,9 @@
                     </table>
                     <div class="btn-container">
                         <input type="submit"
-                               value="Cerrar"
+                               value="Cerrar detalles."
                                asp-page-handler="BtnCerrar"
-                               class="btn btn-secondary" />
+                               class="acciones_Usuario_btn_cerrar" />
                     </div>
                 </div>
             </div>

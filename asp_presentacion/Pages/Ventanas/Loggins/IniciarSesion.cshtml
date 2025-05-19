@@ -1,5 +1,5 @@
 ﻿@page
-@model asp_presentacion.Pages.Ventanas.IniciarSesionModel
+@model asp_presentacion.Pages.Ventanas.Loggins.IniciarSesionModel
 @{
     ViewData["Titulo"] = "Inicio Sesion";
 }
@@ -45,7 +45,7 @@
                 Iniciar Sesion
             </button>
             <button 
-                asp-page="/Ventanas/RegistroUsuario" 
+                asp-page="/Ventanas/Loggins/RegistroUsuario" 
                 class="sesion_form_buttons" 
                 asp-page-handler="BtnRegistro">Registrarse</button>
 

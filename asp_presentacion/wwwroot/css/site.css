@@ -96,20 +96,20 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 /*Perfil de cliente*/
-.perfil_cliente {
+.perfil_Usuario {
     display: flex;
     flex-direction: column;
     height: 80vh;
     width: 100%;
     justify-content: space-around;
 }
-    .perfil_cliente form {
+    .perfil_Usuario form {
         display: flex;
         flex-direction: column;
         gap: 2.5vh;
     }
 
-.panel_cliente {
+.panel_Usuario {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -119,7 +119,7 @@ input[type="number"]::-webkit-outer-spin-button {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.datos_cliente {
+.datos_Usuario {
     padding: 5vh 0vh;
     font-size: 24px;
     gap: 2.5vh;
@@ -127,21 +127,19 @@ input[type="number"]::-webkit-outer-spin-button {
     flex-direction: row;
     justify-content: center;
 }
-.datos_cliente p{
+.datos_Usuario p{
     margin: 0;
     
 }
 
-.acciones_cliente {
+.acciones_Usuario {
     display: flex;
     flex-direction: row;
-    padding: 0vh 20vh 5vh 20vh;
-    font-size: 20px;
+    padding: 0vh 10vh 5vh 10vh;
     flex-wrap: nowrap;
-    justify-content: center;
-    gap: 20vh;
+    justify-content: space-around;
 }
-.acciones_cliente_actualizar_cerrar {
+.acciones_Usuario_btns {
     border: none;
     border-radius: 5px;
     width: 25vh;
@@ -150,11 +148,11 @@ input[type="number"]::-webkit-outer-spin-button {
     color: #fff;
     cursor: pointer;
 }
-    .acciones_cliente_actualizar_cerrar:hover {
+    .acciones_Usuario_btns:hover {
         background-color: #104fbb;
     }
 
-.acciones_cliente_eliminar {
+.acciones_Usuario_btn_cerrar {
     border: none;
     border-radius: 5px;
     width: 25vh;
@@ -163,7 +161,7 @@ input[type="number"]::-webkit-outer-spin-button {
     color: #fff;
     cursor: pointer;
 }
-    .acciones_cliente_eliminar:hover {
+    .acciones_Usuario_btn_cerrar:hover {
         background-color: darkred;
     }
 
