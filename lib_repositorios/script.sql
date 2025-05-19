@@ -195,4 +195,5 @@ CREATE TABLE [Auditorias] (
 	[Accion] NVARCHAR (50),
 	[Tabla]NVARCHAR (50),
 	[Usuario]NVARCHAR (50),
+
 )
