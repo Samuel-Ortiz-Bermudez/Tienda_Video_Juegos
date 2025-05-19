@@ -1,9 +1,7 @@
-﻿using System.Net.NetworkInformation;
-using lib_dominio.Entidades;
+﻿using lib_dominio.Entidades;
 using lib_dominio.Entidades.Auditorias;
 using lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 namespace lib_repositorios.Implementaciones
 {
     public partial class Conexion : DbContext, IConexion

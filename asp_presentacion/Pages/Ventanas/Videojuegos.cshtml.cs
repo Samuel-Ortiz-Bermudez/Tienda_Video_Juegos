@@ -1,36 +1,85 @@
-using asp_presentacion.Datos;
 using lib_dominio.Entidades;
-using lib_repositorios.Implementaciones;
+using lib_dominio.Nucleo;
+using lib_presentaciones.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace asp_presentacion.Pages.Ventanas
 {
     public class VideojuegosModel : PageModel
     {
-
-        private readonly ApplicationDbContext _context;
-
-        public VideojuegosModel(ApplicationDbContext context)
+        private IVideojuegosPresentacion? IPresentacionJuegos = null;
+        public VideojuegosModel(IVideojuegosPresentacion IPresentacionJuegos)
         {
-            _context = context;
+            try
+            {
+                this.IPresentacionJuegos = IPresentacionJuegos;
+                Juego = new Videojuegos();
+
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
         }
-        public List<Videojuegos> ListaVideojuegos { get; set; } = new();
 
-        [BindProperty(SupportsGet = true)]
-        public string? Desarrolladora { get; set; }
+        [BindProperty] public Enumerables.Ventanas Accion { get; set; }
+        [BindProperty] public Videojuegos? Juego { get; set; }
+        [BindProperty] public List<Videojuegos>? ListaJuegos { get; set; }
+        [BindProperty] public List<Videojuegos>? ListaFiltrada { get; set; }
+        [BindProperty] public string? Desarrolladora { get; set; }
+        [BindProperty] public string? Mensaje { get; set; }
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-
-            var query = _context.Videojuegos!.AsQueryable();
-            if (!string.IsNullOrEmpty(Desarrolladora))
-                query = query.Where(v => v.Desarrolladora == Desarrolladora);
-
-            ListaVideojuegos = await query.ToListAsync();
-
+            OnPostIngreso();
         }
+
+        public void OnPostIngreso()
+        {
+            try
+            {
+                Accion = Enumerables.Ventanas.Listas;
+                var juegosTask = this.IPresentacionJuegos!.Listar();
+                juegosTask.Wait();
+
+                ListaJuegos = juegosTask.Result;
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
+
+        public void OnPostBtnFiltro()
+        {
+            try
+            {
+                Accion = Enumerables.Ventanas.Filtro;
+                Desarrolladora = this.Desarrolladora;
+                if (Desarrolladora == "Todas")
+                {
+                    OnPostIngreso();
+                    return;
+                }
+                var juegosTask = this.IPresentacionJuegos!.Listar();
+                juegosTask.Wait();
+
+                ListaJuegos = juegosTask.Result;
+
+                ListaFiltrada = ListaJuegos.Where(j => j.Desarrolladora!.ToUpper().Equals(Desarrolladora!.ToUpper())).ToList();
+                if (!ListaFiltrada.Any())
+                {
+                    OnPostIngreso();
+                    Mensaje = "No hay videojuegos de esta desarrolladora";
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
+
     }
 }

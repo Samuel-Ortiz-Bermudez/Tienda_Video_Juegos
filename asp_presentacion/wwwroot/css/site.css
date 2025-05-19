@@ -4,22 +4,13 @@
     }
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 9272f2e857581019aa630405d16f40c13304ff8b
 .error_mensaje {
     color: red;
     margin: 10px 0;
     margin-left: 12px;
 }
 
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 9272f2e857581019aa630405d16f40c13304ff8b
-/*Inicio de sesion*/
+/* Inicio de sesión */
 .InicioSesion {
     display: flex;
     justify-content: center;
@@ -41,51 +32,40 @@
         color: #2069ff;
         margin-bottom: 20px;
     }
+
     .sesion_form label {
         margin-left: 12px;
         margin-bottom: 0.5rem;
     }
 
-    .sesion_form_inputs {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
+.sesion_form_inputs {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.sesion_form_buttons {
+    width: 100%;
+    padding: 10px;
+    background-color: #2069ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 25px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+
+    .sesion_form_buttons:hover {
+        background-color: #104fbb;
+        transform: scale(1.05);
     }
 
-    .sesion_form_buttons {
-        width: 100%;
-        padding: 10px;
-        background-color: #2069ff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        margin-bottom: 25px;
-        text-decoration: none;
-<<<<<<< HEAD
-        transition: all 0.3s ease-in-out; /* <- Importante para animación suave */
-    }
-
-
-        .sesion_form_buttons:hover {
-            background-color: #104fbb;
-            transform: scale(1.05);
-            transition: all 0.3s ease-in-out;
-        }
-
-
-=======
-    }
-
-        .InicioSesion_form_buttons:hover {
-            background-color: #104fbb;
-        }
-
->>>>>>> 9272f2e857581019aa630405d16f40c13304ff8b
-/*Registro de usuarios*/
+/* Registro de usuarios */
 .Registrarse {
     display: flex;
     justify-content: center;
@@ -93,65 +73,40 @@
     height: 83vh;
 }
 
-<<<<<<< HEAD
-.InicioSesion <p> {
-=======
-.InicioSesion p{
->>>>>>> 9272f2e857581019aa630405d16f40c13304ff8b
-    color: red;
-    margin: 10px 0;
-    margin-left: 12px;
-}
-
-<<<<<<< HEAD
-.Registrarse <p> {
-=======
-.Registrarse p {
->>>>>>> 9272f2e857581019aa630405d16f40c13304ff8b
-    color: red;
-    margin: 10px 0;
-    margin-left: 12px;
-}
+    .Registrarse p {
+        color: red;
+        margin: 10px 0;
+        margin-left: 12px;
+    }
 
 input[type="number"] {
-    -moz-appearance: textfield; 
-    -webkit-appearance: none; 
-    appearance: none; 
-}
-    
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+    -moz-appearance: textfield;
     -webkit-appearance: none;
-    margin: 0;
+    appearance: none;
 }
 
-/*Perfil de cliente*/
-<<<<<<< HEAD
-.perfil_cliente {
-=======
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+/* Perfil de cliente */
 .perfil_Usuario {
->>>>>>> 9272f2e857581019aa630405d16f40c13304ff8b
     display: flex;
     flex-direction: column;
     height: 80vh;
     width: 100%;
     justify-content: space-around;
 }
-<<<<<<< HEAD
-    .perfil_cliente form {
-=======
+
     .perfil_Usuario form {
->>>>>>> 9272f2e857581019aa630405d16f40c13304ff8b
         display: flex;
         flex-direction: column;
         gap: 2.5vh;
     }
 
-<<<<<<< HEAD
-.panel_cliente {
-=======
 .panel_Usuario {
->>>>>>> 9272f2e857581019aa630405d16f40c13304ff8b
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -161,11 +116,7 @@ input[type="number"]::-webkit-outer-spin-button {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-<<<<<<< HEAD
-.datos_cliente {
-=======
 .datos_Usuario {
->>>>>>> 9272f2e857581019aa630405d16f40c13304ff8b
     padding: 5vh 0vh;
     font-size: 24px;
     gap: 2.5vh;
@@ -173,36 +124,21 @@ input[type="number"]::-webkit-outer-spin-button {
     flex-direction: row;
     justify-content: center;
 }
-<<<<<<< HEAD
-.datos_cliente p{
-=======
-.datos_Usuario p{
->>>>>>> 9272f2e857581019aa630405d16f40c13304ff8b
-    margin: 0;
-    
-}
 
-<<<<<<< HEAD
-.acciones_cliente {
-    display: flex;
-    flex-direction: row;
-    padding: 0vh 20vh 5vh 20vh;
-    font-size: 20px;
-    flex-wrap: nowrap;
-    justify-content: center;
-    gap: 20vh;
-}
-.acciones_cliente_actualizar_cerrar {
-=======
+    .datos_Usuario p {
+        margin: 0;
+    }
+
 .acciones_Usuario {
     display: flex;
     flex-direction: row;
     padding: 0vh 10vh 5vh 10vh;
+    font-size: 20px;
     flex-wrap: nowrap;
     justify-content: space-around;
 }
+
 .acciones_Usuario_btns {
->>>>>>> 9272f2e857581019aa630405d16f40c13304ff8b
     border: none;
     border-radius: 5px;
     width: 25vh;
@@ -211,19 +147,12 @@ input[type="number"]::-webkit-outer-spin-button {
     color: #fff;
     cursor: pointer;
 }
-<<<<<<< HEAD
-    .acciones_cliente_actualizar_cerrar:hover {
-        background-color: #104fbb;
-    }
 
-.acciones_cliente_eliminar {
-=======
     .acciones_Usuario_btns:hover {
         background-color: #104fbb;
     }
 
 .acciones_Usuario_btn_cerrar {
->>>>>>> 9272f2e857581019aa630405d16f40c13304ff8b
     border: none;
     border-radius: 5px;
     width: 25vh;
@@ -232,59 +161,43 @@ input[type="number"]::-webkit-outer-spin-button {
     color: #fff;
     cursor: pointer;
 }
-<<<<<<< HEAD
-    .acciones_cliente_eliminar:hover {
-=======
+
     .acciones_Usuario_btn_cerrar:hover {
->>>>>>> 9272f2e857581019aa630405d16f40c13304ff8b
         background-color: darkred;
     }
 
-/*Compras del perfil del usuario*/
+/* Compras del perfil del usuario */
 .compras_cliente {
-    background-color: rgb(255, 255, 255);
+    background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
     height: 35vh;
     align-items: center;
-    border-width: 2px;
-    border-style: solid;
-    border-color: rgb(204, 204, 204);
-    border-image: initial;
+    border: 2px solid #ccc;
     border-radius: 10px;
     padding: 0px 30px;
     overflow-y: auto;
     overflow-x: hidden;
 }
 
-.compras_cliente h4 {
-    margin: 3vh;
-}
+    .compras_cliente h4 {
+        margin: 3vh;
+    }
+
 .tb_data {
     width: 100%;
     border-radius: 10px;
 }
 
-<<<<<<< HEAD
-    .popup {
-=======
 .popup {
->>>>>>> 9272f2e857581019aa630405d16f40c13304ff8b
     position: fixed;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    background-color: rgba(0,0,0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-<<<<<<< HEAD
-    .pp_del_inner {
-=======
 .pp_del_inner {
->>>>>>> 9272f2e857581019aa630405d16f40c13304ff8b
     position: absolute;
     left: 50px;
     right: 50px;
@@ -297,41 +210,35 @@ input[type="number"]::-webkit-outer-spin-button {
     background: white;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 20px; 
-    box-sizing: border-box;
+    padding: 20px;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     justify-content: space-between;
-<<<<<<< HEAD
-    }
-=======
 }
->>>>>>> 9272f2e857581019aa630405d16f40c13304ff8b
 
     .pp_del_inner .btn-container {
         display: flex;
-        justify-content: flex-end; 
-        margin-top: 10px; 
-<<<<<<< HEAD
+        justify-content: flex-end;
     }
 
-    .contenedor-cards {
+.contenedor-cards {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
     padding: 20px;
 }
-    /*para el catalogo*/
-    .grid-juegos {
+
+/* Catálogo */
+.grid-juegos {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
     margin-top: 30px;
-    }
+}
 
-    .card-juego {
+.card-juego {
     width: 200px;
     background-color: #f9f9f9;
     border-radius: 12px;
@@ -340,7 +247,7 @@ input[type="number"]::-webkit-outer-spin-button {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
     text-align: center;
-    }
+}
 
     .card-juego:hover {
         transform: scale(1.08);
@@ -353,12 +260,12 @@ input[type="number"]::-webkit-outer-spin-button {
         object-fit: cover;
     }
 
-    .contenido-juego {
+.contenido-juego {
     padding: 10px;
-    }
+}
 
     .contenido-juego h3 {
-        margin: 10px 0 5px 0;
+        margin: 10px 0 5px;
         font-size: 18px;
         color: #333;
     }
@@ -368,28 +275,28 @@ input[type="number"]::-webkit-outer-spin-button {
         color: #666;
         font-size: 14px;
     }
-/* Por si se desea estilizar 
-    .contenedor-filtros {
-    width: 100%;
-    max-width: 300px;
-    margin: 20px auto;
-    padding: 15px;
-    background-color: #f1f1f1;
-    border-radius: 10px;
+
+.filtros {
+    box-sizing: border-box;
+    gap: 0.5vh;
+}
+    .filtros div {
+        display: flex;
+        gap: 2.5vh;
+    }
+    .filtros select{
+
     }
 
-    .contenedor-filtros h3 {
-        text-align: center;
+.filtro_btn {
+    border: none;
+    border-radius: 5px;
+    width: 18vh;
+    height: 4vh;
+    background-color: #2069ff;
+    color: #fff;
+    cursor: pointer;
+}
+    .filtro_btn:hover {
+        background-color: #104fbb;
     }
-
-    .filtro {
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 8px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    }
-        */
-=======
-    }
->>>>>>> 9272f2e857581019aa630405d16f40c13304ff8b
