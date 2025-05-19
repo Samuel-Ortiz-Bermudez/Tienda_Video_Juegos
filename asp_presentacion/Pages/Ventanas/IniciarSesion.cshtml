@@ -1,0 +1,58 @@
+﻿@page
+@model asp_presentacion.Pages.Ventanas.IniciarSesionModel
+@{
+    ViewData["Titulo"] = "Inicio Sesion";
+}
+
+
+<content class="InicioSesion">
+    <div class="sesion_form">
+        <form method="POST" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <h3>
+                Iniciar Sesion
+            </h3>    
+            
+            @if(!string.IsNullOrEmpty(Model.Mensaje)){
+                <p class="error_mensaje">  
+                    @Model.Mensaje
+                </p>
+            }
+            <div>
+                <label>Correo.</label>
+                <input type="email" 
+                    name="Correo" 
+                    placeholder="Escribir correo"
+                    class="sesion_form_inputs"
+                    onchange="keyUp(this)" 
+                    asp-for="@Model.Correo"
+                    />
+            </div>
+            <div>
+                <label>Contraseña.</label>
+                <input type="password" 
+                    name="Contrasena" 
+                    placeholder="Escribir contraseña" 
+                    class="sesion_form_inputs" 
+                    onchange="keyUp(this)" 
+                    asp-for="@Model.Contrasena" 
+                    />
+            </div>
+            <button 
+                type="submit" 
+                class="sesion_form_buttons"
+                asp-page-handler="BtnInicio">
+                Iniciar Sesion
+            </button>
+            <button 
+                asp-page="/Ventanas/RegistroUsuario" 
+                class="sesion_form_buttons" 
+                asp-page-handler="BtnRegistro">Registrarse</button>
+
+        </form>
+    </div>
+</content >
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

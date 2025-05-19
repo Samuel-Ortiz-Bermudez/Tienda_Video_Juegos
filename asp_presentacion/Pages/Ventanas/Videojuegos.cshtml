@@ -1,0 +1,47 @@
+﻿@page
+@model asp_presentacion.Pages.Ventanas.VideojuegosModel
+@{
+}
+<head>
+     <title>Buscador</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body> 
+
+    <div class="contenedor-filtros">
+    <form method="get">
+    <h3> Filtros</h3>
+
+    <label for = "Desarrolladora"> Desarrolladora </label>
+    <select name="Desarrolladora" class="filtro"> 
+        <option value="">Todas</option>
+        <option value="Steam">Steam</option>    
+        <option value="Ea">Ea</option>
+        <option value="Epicgames">Epic Games</option>
+        <option value="Nintendo">Nintendo</option>
+    </select>
+
+    <button type="submit"> Aplicar Filtros </button>
+    </form>
+    </div>
+
+</body>
+
+
+<h1>Lista de Videojuegos</h1>
+
+<div class="grid-juegos">
+    @foreach (var juego in Model.ListaVideojuegos!)
+    {
+        <div class="card-juego">
+            <img src="@juego.ImagenUrl" alt="Imagen de @juego.Nombre" />
+            <div class="contenido-juego">
+                <h3>@juego.Nombre</h3>
+                <p>@juego.Desarrolladora</p>
+                <p>$@juego.Precio</p>
+            </div>
+        </div>
+    }
+</div>

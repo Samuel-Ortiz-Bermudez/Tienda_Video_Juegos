@@ -1,0 +1,313 @@
+@media (min-width: 1400px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+        max-width: 85%;
+    }
+}
+
+
+.error_mensaje {
+    color: red;
+    margin: 10px 0;
+    margin-left: 12px;
+}
+
+
+
+/*Inicio de sesion*/
+.InicioSesion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+}
+
+.sesion_form {
+    width: 350px;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    .sesion_form h3 {
+        text-align: center;
+        color: #2069ff;
+        margin-bottom: 20px;
+    }
+    .sesion_form label {
+        margin-left: 12px;
+        margin-bottom: 0.5rem;
+    }
+
+    .sesion_form_inputs {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .sesion_form_buttons {
+        width: 100%;
+        padding: 10px;
+        background-color: #2069ff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-bottom: 25px;
+        text-decoration: none;
+        transition: all 0.3s ease-in-out; /* <- Importante para animación suave */
+    }
+
+
+        .sesion_form_buttons:hover {
+            background-color: #104fbb;
+            transform: scale(1.05);
+            transition: all 0.3s ease-in-out;
+        }
+
+
+/*Registro de usuarios*/
+.Registrarse {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 83vh;
+}
+
+.InicioSesion <p> {
+    color: red;
+    margin: 10px 0;
+    margin-left: 12px;
+}
+
+.Registrarse <p> {
+    color: red;
+    margin: 10px 0;
+    margin-left: 12px;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; 
+    -webkit-appearance: none; 
+    appearance: none; 
+}
+    
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/*Perfil de cliente*/
+.perfil_cliente {
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    width: 100%;
+    justify-content: space-around;
+}
+    .perfil_cliente form {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5vh;
+    }
+
+.panel_cliente {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.datos_cliente {
+    padding: 5vh 0vh;
+    font-size: 24px;
+    gap: 2.5vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.datos_cliente p{
+    margin: 0;
+    
+}
+
+.acciones_cliente {
+    display: flex;
+    flex-direction: row;
+    padding: 0vh 20vh 5vh 20vh;
+    font-size: 20px;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 20vh;
+}
+.acciones_cliente_actualizar_cerrar {
+    border: none;
+    border-radius: 5px;
+    width: 25vh;
+    height: 5vh;
+    background-color: #2069ff;
+    color: #fff;
+    cursor: pointer;
+}
+    .acciones_cliente_actualizar_cerrar:hover {
+        background-color: #104fbb;
+    }
+
+.acciones_cliente_eliminar {
+    border: none;
+    border-radius: 5px;
+    width: 25vh;
+    height: 5vh;
+    background-color: red;
+    color: #fff;
+    cursor: pointer;
+}
+    .acciones_cliente_eliminar:hover {
+        background-color: darkred;
+    }
+
+/*Compras del perfil del usuario*/
+.compras_cliente {
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
+    height: 35vh;
+    align-items: center;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(204, 204, 204);
+    border-image: initial;
+    border-radius: 10px;
+    padding: 0px 30px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.compras_cliente h4 {
+    margin: 3vh;
+}
+.tb_data {
+    width: 100%;
+    border-radius: 10px;
+}
+
+    .popup {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: rgba(0,0,0, 0.5);
+}
+
+    .pp_del_inner {
+    position: absolute;
+    left: 50px;
+    right: 50px;
+    top: 50px;
+    bottom: 25%;
+    min-width: 300px;
+    max-width: 60%;
+    height: 200px;
+    margin: auto;
+    background: white;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px; 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between;
+    }
+
+    .pp_del_inner .btn-container {
+        display: flex;
+        justify-content: flex-end; 
+        margin-top: 10px; 
+    }
+
+    .contenedor-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+    /*para el catalogo*/
+    .grid-juegos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+    }
+
+    .card-juego {
+    width: 200px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+    }
+
+    .card-juego:hover {
+        transform: scale(1.08);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-juego img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+    }
+
+    .contenido-juego {
+    padding: 10px;
+    }
+
+    .contenido-juego h3 {
+        margin: 10px 0 5px 0;
+        font-size: 18px;
+        color: #333;
+    }
+
+    .contenido-juego p {
+        margin: 5px 0;
+        color: #666;
+        font-size: 14px;
+    }
+/* Por si se desea estilizar 
+    .contenedor-filtros {
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    }
+
+    .contenedor-filtros h3 {
+        text-align: center;
+    }
+
+    .filtro {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    }
+        */
