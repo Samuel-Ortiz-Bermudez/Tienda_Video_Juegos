@@ -42,10 +42,6 @@ namespace asp_presentacion.Pages.Ventanas.Loggins
 
         public void OnGet()
         {
-            var variable_session = HttpContext.Session.GetString("Usuario");
-            if (!string.IsNullOrEmpty(variable_session))
-            { EstaLogueado = true; return; }
-
             OnPostBtnInicio();
         }
 
