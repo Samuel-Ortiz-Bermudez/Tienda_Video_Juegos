@@ -1,4 +1,124 @@
 ﻿@page
 @model asp_presentacion.Pages.Ventanas.AccionesEmpleados.OperarVideojuegosModel
 @{
+    ViewData["Titulo"] = "CRUD juegos";
+}
+
+<content>
+    <form method="POST">
+        @Html.AntiForgeryToken()
+        <div class="informacion">
+            <div>
+                <input type="submit" name="Listar" value="Listar juegos" class="acciones_Usuario_btns" asp-page-handler="Ingreso"/>
+                <input type="submit" name="Guardar" value="Guardar nuevo juego" class="acciones_Usuario_btns" asp-page-handler="BtnNuevo" />
+            </div>
+            <table class="tb_data table table-striped table-bordered table-hover">
+                <tr>
+                    <th>
+                        Codigo de juego.
+                    </th>
+                    <th>
+                        Nombre de juego.
+                    </th>
+                    <th class="cl_hidden">
+                        Precio del juego.
+                    </th>
+                    <th class="cl_actions">
+                        Desarrolladora.
+                    </th>
+                    <th class="cl_actions">
+                        Estado.
+                    </th>
+                    <th>
+                        Ruta Imagen.
+                    </th>
+                    <th>
+                        Accion.
+                    </th>
+                </tr>
+                 @if (Model.ListaJuegos!.Any() && Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)
+                 { 
+                
+                    @foreach(var elemento in Model.ListaJuegos!)
+                    {
+                        <tr>
+                            <td>
+                                @elemento.Codigo
+                            </td>
+                            <td>
+                                @elemento.Nombre
+                            </td>
+                            <td class="cl_hidden">
+                                @elemento.Precio
+                            </td>
+                            <td class="cl_actions">
+                                @elemento.Desarrolladora
+                            </td>
+                            <td class="cl_actions">
+                                @(elemento.Estado ? "Activo" : "Desactivo")
+                            </td>
+                            <td>
+                                @elemento.ImagenUrl
+                            </td>
+                            <td class="hidden" style="display: none;" name="@elemento.Id">
+                                @elemento.Id
+                            </td>
+                            <td>
+                                <input type="submit" name="Actualizar" value="Editar juego" asp-page-handler="BtnEditar" asp-route-data="@elemento!.Id"/>
+                                <input type="submit" name="Eliminar" value="Borrar juego" asp-page-handler="BtnBorrar" asp-route-data="@elemento!.Id" />
+                            </td>
+                        </tr>
+                    }
+                 } 
+            </table>
+        </div>
+        @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Crear || Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar)
+        {
+            <div class='popup'>
+                <div class="pp_del_inner">
+                    <table class="tb_data table table-striped table-bordered table-hover">
+                        <label>Nombre</label>
+                        <input type="text" 
+                            name="Nombre" 
+                            placeholder="Nombre" 
+                            asp-for="Actual.Nombre"/>
+                        <label>Precio</label>
+                        <input type="number"
+                               name="Actual.Precio"
+                               placeholder="Precio"
+                               asp-for="@Model.Actual.Precio" />
+                        <label>Codigo</label>
+                        <input type="text"
+                               name="Actual.Codigo"
+                               placeholder="Codigo"
+                               asp-for="@Model.Actual.Codigo" />
+                        <label>Desarrolladora</label>
+                        <input type="text"
+                               name="Actual.Desarrolladora"
+                               placeholder="Desarrolladora"
+                               asp-for="@Model.Actual.Desarrolladora" />
+                        <label for="Estado">Estado</label>
+                        <select id="Estado" name="Actual.Estado" asp-for="Actual.Estado">
+                            <option value="true">Activo</option>
+                            <option value="false">Desactivo</option>
+                        </select>
+                        <label>Ruta Imagen</label>
+                        <input type="text"
+                               name="Actual.ImagenUrl"
+                               placeholder="Ruta Imagen"
+                               asp-for="@Model.Actual.ImagenUrl" />
+                        <input type="hidden" asp-for="@Model.Actual!.Id" />
+                    </table>
+                    <div class="btn-container">
+                        <input type="submit" class="acciones_Usuario_btns" name="Guardar" value="Guardar juego" asp-page-handler="BtnGuardar" asp-route-data="@Model.Actual!.Id"/>
+                        <input type="submit" class="acciones_Usuario_btns" name="Cerrar" value="Cerrar panel" asp-page-handler="BtnCerrar"/>
+                    </div>
+                </div>
+            </div>
+        }
+    </form>
+</content>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

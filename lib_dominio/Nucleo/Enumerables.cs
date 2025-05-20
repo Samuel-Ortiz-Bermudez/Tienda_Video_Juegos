@@ -9,6 +9,7 @@
             Borrar = 2,
             Detalles = 3,
             Filtro = 4,
+            Crear = 5,
         }
     }
 }

@@ -9,7 +9,7 @@
         @Html.AntiForgeryToken()
         <div class="panel_Usuario">
             <div id="datos-Usuario" class="datos_Usuario">
-                @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)
+                @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas && Model.Empleado != null)
                 {
                     <p>Usuario: @Model.Usuario</p>
                     <p>Nombre: @Model.Empleado.Nombre</p>

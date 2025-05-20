@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
 using lib_presentaciones.Interfaces;
 using lib_dominio.Entidades;
+using System.Security.Claims;
 
 namespace asp_presentacion.Pages.Ventanas.Perfiles
 {
@@ -14,7 +15,7 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
     {
         private ICuentasEmpleadosPresentacion? iPresentacionCuenta = null;
 
-        public EmpleadosPerfilModel(ICuentasEmpleadosPresentacion? iPresentacionCuenta)
+        public EmpleadosPerfilModel(ICuentasEmpleadosPresentacion iPresentacionCuenta)
         {
             try
             {
@@ -28,9 +29,9 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
         }
 
         [BindProperty] public Enumerables.Ventanas Accion { get; set; }
-        [BindProperty] public CuentasEmpleados Cuenta { get; set; }
-        [BindProperty] public Empleados Empleado { get; set; }
-        [BindProperty] public List<CuentasEmpleados> CuentaEmpleado { get; set; }
+        [BindProperty] public CuentasEmpleados? Cuenta { get; set; }
+        [BindProperty] public Empleados? Empleado { get; set; }
+        [BindProperty] public List<CuentasEmpleados>? CuentaEmpleado { get; set; }
         [BindProperty] public string? Usuario { get; set; }
         [BindProperty] public string? Rol { get; set; }
         public void OnGet()
@@ -45,7 +46,7 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
             {
                 Accion = Enumerables.Ventanas.Listas;
                 Usuario = User.Identity!.Name;
-                Rol = User.Claims.FirstOrDefault(c => c.Type == "Rol")?.Value;
+                Rol = User.Claims.FirstOrDefault(r => r.Type == ClaimTypes.Role)?.Value;
                 Cuenta!.Correo = User.Claims.FirstOrDefault(c => c.Type == "Correo")?.Value;
                 var empleado = this.iPresentacionCuenta!.PorCorreo(Cuenta);
                 empleado.Wait();

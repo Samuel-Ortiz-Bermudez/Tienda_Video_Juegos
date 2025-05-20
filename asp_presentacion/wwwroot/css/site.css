@@ -4,6 +4,10 @@
     }
 }
 
+.hidden {
+    display: none;
+}
+
 .error_mensaje {
     color: red;
     margin: 10px 0;
@@ -182,12 +186,24 @@ input[type="number"] {
     .compras_cliente h4 {
         margin: 3vh;
     }
-
+/*Tablas con informacion*/
 .tb_data {
     width: 100%;
     border-radius: 10px;
 }
 
+.informacion {
+    margin-top: 3vh;
+    display: flex;
+    gap: 3vh;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden; 
+    max-height: 80vh; 
+    max-width: 100%; 
+    box-sizing: border-box
+}
+/*Ventanas popup*/
 .popup {
     position: fixed;
     width: 100%;
@@ -203,9 +219,9 @@ input[type="number"] {
     right: 50px;
     top: 50px;
     bottom: 25%;
-    min-width: 300px;
+    min-width: 320px;
     max-width: 60%;
-    height: 200px;
+    height: auto; 
     margin: auto;
     background: white;
     overflow-y: auto;
@@ -219,15 +235,16 @@ input[type="number"] {
     .pp_del_inner .btn-container {
         display: flex;
         justify-content: flex-end;
+        gap: 1.5vh;
     }
 
-.contenedor-cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-}
+    .contenedor-cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
+    }
 
 /* Catálogo */
 .grid-juegos {
@@ -300,7 +317,6 @@ input[type="number"] {
     .filtro_btn:hover {
         background-color: #104fbb;
     }
-
 .tarjeta-enlace {
     text-decoration: none;
 }
@@ -344,5 +360,5 @@ input[type="number"] {
 }
 
 .texto {
-    font-family: "Times New Roman", Times, serif;
+    font-family: 'Times New Roman', Times, serif;
 }
