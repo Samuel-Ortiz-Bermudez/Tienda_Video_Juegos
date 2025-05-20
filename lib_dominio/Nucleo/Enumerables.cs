@@ -7,7 +7,8 @@
             Listas = 0,
             Editar = 1,
             Borrar = 2,
-            Detalles = 3
+            Detalles = 3,
+            Filtro = 4,
         }
     }
 }

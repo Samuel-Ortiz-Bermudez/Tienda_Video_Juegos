@@ -1,8 +1,4 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using lib_repositorios.Implementaciones;
-using Microsoft.EntityFrameworkCore;
-
-
 using asp_presentacion;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(option =>
     {
-        option.LoginPath = "/ventanas/IniciarSesion";
+        option.LoginPath = "/ventanas/Liggins/IniciarSesion";
         option.ExpireTimeSpan = TimeSpan.FromMinutes(30);
         option.AccessDeniedPath = "/Pages/Index";
     });

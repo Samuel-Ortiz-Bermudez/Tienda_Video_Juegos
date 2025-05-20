@@ -1,0 +1,85 @@
+using lib_dominio.Entidades;
+using lib_dominio.Nucleo;
+using lib_presentaciones.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace asp_presentacion.Pages.Ventanas
+{
+    public class VideojuegosModel : PageModel
+    {
+        private IVideojuegosPresentacion? IPresentacionJuegos = null;
+        public VideojuegosModel(IVideojuegosPresentacion IPresentacionJuegos)
+        {
+            try
+            {
+                this.IPresentacionJuegos = IPresentacionJuegos;
+                Juego = new Videojuegos();
+
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
+
+        [BindProperty] public Enumerables.Ventanas Accion { get; set; }
+        [BindProperty] public Videojuegos? Juego { get; set; }
+        [BindProperty] public List<Videojuegos>? ListaJuegos { get; set; }
+        [BindProperty] public List<Videojuegos>? ListaFiltrada { get; set; }
+        [BindProperty] public string? Desarrolladora { get; set; }
+        [BindProperty] public string? Mensaje { get; set; }
+
+        public void OnGet()
+        {
+            OnPostIngreso();
+        }
+
+        public void OnPostIngreso()
+        {
+            try
+            {
+                Accion = Enumerables.Ventanas.Listas;
+                var juegosTask = this.IPresentacionJuegos!.Listar();
+                juegosTask.Wait();
+
+                ListaJuegos = juegosTask.Result;
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
+
+        public void OnPostBtnFiltro()
+        {
+            try
+            {
+                Accion = Enumerables.Ventanas.Filtro;
+                Desarrolladora = this.Desarrolladora;
+                if (Desarrolladora == "Todas")
+                {
+                    OnPostIngreso();
+                    return;
+                }
+                var juegosTask = this.IPresentacionJuegos!.Listar();
+                juegosTask.Wait();
+
+                ListaJuegos = juegosTask.Result;
+
+                ListaFiltrada = ListaJuegos.Where(j => j.Desarrolladora!.ToUpper().Equals(Desarrolladora!.ToUpper())).ToList();
+                if (!ListaFiltrada.Any())
+                {
+                    OnPostIngreso();
+                    Mensaje = "No hay videojuegos de esta desarrolladora";
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
+
+    }
+}

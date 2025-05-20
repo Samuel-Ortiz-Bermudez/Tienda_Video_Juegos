@@ -1,49 +1,78 @@
 ﻿@page
 @model asp_presentacion.Pages.Ventanas.VideojuegosModel
 @{
+    ViewData["Titulo"] = "Catalogo";
 }
 
-<head>
-     <title>Buscador</title>
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/skeleton.css">
-    <link rel="stylesheet" href="css/app.css">
-</head>
-<body> 
+<content>
+    <div>
+        <h1>Buscador</h1>
+    </div>
+    <div>
 
-    <div class="contenedor-filtros">
-    <form method="get">
-    <h3> Filtros</h3>
+        <div class="contenedor-filtros">
+            <form method="POST" class="filtros">
+                <h4> Filtros</h4>
 
-    <label for = "Desarrolladora"> Desarrolladora </label>
-    <select name="Desarrolladora" class="filtro"> 
-        <option value="">Todas</option>
-        <option value="Steam">Steam</option>    
-        <option value="Ea">Ea</option>
-        <option value="Epicgames">Epic Games</option>
-        <option value="Nintendo">Nintendo</option>
-    </select>
+                <h5 for="Desarrolladora"> Desarrolladora </h5>
+                <div>
+                    <select name="Desarrolladora" class="filtro">
+                        <option value="Todas">Todas</option>
+                        <option value="Steam">Steam</option>
+                        <option value="Ea">Ea</option>
+                        <option value="Epicgames">Epic Games</option>
+                        <option value="Nintendo">Nintendo</option>
+                    </select>
+                    <button type="submit" class="filtro_btn" asp-page-handler="BtnFiltro"> Aplicar Filtros </button>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.Mensaje))
+                {
+                    <p class="error_mensaje">
+                        @Model.Mensaje
+                    </p>
+                }
+            </form>
+        </div>
 
-    <button type="submit"> Aplicar Filtros </button>
-    </form>
     </div>
 
-</body>
 
+    <h1>Lista de Videojuegos</h1>
 
-<h1>Lista de Videojuegos</h1>
-
-<div class="grid-juegos">
-    @foreach (var juego in Model.ListaVideojuegos!)
+    @if(@Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)
     {
-        <div class="card-juego">
-            <img src="@juego.ImagenUrl" alt="Imagen de @juego.Nombre" />
-            <div class="contenido-juego">
-                <h3>@juego.Nombre</h3>
-                <p>@juego.Desarrolladora</p>
-                <p>$@juego.Precio</p>
-            </div>
+        <div class="grid-juegos">
+            @foreach (var juego in Model.ListaJuegos!)
+            {
+                <div class="card-juego">
+                    <img src="@juego.ImagenUrl" alt="Imagen de @juego.Nombre" />
+                    <div class="contenido-juego">
+                        <h3>@juego.Nombre</h3>
+                        <p>@juego.Desarrolladora</p>
+                        <p>$@juego.Precio</p>
+                    </div>
+                </div>
+            }
         </div>
     }
 
-</div>
+    @if (@Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Filtro)
+    {
+        <div class="grid-juegos">
+            @foreach (var juego in Model.ListaFiltrada!)
+            {
+                <div class="card-juego">
+                    <img src="@juego.ImagenUrl" alt="Imagen de @juego.Nombre" />
+                    <div class="contenido-juego">
+                        <h3>@juego.Nombre</h3>
+                        <p>@juego.Desarrolladora</p>
+                        <p>$@juego.Precio</p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+</content>
+
+
