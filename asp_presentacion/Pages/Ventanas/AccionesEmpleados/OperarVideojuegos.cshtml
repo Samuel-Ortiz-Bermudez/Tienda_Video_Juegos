@@ -81,24 +81,24 @@
                         <input type="text" 
                             name="Nombre" 
                             placeholder="Nombre" 
-                            asp-for="Actual.Nombre"/>
+                            asp-for="Actual!.Nombre"/>
                         <label>Precio</label>
                         <input type="number"
                                name="Actual.Precio"
                                placeholder="Precio"
-                               asp-for="@Model.Actual.Precio" />
+                               asp-for="@Model.Actual!.Precio" />
                         <label>Codigo</label>
                         <input type="text"
                                name="Actual.Codigo"
                                placeholder="Codigo"
-                               asp-for="@Model.Actual.Codigo" />
+                               asp-for="@Model.Actual!.Codigo" />
                         <label>Desarrolladora</label>
                         <input type="text"
                                name="Actual.Desarrolladora"
                                placeholder="Desarrolladora"
-                               asp-for="@Model.Actual.Desarrolladora" />
+                               asp-for="@Model.Actual!.Desarrolladora" />
                         <label for="Estado">Estado</label>
-                        <select id="Estado" name="Actual.Estado" asp-for="Actual.Estado">
+                        <select id="Estado" name="Actual.Estado" asp-for="Actual!.Estado">
                             <option value="true">Activo</option>
                             <option value="false">Desactivo</option>
                         </select>
@@ -106,7 +106,7 @@
                         <input type="text"
                                name="Actual.ImagenUrl"
                                placeholder="Ruta Imagen"
-                               asp-for="@Model.Actual.ImagenUrl" />
+                               asp-for="@Model.Actual!.ImagenUrl" />
                         <input type="hidden" asp-for="@Model.Actual!.Id" />
                     </table>
                     <div class="btn-container">
