@@ -92,6 +92,25 @@ namespace asp_presentacion.Pages.Ventanas.AccionesEmpleados
             {
                 OnPostIngreso();
                 Accion = Enumerables.Ventanas.Borrar;
+                Actual = ListaJuegos!.FirstOrDefault(j => j.Id.ToString() == data);
+
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
+        public void OnPostBtnBorrarVal()
+        {
+            try
+            {
+                
+                Accion = Enumerables.Ventanas.Borrar;
+                var borrarTask = this.IPresentacionJuegos!.Borrar(Actual);
+                borrarTask.Wait();
+
+                Accion = Enumerables.Ventanas.Listas;
+                OnPostIngreso();
             }
             catch (Exception ex)
             {
