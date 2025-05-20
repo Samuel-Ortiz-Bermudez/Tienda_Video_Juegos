@@ -46,7 +46,6 @@ namespace lib_aplicaciones.Implementaciones
         public List<DetallesCompras> Listar()
         {
             return this.IConexion!.DetallesCompras!.Take(20)
-                .Include(x => x._Compra)
                 .Include(x => x._Videojuego)
                 .ToList();
         }
@@ -55,7 +54,6 @@ namespace lib_aplicaciones.Implementaciones
         {
             return this.IConexion!.DetallesCompras!
                 .Where(x => x.Codigo!.Contains(entidad!.Codigo!))
-                .Include(x => x._Compra)
                 .Include(x => x._Videojuego)
                 .ToList();
         }

@@ -42,7 +42,7 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
         [BindProperty] public CuentasClientes? Cuenta { get; set; }
         [BindProperty] public List<CuentasClientes>? CuentaCliente { get; set; }
         [BindProperty] public Clientes? Cliente { get; set; }
-        [BindProperty] public List<DetallesCompras>? DetallesCompra { get; set; }
+        [BindProperty] public List<DetallesCompras>? DetallesCompraLista { get; set; }
         [BindProperty] public List<DetallesCompras>? ListaDetalles { get; set; }
 
         [BindProperty] public Compras? Actual { get; set; }
@@ -120,7 +120,7 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
             }
         }
 
-        public virtual void OnPostBtnDetalles(string Id)
+        public virtual void OnPostBtnDetalles(string data)
         {
             try
             {
@@ -131,7 +131,9 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
 
                 ListaDetalles = detallesComprasTask.Result;
 
-                DetallesCompra = ListaDetalles.Where(x => x.Compra.ToString() == Id).ToList();
+                DetallesCompraLista = ListaDetalles.Where(x => x.Compra.ToString() == data).ToList();
+            
+                
             }
             catch (Exception ex)
             {

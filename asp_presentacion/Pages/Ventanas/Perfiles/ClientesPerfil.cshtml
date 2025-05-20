@@ -103,6 +103,7 @@
                                 <td class="cl_hidden">
                                     @compra._Empleado!.Nombre
                                 </td>
+                                <td class="hidden" name="@compra.Id">@compra!.Id</td>
                                 <td>
                                     <input type="submit"
                                     value="detalles"
@@ -176,7 +177,7 @@
             </div>
         }
 
-        @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Detalles && Model.DetallesCompra != null)
+        @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Detalles && Model.DetallesCompraLista != null)
         {
             <div class='popup'>
                 <div class="pp_del_inner">
@@ -188,18 +189,20 @@
                             <th>Subtotal</th>
                             <th>Codigo</th>
                         </tr>
-                        <tr>
-                            @if(Model.DetallesCompra != null){
-                                 @foreach (var detalleCompra in Model.DetallesCompra!) 
-                                 { 
-                                     <td>@detalleCompra!._Videojuego!.Nombre</td> 
-                                     <td>@detalleCompra!.Cantidad</td> 
-                                     <td>@detalleCompra!._Videojuego!.Precio</td> 
-                                     <td>@detalleCompra!.Subtotal</td> 
-                                     <td>@detalleCompra!.Codigo</td> 
-                                 } 
-                             }
-                        </tr>
+                        @if(Model.DetallesCompraLista != null)
+                        {
+                            @foreach (var detalleCompra in Model.DetallesCompraLista!)
+                            {
+                                <tr>
+                                    <td>@detalleCompra!._Videojuego!.Nombre</td>
+                                    <td>@detalleCompra!.Cantidad</td>
+                                    <td>@detalleCompra!._Videojuego!.Precio</td>
+                                    <td>@detalleCompra!.Subtotal</td>
+                                    <td>@detalleCompra!.Codigo</td>
+
+                                </tr>
+                            }
+                        }
                     </table>
                     <div class="btn-container">
                         <input type="submit"
