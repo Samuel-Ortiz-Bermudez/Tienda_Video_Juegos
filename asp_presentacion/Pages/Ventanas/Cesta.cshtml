@@ -1,0 +1,34 @@
+﻿@page
+@model asp_presentacion.Pages.Ventanas.CestaModel
+@{
+	ViewData["Title"] = "Tu cesta";
+}
+
+@if (Model.Cesta != null && Model.Cesta.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Juego</th>
+                <th>Cantidad</th>
+                <th>Precio unitario</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Cesta)
+            {
+                <tr>
+                    <td>@item._Videojuego?.Nombre</td>
+                    <td>@item.Cantidad</td>
+                    <td>@item._Videojuego?.Precio.ToString("C")</td>
+                    <td>@item.Subtotal.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No tienes productos en tu cesta.</p>
+}

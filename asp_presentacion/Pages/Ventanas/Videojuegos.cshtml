@@ -1,0 +1,91 @@
+﻿@page
+@model asp_presentacion.Pages.Ventanas.VideojuegosModel
+@{
+    ViewData["Titulo"] = "Catalogo";
+}
+
+<content>
+    <div>
+        <h1>Buscador</h1>
+    </div>
+    <div>
+
+        <div class="contenedor-filtros">
+            <form method="POST" class="filtros">
+                <h4> Filtros</h4>
+
+                <h5 for="Desarrolladora"> Desarrolladora </h5>
+                <div>
+                    <select name="Desarrolladora" class="filtro">
+                        <option value="Todas">Todas</option>
+                        <option value="Steam">Steam</option>
+                        <option value="Ea">EA</option>
+                        <option value="Epicgames">Epic Games</option>
+                        <option value="Nintendo">Nintendo</option>
+                    </select>
+                    <button type="submit" class="filtro_btn" asp-page-handler="BtnFiltro"> Aplicar Filtros </button>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.Mensaje))
+                {
+                    <p class="error_mensaje">
+                        @Model.Mensaje
+                    </p>
+                }
+            </form>
+        </div>
+
+    </div>
+
+
+    <h1>Lista de Videojuegos</h1>
+
+    @if(@Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)
+    {
+        <div class="grid-juegos">
+            @foreach (var juego in Model.ListaJuegos!)
+            {
+                <div class="card-juego">
+                    <img src="@juego.ImagenUrl" alt="Imagen de @juego.Nombre" />
+                    <div class="contenido-juego">
+                        <h3>@juego.Nombre</h3>
+                        <p>@juego.Desarrolladora</p>
+                        <p>$@juego.Precio</p>
+                        
+                    </div>
+                    @foreach (var juegoCesta in Model.ListaJuegos!)
+                    {
+                        <form method="post" asp-page-handler="AgregarACesta">
+                            <input type="hidden" name="id" value="@juegoCesta.Id" />
+                            <div class="card m-2 p-2">
+                                <h5>@juegoCesta.Nombre</h5>
+                                <p>Precio: @juegoCesta.Precio</p>
+                                <button type="submit" class="btn-AgregarCesta">Añadir a la cesta</button>
+                            </div>
+                        </form>
+                    }
+
+                </div>
+            }
+        </div>
+    }
+
+    @if (@Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Filtro)
+    {
+        <div class="grid-juegos">
+            @foreach (var juego in Model.ListaFiltrada!)
+            {
+                <div class="card-juego">
+                    <img src="@juego.ImagenUrl" alt="Imagen de @juego.Nombre" />
+                    <div class="contenido-juego">
+                        <h3>@juego.Nombre</h3>
+                        <p>@juego.Desarrolladora</p>
+                        <p>$@juego.Precio</p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+</content>
+
+

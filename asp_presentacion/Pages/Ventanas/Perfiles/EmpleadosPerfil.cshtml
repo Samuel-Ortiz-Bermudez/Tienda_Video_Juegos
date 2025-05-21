@@ -1,0 +1,55 @@
+﻿@page
+@model asp_presentacion.Pages.Ventanas.Perfiles.EmpleadosPerfilModel
+@{
+    ViewData["Titulo"] = "Perfil";
+}
+
+<content class="perfil_Usuario">
+    <form method="POST">
+        @Html.AntiForgeryToken()
+        <div class="panel_Usuario">
+            <div id="datos-Usuario" class="datos_Usuario">
+                @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas && Model.Empleado != null)
+                {
+                    <p>Usuario: @Model.Usuario</p>
+                    <p>Nombre: @Model.Empleado.Nombre</p>
+                    <p>Cedula: @Model.Empleado.Cedula</p>
+                    <p>Salario: @Model.Empleado.Salario</p>
+                    <p>Telefono: @Model.Empleado.Salario</p>
+                    <p>Rol: @Model.Rol</p>
+                }
+            </div>
+            <div class="acciones_Usuario">
+                <button type="submit"
+                    class="acciones_Usuario_btns"
+                    asp-page-handler="BtnCerrarSesion"
+                    name="">
+                    Cerrar sesion.
+                </button>
+                <button type="submit"
+                    class="acciones_Usuario_btns"
+                    asp-page="/Ventanas/AccionesEmpleados/OperarVideojuegos"
+                    name="OperarVideojuegos">
+                    Operar Videojuegos.
+                </button>
+                @if(User.IsInRole("Admin")){
+                    <button type="submit"
+                        class="acciones_Usuario_btns"
+                        asp-page="/Ventanas/AccionesEmpleados/OperarEmpleados"
+                        name="OperarEmpleados">
+                        Operar empleados.
+                    </button>
+                    <button type="submit"
+                        class="acciones_Usuario_btns"
+                        asp-page-handler=""
+                        name="">
+                        Revisar auditorias.
+                    </button>
+                }
+            </div>
+        </div>
+    </form>
+</content>
+
+
+

@@ -1,0 +1,222 @@
+﻿@page
+@model asp_presentacion.Pages.Ventanas.Perfiles.ClientesPerfilModel
+@{
+    ViewData["Titulo"] = "Perfil";
+}
+
+<content class="perfil_Usuario">
+    <form method="POST">
+        @Html.AntiForgeryToken()
+        <div class="panel_Usuario">
+            <div id="datos-cliente" class="datos_Usuario">
+                @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)
+                {
+                    <p>Usuario: @Model.Usuario</p>
+                    <p>Nombre: @Model.Cliente!.Nombre</p>
+                    <p>Cedula: @Model.Cliente!.Cedula</p>
+                    <p>Telefono: @Model.Cliente!.Telefono</p>
+                    <p>Direccion: @Model.Cliente!.Direccion</p>
+                }
+            </div>
+            <div class="acciones_Usuario">
+                @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas){
+                    <button 
+                    type="submit"
+                    class="acciones_Usuario_btns"
+                    asp-page-handler="BtnCerrarSesion" 
+                    name="CerrarSesion"
+                    >Cerrar sesion.</button>
+                    <button 
+                    type="submit"
+                    class="acciones_Usuario_btns"
+                    asp-page-handler="BtnCambiar" 
+                    name="CambiarDatos"
+                    >Actualizar datos.</button>
+                    <button 
+                    type="submit"
+                    class="acciones_Usuario_btn_cerrar"
+                    asp-page-handler="BtnEliminar"
+                    >Eliminar Cuenta.</button>
+                }
+
+                @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar) {
+                    <center>
+                        <button 
+                        type="submit"
+                        class="acciones_Usuario_btn_cerrar"
+                        asp-page-handler="BtnGuardar" 
+                        name="GuardarCambios"
+                        >Guardar cambios.</button>
+                    </center>
+                }
+            </div>
+        </div>
+
+
+        <div id="datos-compras-cliente" class="compras_cliente">
+            @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)
+            {
+                <div style="display: flex">
+                    <h4>Compras realizadas.</h4>
+                    @if(!Model.Lista!.Any()) {
+                        <h4 class="error_mensaje">No se han realizado compras.</h4>
+                    }
+                </div>
+                <table class="tb_data table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>
+                            Codigo de compra.
+                        </th>
+                        <th>
+                            Total de compra.
+                        </th>
+                        <th class="cl_hidden">
+                            Fecha de compra.
+                        </th>
+                        <th class="cl_actions">
+                            Metodo de pago.
+                        </th>
+                        <th class="cl_actions">
+                            Empleado.
+                        </th>
+                        <th>
+                            Detalles de compra
+                        </th>
+                    </tr>
+                    @if (Model.Lista!.Any())
+                    {
+                        @foreach (var compra in Model.Lista!)
+                        {
+                            <tr>
+                                <td>
+                                    @compra.Codigo
+                                </td>
+                                <td>
+                                    @compra.Total
+                                </td>
+                                <td class="cl_hidden">
+                                    @compra.FechaVenta
+                                </td>
+                                <td class="cl_hidden">
+                                    @compra.MetodoPago
+                                </td>
+                                <td class="cl_hidden">
+                                    @compra._Empleado!.Nombre
+                                </td>
+                                <td class="hidden" name="@compra.Id">@compra!.Id</td>
+                                <td>
+                                    <input type="submit"
+                                    value="detalles"
+                                    asp-page-handler="BtnDetalles"
+                                    class="btn btn-secondary"
+                                    asp-route-data="@compra.Id"
+                                    />
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            }
+
+            @if(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar && Model.Cliente != null) {
+                <div>
+                    <label>Nombre.</label>
+                    <input type="text"
+                    placeholder="Nombre"
+                    class="sesion_form_inputs"
+                    asp-for="@Model.Cliente!.Nombre" />
+                </div>
+                <div>
+                    <label>Cedula.</label>
+                    <input type="number"
+                    placeholder="Cedula"
+                    class="sesion_form_inputs"
+                    asp-for="@Model.Cliente!.Cedula" />
+                </div>
+                <div>
+                    <label>Direccion.</label>
+                    <input type="text"
+                    placeholder="Direccion"
+                    class="sesion_form_inputs"
+                    asp-for="@Model.Cliente!.Direccion" />
+                </div>
+                <div>
+                    <label>Telefono.</label>
+                    <input type="number"
+                    placeholder="Telefono"
+                    class="sesion_form_inputs"
+                    asp-for="@Model.Cliente!.Telefono" />
+                    <input type="hidden" asp-for="@Model.Cliente!.Id" />
+                </div>
+            }
+        </div>
+
+        @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
+        {
+            <div class='popup'>
+                <div class='pp_del_inner'>
+                    <div style='width:95%'>
+                        <h2 align="left">
+                            Mensaje
+                        </h2>
+
+                        <h4 align="left">
+                            Desea borrar la entidad?
+                        </h4>
+
+                        <input type="submit"
+                        value="Borrar"
+                        asp-page-handler="BtBorrar"
+                        class="btn btn-secondary" />
+                        <input type="submit"
+                        value="Cerrar"
+                        asp-page-handler="BtCancelar"
+                        class="btn btn-secondary" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Detalles && Model.DetallesCompraLista != null)
+        {
+            <div class='popup'>
+                <div class="pp_del_inner">
+                    <table class="tb_data table table-striped table-bordered table-hover">
+                        <tr>
+                            <th>Videojuego</th>
+                            <th>Cantidad</th>
+                            <th>Valor unitario</th>
+                            <th>Subtotal</th>
+                            <th>Codigo</th>
+                        </tr>
+                        @if(Model.DetallesCompraLista != null)
+                        {
+                            @foreach (var detalleCompra in Model.DetallesCompraLista!)
+                            {
+                                <tr>
+                                    <td>@detalleCompra!._Videojuego!.Nombre</td>
+                                    <td>@detalleCompra!.Cantidad</td>
+                                    <td>@detalleCompra!._Videojuego!.Precio</td>
+                                    <td>@detalleCompra!.Subtotal</td>
+                                    <td>@detalleCompra!.Codigo</td>
+
+                                </tr>
+                            }
+                        }
+                    </table>
+                    <div class="btn-container">
+                        <input type="submit"
+                               value="Cerrar detalles."
+                               asp-page-handler="BtnCerrar"
+                               class="acciones_Usuario_btn_cerrar" />
+                    </div>
+                </div>
+            </div>
+        }
+    </form>
+</content>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
