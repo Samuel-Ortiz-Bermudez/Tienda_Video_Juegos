@@ -11,6 +11,7 @@
             <div>
                 <input type="submit" name="Listar" value="Listar juegos" class="acciones_Usuario_btns" asp-page-handler="Ingreso"/>
                 <input type="submit" name="Guardar" value="Guardar nuevo juego" class="acciones_Usuario_btns" asp-page-handler="BtnNuevo" />
+                <input type="submit" name="Volver" value="Volver al perfil" class="acciones_Usuario_btns" asp-page="/Ventanas/Perfiles/EmpleadosPerfil" />
             </div>
             <table class="tb_data table table-striped table-bordered table-hover">
                 <tr>
@@ -112,6 +113,52 @@
                     <div class="btn-container">
                         <input type="submit" class="acciones_Usuario_btns" name="Guardar" value="Guardar juego" asp-page-handler="BtnGuardar" asp-route-data="@Model.Actual!.Id"/>
                         <input type="submit" class="acciones_Usuario_btns" name="Cerrar" value="Cerrar panel" asp-page-handler="BtnCerrar"/>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar) 
+        {
+            <div class='popup'>
+                <div class="pp_del_inner">
+                    <label>Nombre</label>
+                    <label 
+                            name="Nombre"
+                            asp-for="Actual!.Nombre" >
+                            @Model.Actual!.Nombre
+                    </label>
+
+                    <label>Precio</label>
+                    <label 
+                            name="Precio"
+                            asp-for="Actual!.Precio">
+                            @Model.Actual!.Precio
+                    </label>
+
+                    <label>Codigo</label>
+                    <label name="Codigo"
+                            asp-for="Actual!.Codigo">
+                        @Model.Actual!.Codigo
+                    </label>
+
+                    <label>Desarrolladora</label>
+                    <label name="Desarrolladora"
+                           asp-for="Actual!.Desarrolladora">
+                        @Model.Actual!.Desarrolladora
+                    </label>
+                    <label>Estado</label>
+                    <label name="Estado"
+                           asp-for="Actual!.Estado">
+                        @Model.Actual!.Estado
+                    </label>
+                    <input type="hidden"
+                            name="Actual.ImagenUrl"
+                            asp-for="@Model.Actual!.ImagenUrl" />
+                    <input type="hidden" asp-for="@Model.Actual!.Id" />
+                    <div class="btn-container">
+                        <input type="submit" class="acciones_Usuario_btn_cerrar" name="Borrar" value="Borrar juego" asp-page-handler="BtnBorrarVal" asp-route-data="@Model.Actual!.Id" />
+                        <input type="submit" class="acciones_Usuario_btns" name="Cerrar" value="Cerrar panel" asp-page-handler="BtnCerrar" />
                     </div>
                 </div>
             </div>

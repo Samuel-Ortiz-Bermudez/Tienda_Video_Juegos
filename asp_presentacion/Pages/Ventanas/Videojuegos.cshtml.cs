@@ -3,7 +3,6 @@ using lib_dominio.Nucleo;
 using lib_presentaciones.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace asp_presentacion.Pages.Ventanas
 {
@@ -84,9 +83,9 @@ namespace asp_presentacion.Pages.Ventanas
 
 
         public IActionResult OnPostAgregarACesta(int id)
-        {       
+        {
             try
-            {   
+            {
                 var juegoTask = IPresentacionJuegos!.PorCodigo(new Videojuegos { Id = id });
                 juegoTask.Wait();
                 var juegoCesta = juegoTask.Result.FirstOrDefault();
@@ -100,7 +99,7 @@ namespace asp_presentacion.Pages.Ventanas
                 // se obtiene la cesta de la sesión
                 var cesta = HttpContext.Session.GetObjectFromJson<List<DetallesCompras>>("Cesta") ?? new List<DetallesCompras>();
 
-                
+
                 var existente = cesta.FirstOrDefault(d => d.Videojuego == id);
                 if (existente != null)
                 {
@@ -114,13 +113,13 @@ namespace asp_presentacion.Pages.Ventanas
                         Videojuego = juegoCesta.Id,
                         _Videojuego = juegoCesta,
                         Cantidad = 1,
-                        Subtotal = juegoCesta.Precio 
+                        Subtotal = juegoCesta.Precio
                     };
                     nuevoDetalle.CalculoSubtotal();
                     cesta.Add(nuevoDetalle);
                 }
 
-                
+
                 HttpContext.Session.SetObjectAsJson("Cesta", cesta);
                 TempData["Mensaje"] = "Agregado a la cesta.";
             }
@@ -131,8 +130,7 @@ namespace asp_presentacion.Pages.Ventanas
             }
 
             return RedirectToPage();
+
         }
-
-
     }
 }

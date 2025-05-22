@@ -16,6 +16,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 var startup = new Startup(builder.Configuration);
 startup.ConfigureServices(builder, builder.Services);
 
+
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 

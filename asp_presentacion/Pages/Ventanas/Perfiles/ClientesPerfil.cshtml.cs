@@ -52,11 +52,14 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
 
         public void OnGet()
         {
+
             OnPostIngreso();
+
         }
 
         public void OnPostIngreso()
         {
+
             try
             {
                 Usuario = User.Identity!.Name;
@@ -68,12 +71,14 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
                 Cliente = CuentaCliente[0]._Cliente;
                 Accion = Enumerables.Ventanas.Listas;
 
+
                 var ComprasLista = this.iPresentacionCompras!.Listar();
                 ComprasLista.Wait();
                 Lista = ComprasLista!.Result.Where(x => x.Cliente == Cliente!.Id).ToList();
             }
             catch (Exception ex)
             {
+
                 LogConversor.Log(ex, ViewData!);
             }
 
@@ -135,7 +140,6 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
 
                 DetallesCompraLista = ListaDetalles.Where(x => x.Compra.ToString() == data).ToList();
 
-
             }
             catch (Exception ex)
             {
@@ -162,4 +166,6 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
             return RedirectToPage("/Ventanas/Videojuegos");
         }
     }
+
 }
+

@@ -256,7 +256,7 @@ input[type="number"] {
 }
 
 .card-juego {
-    width: 250px;
+    width: 200px;
     background-color: #f9f9f9;
     border-radius: 12px;
     overflow: hidden;
@@ -363,6 +363,7 @@ input[type="number"] {
     font-family: 'Times New Roman', Times, serif;
 }
 
+
 .btn-AgregarCesta {
     width: 90%;
     padding: 10px;
@@ -380,4 +381,5 @@ input[type="number"] {
         background-color: #104fbb;
         transform: scale(1.05);
     }
+
 
