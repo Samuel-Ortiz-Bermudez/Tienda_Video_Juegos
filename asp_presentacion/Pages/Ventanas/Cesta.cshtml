@@ -15,6 +15,8 @@
                 <th>Subtotal</th>
             </tr>
         </thead>
+        
+
         <tbody>
             @foreach (var item in Model.Cesta)
             {
@@ -23,10 +25,20 @@
                     <td>@item.Cantidad</td>
                     <td>@item._Videojuego?.Precio.ToString("C")</td>
                     <td>@item.Subtotal.ToString("C")</td>
+                    <td>
+                        <form method="post" asp-page-handler="EliminarDeCesta">
+                            <input type="hidden" name="id" value="@item.Videojuego" />
+                            <button type="submit" class="btn-eliminar">Eliminar</button>
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
+
+    <h4>Total: @Model.Total.ToString("C")</h4>
+
+
 }
 else
 {

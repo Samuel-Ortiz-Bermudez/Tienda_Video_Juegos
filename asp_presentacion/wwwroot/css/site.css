@@ -382,4 +382,22 @@ input[type="number"] {
         transform: scale(1.05);
     }
 
+.btn-eliminar {
+    width: 70%;
+    padding: 3px;
+    background-color: #2069ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 25px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+    .btn-eliminar:hover {
+    background-color: #104fbb;
+    transform: scale(1.05);
+    }
+
 
