@@ -82,15 +82,15 @@ namespace asp_presentacion.Pages.Ventanas
         }
 
 
-        public IActionResult OnPostAgregarACesta(int id)
+        public IActionResult OnPostAgregarACesta(string codigo)
         {
             try
             {
-                var juegoTask = IPresentacionJuegos!.PorCodigo(new Videojuegos { Id = id });
+                var juegoTask = IPresentacionJuegos!.PorCodigo(new Videojuegos { Codigo = codigo });
                 juegoTask.Wait();
-                var juegoCesta = juegoTask.Result.FirstOrDefault();
+                var juego = juegoTask.Result.FirstOrDefault();
 
-                if (juegoCesta == null)
+                if (juego == null)
                 {
                     Mensaje = "Juego no encontrado.";
                     return RedirectToPage();
@@ -100,7 +100,7 @@ namespace asp_presentacion.Pages.Ventanas
                 var cesta = HttpContext.Session.GetObjectFromJson<List<DetallesCompras>>("Cesta") ?? new List<DetallesCompras>();
 
 
-                var existente = cesta.FirstOrDefault(d => d.Videojuego == id);
+                var existente = cesta.FirstOrDefault(d => d.Videojuego == juego.Id);
                 if (existente != null)
                 {
                     existente.Cantidad++;
@@ -110,10 +110,10 @@ namespace asp_presentacion.Pages.Ventanas
                 {
                     var nuevoDetalle = new DetallesCompras
                     {
-                        Videojuego = juegoCesta.Id,
-                        _Videojuego = juegoCesta,
+                        Videojuego = juego.Id,
+                        _Videojuego = juego,
                         Cantidad = 1,
-                        Subtotal = juegoCesta.Precio
+                        Subtotal = juego.Precio
                     };
                     nuevoDetalle.CalculoSubtotal();
                     cesta.Add(nuevoDetalle);

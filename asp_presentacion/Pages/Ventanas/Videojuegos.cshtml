@@ -52,17 +52,16 @@
                         <p>$@juego.Precio</p>
                         
                     </div>
-                    @foreach (var juegoCesta in Model.ListaJuegos!)
-                    {
+                    
                         <form method="post" asp-page-handler="AgregarACesta">
-                            <input type="hidden" name="id" value="@juegoCesta.Id" />
+                            <input type="hidden" name="Codigo" value="@juego.Codigo" />
                             <div class="card m-2 p-2">
-                                <h5>@juegoCesta.Nombre</h5>
-                                <p>Precio: @juegoCesta.Precio</p>
+                                <h5>@juego.Nombre</h5>
+                                <p>Precio: @juego.Precio</p>
                                 <button type="submit" class="btn-AgregarCesta">Añadir a la cesta</button>
                             </div>
                         </form>
-                    }
+                    
 
                 </div>
             }
@@ -81,6 +80,14 @@
                         <p>@juego.Desarrolladora</p>
                         <p>$@juego.Precio</p>
                     </div>
+                    <form method="post" asp-page-handler="AgregarACesta">
+                        <input type="hidden" name="Codigo" value="@juego.Codigo" />
+                        <div class="card m-2 p-2">
+                            <h5>@juego.Nombre</h5>
+                            <p>Precio: @juego.Precio</p>
+                            <button type="submit" class="btn-AgregarCesta">Añadir a la cesta</button>
+                        </div>
+                    </form>
                 </div>
             }
         </div>
