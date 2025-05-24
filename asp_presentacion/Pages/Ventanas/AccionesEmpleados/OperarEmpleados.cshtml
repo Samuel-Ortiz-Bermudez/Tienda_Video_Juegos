@@ -1,4 +1,127 @@
 ﻿@page
 @model asp_presentacion.Pages.Ventanas.AccionesEmpleados.OperarEmpleadosModel
 @{
+	ViewData["Titulo"] = "CRUD Empleados";
+}
+<content>
+    <form method="POST">
+        @Html.AntiForgeryToken()
+        <div class="informacion">
+            <div>
+                <input type="submit" name="Listar" value="Listar Empleados" class="acciones_Usuario_btns" asp-page-handler="Ingreso"/>
+                <input type="submit" name="Guardar" value="Registrar nuevo Empleado" class="acciones_Usuario_btns" asp-page-handler="BtnNuevo" />
+                <input type="submit" name="Volver" value="Volver al perfil" class="acciones_Usuario_btns" asp-page="/Ventanas/Perfiles/EmpleadosPerfil" asp-page-handler="Ingreso"/>
+            </div>
+            <table class="tb_data table table-striped table-bordered table-hover">
+                <tr>
+                    <th>
+                        Nombre del empleado.
+                    </th>
+                    <th>
+                        Cedula del empleado.
+                    </th>
+                    <th class="cl_hidden">
+                        Salario del empleado.
+                    </th>
+                    <th class="cl_actions">
+                        Telefono del empleado.
+                    </th>
+                    <th class="cl_actions">
+                        Correo del empleado.
+                    </th>
+                    <th class="cl_actions">
+                        Rol.
+                    </th>
+                    <th class="cl_actions">
+                        Accion.
+                    </th>
+                </tr>
+                @if (Model.ListaEmpleados!.Any() && Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)
+                {
+                    foreach (var empleado in Model.ListaEmpleados!)
+                    {
+                        var cuenta = Model.ListaCuentas!.FirstOrDefault(c => c.Id == empleado.Id);
+
+                        <tr>
+                            <td>
+                                @empleado.Nombre
+                            </td>
+                            <td>
+                                @empleado.Cedula
+                            </td>
+                            <td class="cl_hidden">
+                                @empleado.Salario
+                            </td>
+                            <td class="cl_actions">
+                                @empleado.Telefono
+                            </td>
+                            <td class="cl_actions">
+                                @cuenta?.Correo
+                            </td>
+                            <td class="cl_actions">
+                                @cuenta?.Rol
+                            </td>
+                            <td>
+                                <input type="submit" name="Actualizar" value="Editar Empleado" asp-page-handler="BtnEditar" asp-route-IdEmpleado="@empleado.Id" asp-route-IdCuenta="@cuenta?.Id" />
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+        @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Crear || Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar)
+        {
+            <div class='popup'>
+                <div class="pp_del_inner">
+                    <table class="tb_data table table-striped table-bordered table-hover">
+                        <label>Nombre</label>
+                        <input type="text"
+                               name="ActualEmpleado.Nombre"
+                               placeholder="Nombre"
+                               asp-for="ActualEmpleado!.Nombre" />
+                        <label>Cedula</label>
+                        <input type="number"
+                               name="ActualEmpleado.Cedula"
+                               placeholder="Cedula"
+                               asp-for="@Model.ActualEmpleado!.Cedula" />
+                        <label>Salario</label>
+                        <input type="number"
+                               name="ActualEmpleado.Salario"
+                               placeholder="Salario"
+                               asp-for="@Model.ActualEmpleado!.Salario" />
+                        <label>Telefono</label>
+                        <input type="number"
+                               name="ActualEmpleado.Telefono"
+                               placeholder="Telefono"
+                               asp-for="@Model.ActualEmpleado!.Telefono" />
+                        <label>Rol</label>
+                        <select id="Rol" name="ActualCuenta.Rol" asp-for="@Model.ActualCuenta!.Rol">
+                            <option value="Admin">Admin</option>
+                            <option value="Empleado">Empleado</option>
+                        </select>
+                        <label>Correo</label>
+                        <input type="email"
+                               name="ActualCuenta.Correo"
+                               placeholder="Correo"
+                               asp-for="@Model.ActualCuenta!.Correo" />
+                        <label>Contraseña</label>
+                        <input type="text"
+                                name="ActualCuenta.Contrasena"
+                                placeholder="Contraseña"
+                                asp-for="@Model.ActualCuenta!.Contrasena" />
+                        <input type="hidden" asp-for="@Model.ActualCuenta!.Id" />
+                        <input type="hidden" asp-for="@Model.ActualEmpleado!.Id" />
+                    </table>
+                    <div class="btn-container">
+                        <input type="submit" class="acciones_Usuario_btns" name="Guardar" value="Guardar Empleado" asp-page-handler="BtnGuardar" />
+                        <input type="submit" class="acciones_Usuario_btns" name="Cerrar" value="Cerrar panel" asp-page-handler="BtnCerrar" />
+                    </div>
+                </div>
+            </div>
+        }
+    </form>
+</content>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

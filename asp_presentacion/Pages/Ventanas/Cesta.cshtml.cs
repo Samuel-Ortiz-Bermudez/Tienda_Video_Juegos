@@ -6,15 +6,28 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace asp_presentacion.Pages.Ventanas
 {
-
-
     public class CestaModel : PageModel
-
     {
+        private IComprasPresentacion _comprasPresentacion = null;
 
-        [BindProperty]
-        public List<DetallesCompras> Cesta { get; set; } = new();
+        public CestaModel(IComprasPresentacion _comprasPresentacion)
+        {
+            try
+            {
+                this._comprasPresentacion = _comprasPresentacion;
+
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
+
+        [BindProperty] public List<DetallesCompras> Cesta { get; set; } = new();
         public decimal Total { get; set; }
+        public string MetodoSeleccionado { get; set; }
+        public int clienteId { get; set; }
+        public int empleadoId { get; set; }
 
         public void OnGet()
         {
@@ -82,7 +95,7 @@ namespace asp_presentacion.Pages.Ventanas
 
                 compra.CalculoTotal();
 
-                var resultado = await _comprasPresentacion.Guardar(compra);
+                var resultado = await this._comprasPresentacion!.Guardar(compra);
 
                 // Limpia la sesión
                 HttpContext.Session.Remove("Cesta");
@@ -100,5 +113,4 @@ namespace asp_presentacion.Pages.Ventanas
     }
 
 
-}
 }

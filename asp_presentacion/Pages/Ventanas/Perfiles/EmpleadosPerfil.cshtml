@@ -15,7 +15,7 @@
                     <p>Nombre: @Model.Empleado.Nombre</p>
                     <p>Cedula: @Model.Empleado.Cedula</p>
                     <p>Salario: @Model.Empleado.Salario</p>
-                    <p>Telefono: @Model.Empleado.Salario</p>
+                    <p>Telefono: @Model.Empleado.Telefono</p>
                     <p>Rol: @Model.Rol</p>
                 }
             </div>
@@ -36,13 +36,15 @@
                     <button type="submit"
                         class="acciones_Usuario_btns"
                         asp-page="/Ventanas/AccionesEmpleados/OperarEmpleados"
+                        asp-page-handler="Ingreso"
                         name="OperarEmpleados">
                         Operar empleados.
                     </button>
                     <button type="submit"
                         class="acciones_Usuario_btns"
-                        asp-page-handler=""
-                        name="">
+                        asp-page-handler="Ingreso"
+                        asp-page="/Ventanas/AccionesEmpleados/Auditorias"
+                        name="Auditorias">
                         Revisar auditorias.
                     </button>
                 }

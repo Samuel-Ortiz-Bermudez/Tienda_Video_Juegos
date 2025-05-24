@@ -38,6 +38,12 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("lbYaSeGuardo");
 
+            int idEmpleado = this.IConexion!.Empleados!
+                              .OrderByDescending(x => x.Id)
+                              .FirstOrDefault()?.Id ?? 0;
+
+            entidad.Empleado = idEmpleado;
+
             this.IConexion!.CuentasEmpleados!.Add(entidad);
             this.IConexion.SaveChanges();
             return entidad;

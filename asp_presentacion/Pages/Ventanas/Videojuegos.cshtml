@@ -16,13 +16,7 @@
 
                 <h5 for="Desarrolladora"> Desarrolladora </h5>
                 <div>
-                    <select name="Desarrolladora" class="filtro">
-                        <option value="Todas">Todas</option>
-                        <option value="Steam">Steam</option>
-                        <option value="Ea">EA</option>
-                        <option value="Epicgames">Epic Games</option>
-                        <option value="Nintendo">Nintendo</option>
-                    </select>
+                    <input type="text" name="Filtro" placeholder="Desarrolladora" asp-for="@Model.Filtro" value=""/>
                     <button type="submit" class="filtro_btn" asp-page-handler="BtnFiltro"> Aplicar Filtros </button>
                 </div>
                 @if (!string.IsNullOrEmpty(Model.Mensaje))

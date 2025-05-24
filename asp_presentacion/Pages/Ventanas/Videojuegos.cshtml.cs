@@ -29,6 +29,7 @@ namespace asp_presentacion.Pages.Ventanas
         [BindProperty] public List<Videojuegos>? ListaFiltrada { get; set; }
         [BindProperty] public string? Desarrolladora { get; set; }
         [BindProperty] public string? Mensaje { get; set; }
+        [BindProperty] public string? Filtro { get; set; }
 
         public void OnGet()
         {
@@ -43,7 +44,7 @@ namespace asp_presentacion.Pages.Ventanas
                 var juegosTask = this.IPresentacionJuegos!.Listar();
                 juegosTask.Wait();
 
-                ListaJuegos = juegosTask.Result;
+                ListaJuegos = juegosTask.Result.Where( j => j.Estado.Equals(true)).ToList();
             }
             catch (Exception ex)
             {
@@ -56,8 +57,8 @@ namespace asp_presentacion.Pages.Ventanas
             try
             {
                 Accion = Enumerables.Ventanas.Filtro;
-                Desarrolladora = this.Desarrolladora;
-                if (Desarrolladora == "Todas")
+                Filtro = this.Filtro;
+                if (Filtro == null)
                 {
                     OnPostIngreso();
                     return;
@@ -67,7 +68,7 @@ namespace asp_presentacion.Pages.Ventanas
 
                 ListaJuegos = juegosTask.Result;
 
-                ListaFiltrada = ListaJuegos.Where(j => j.Desarrolladora!.ToUpper().Equals(Desarrolladora!.ToUpper())).ToList();
+                ListaFiltrada = ListaJuegos.Where(j => j.Desarrolladora!.ToUpper().Equals(Filtro!.ToUpper())).ToList();
                 if (!ListaFiltrada.Any())
                 {
                     OnPostIngreso();
