@@ -26,6 +26,10 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad!.Id == 0)
                 throw new Exception("lbNoSeGuardo");
 
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Borrar", Fecha = DateTime.Now, Tabla = "CuentasEmpleados" }
+                );
+
             this.IConexion!.CuentasEmpleados!.Remove(entidad);
             this.IConexion.SaveChanges();
             return entidad;
@@ -37,6 +41,10 @@ namespace lib_aplicaciones.Implementaciones
                 throw new Exception("lbFaltaInformacion");
             if (entidad.Id != 0)
                 throw new Exception("lbYaSeGuardo");
+
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Guardar", Fecha = DateTime.Now, Tabla = "CuentasEmpleados" }
+                );
 
             int idEmpleado = this.IConexion!.Empleados!
                               .OrderByDescending(x => x.Id)
@@ -51,6 +59,10 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<CuentasEmpleados> Listar()
         {
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Listar", Fecha = DateTime.Now, Tabla = "CuentasEmpleados" }
+                );
+            this.IConexion.SaveChanges();
             return this.IConexion!.CuentasEmpleados!.Take(20)
                 .Include(x => x._Empleado)
                 .ToList();
@@ -58,6 +70,11 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<CuentasEmpleados> PorCorreo(CuentasEmpleados? entidad)
         {
+
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "PorCorreo", Fecha = DateTime.Now, Tabla = "CuentasEmpleados" }
+                );
+            this.IConexion.SaveChanges();
             return this.IConexion!.CuentasEmpleados!
                 .Where(x => x.Correo!.Contains(entidad!.Correo!))
                 .Include(x => x._Empleado)
@@ -70,6 +87,10 @@ namespace lib_aplicaciones.Implementaciones
                 throw new Exception("lbFaltaInformacion");
             if (entidad!.Id == 0)
                 throw new Exception("lbNoSeGuardo");
+
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Modificar", Fecha = DateTime.Now, Tabla = "CuentasEmpleados" }
+                );
 
             var entry = this.IConexion!.Entry<CuentasEmpleados>(entidad);
             entry.State = EntityState.Modified;

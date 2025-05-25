@@ -26,6 +26,10 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad!.Id == 0)
                 throw new Exception("lbNoSeGuardo");
 
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Borrar", Fecha = DateTime.Now, Tabla = "Suministros" }
+                );
+
             this.IConexion!.Suministros!.Remove(entidad);
             this.IConexion.SaveChanges();
             return entidad;
@@ -38,6 +42,10 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("lbYaSeGuardo");
 
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Guardar", Fecha = DateTime.Now, Tabla = "Suministros" }
+                );
+
             this.IConexion!.Suministros!.Add(entidad);
             this.IConexion.SaveChanges();
             return entidad;
@@ -45,11 +53,19 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<Suministros> Listar()
         {
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Listar", Fecha = DateTime.Now, Tabla = "Suministros" }
+                );
+            this.IConexion.SaveChanges();
             return this.IConexion!.Suministros!.Take(20).ToList();
         }
 
         public List<Suministros> PorCodigo(Suministros? entidad)
         {
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "PorCodigo", Fecha = DateTime.Now, Tabla = "Suministros" }
+                );
+            this.IConexion.SaveChanges();
             return this.IConexion!.Suministros!
                 .Where(x => x.Codigo!.Contains(entidad!.Codigo!))
                 .ToList();
@@ -61,6 +77,10 @@ namespace lib_aplicaciones.Implementaciones
                 throw new Exception("lbFaltaInformacion");
             if (entidad!.Id == 0)
                 throw new Exception("lbNoSeGuardo");
+
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Modificar", Fecha = DateTime.Now, Tabla = "Suministros" }
+                );
 
             var entry = this.IConexion!.Entry<Suministros>(entidad);
             entry.State = EntityState.Modified;

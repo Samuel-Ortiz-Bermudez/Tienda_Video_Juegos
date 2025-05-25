@@ -26,6 +26,10 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad!.Id == 0)
                 throw new Exception("lbNoSeGuardo");
 
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Borrar", Fecha = DateTime.Now, Tabla = "DetallesCompras" }
+                );
+
             this.IConexion!.DetallesCompras!.Remove(entidad);
             this.IConexion.SaveChanges();
             return entidad;
@@ -38,6 +42,10 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("lbYaSeGuardo");
 
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Guardar", Fecha = DateTime.Now, Tabla = "DetallesCompras" }
+                );
+
             this.IConexion!.DetallesCompras!.Add(entidad);
             this.IConexion.SaveChanges();
             return entidad;
@@ -45,6 +53,10 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<DetallesCompras> Listar()
         {
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Listar", Fecha = DateTime.Now, Tabla = "DetallesCompras" }
+                );
+            this.IConexion.SaveChanges();
             return this.IConexion!.DetallesCompras!.Take(20)
                 .Include(x => x._Videojuego)
                 .ToList();
@@ -52,6 +64,10 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<DetallesCompras> PorCodigo(DetallesCompras? entidad)
         {
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "PorCodigo", Fecha = DateTime.Now, Tabla = "DetallesCompras" }
+                );
+            this.IConexion.SaveChanges();
             return this.IConexion!.DetallesCompras!
                 .Where(x => x.Codigo!.Contains(entidad!.Codigo!))
                 .Include(x => x._Videojuego)
@@ -64,6 +80,10 @@ namespace lib_aplicaciones.Implementaciones
                 throw new Exception("lbFaltaInformacion");
             if (entidad!.Id == 0)
                 throw new Exception("lbNoSeGuardo");
+
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Modificar", Fecha = DateTime.Now, Tabla = "DetallesCompras" }
+                );
 
             var entry = this.IConexion!.Entry<DetallesCompras>(entidad);
             entry.State = EntityState.Modified;

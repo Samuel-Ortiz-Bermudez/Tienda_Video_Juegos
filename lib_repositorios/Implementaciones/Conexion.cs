@@ -1,5 +1,4 @@
 ﻿using lib_dominio.Entidades;
-using lib_dominio.Entidades.Auditorias;
 using lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
 namespace lib_repositorios.Implementaciones
@@ -26,6 +25,6 @@ namespace lib_repositorios.Implementaciones
 
 
         //Auditorias
-        public DbSet<AuditoriaClientes>? AuditoriaClientes { get; set; }
+        public DbSet<Auditorias>? Auditorias { get; set; }
     }
 }

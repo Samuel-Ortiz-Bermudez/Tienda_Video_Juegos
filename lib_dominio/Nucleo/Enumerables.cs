@@ -10,6 +10,8 @@
             Detalles = 3,
             Filtro = 4,
             Crear = 5,
+            FiltroTabla = 6,
+            FiltroAccion = 7,
         }
     }
 }

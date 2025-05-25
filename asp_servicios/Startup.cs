@@ -38,6 +38,7 @@ namespace asp_servicios
             services.AddScoped<IVideojuegosAplicacion, VideojuegosAplicacion>();
             services.AddScoped<ICuentasClientesAplicacion, CuentasClientesAplicacion>();
             services.AddScoped<ICuentasEmpleadosAplicacion, CuentasEmpleadosAplicacion>();
+            services.AddScoped<IAuditoriasAplicacion, AuditoriasAplicacion>();
 
 
             // Controladores

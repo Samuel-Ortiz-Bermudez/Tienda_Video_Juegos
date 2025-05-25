@@ -1,5 +1,4 @@
 ﻿using lib_dominio.Entidades;
-using lib_dominio.Entidades.Auditorias;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 namespace lib_repositorios.Interfaces
@@ -21,7 +20,7 @@ namespace lib_repositorios.Interfaces
 
 
         //Auditorias
-        DbSet<AuditoriaClientes>? AuditoriaClientes { get; set; }
+        DbSet<Auditorias>? Auditorias { get; set; }
         EntityEntry<T> Entry<T>(T entity) where T : class;
         int SaveChanges();
     }

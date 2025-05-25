@@ -26,6 +26,10 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad!.Id == 0)
                 throw new Exception("lbNoSeGuardo");
 
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Borrar", Fecha = DateTime.Now, Tabla = "Compras" }
+                );
+
             this.IConexion!.Compras!.Remove(entidad);
             this.IConexion.SaveChanges();
             return entidad;
@@ -38,6 +42,10 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("lbYaSeGuardo");
 
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Guardar", Fecha = DateTime.Now, Tabla = "Compras" }
+                );
+
             this.IConexion!.Compras!.Add(entidad);
             this.IConexion.SaveChanges();
             return entidad;
@@ -45,6 +53,10 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<Compras> Listar()
         {
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Listar", Fecha = DateTime.Now, Tabla = "Compras" }
+                );
+            this.IConexion.SaveChanges();
             return this.IConexion!.Compras!.Take(20)
                 .Include(x => x._Cliente)
                 .Include(x => x._Empleado)
@@ -53,6 +65,10 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<Compras> PorCodigo(Compras? entidad)
         {
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "PorCodigo", Fecha = DateTime.Now, Tabla = "Compras" }
+                );
+            this.IConexion.SaveChanges();
             return this.IConexion!.Compras!
                 .Where(x => x.Codigo!.Contains(entidad!.Codigo!))
                 .Include(x => x._Cliente)
@@ -62,6 +78,10 @@ namespace lib_aplicaciones.Implementaciones
 
         public Compras? Modificar(Compras? entidad)
         {
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Modificar", Fecha = DateTime.Now, Tabla = "Compras" }
+                );
+
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
             if (entidad!.Id == 0)

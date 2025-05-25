@@ -1,4 +1,95 @@
 ﻿@page
 @model asp_presentacion.Pages.Ventanas.AccionesEmpleados.AuditoriasModel
 @{
+	ViewData["Titulo"] = "Auditorias";
+}
+
+<content>
+    <form method="POST">
+        @Html.AntiForgeryToken()
+        <div class="informacion">
+            <div>
+                <input type="submit" name="Listar" value="Listar" class="acciones_Usuario_btns" asp-page-handler="Ingreso" />
+                <input type="submit" name="Volver" value="Volver al perfil" class="acciones_Usuario_btns" asp-page="/Ventanas/Perfiles/EmpleadosPerfil" asp-page-handler="Ingreso" />
+
+                <input type="text" name="FiltroTabla" placeholder="Filtro por tabla" asp-for="@Model.FiltroTabla" value="" />
+                <button type="submit" class="filtro_btn" asp-page-handler="BtnFiltroTabla"> Aplicar Filtro </button>
+
+                <input type="text" name="FiltroAccion" placeholder="Filtro por tabla" asp-for="@Model.FiltroAccion" value="" />
+                <button type="submit" class="filtro_btn" asp-page-handler="BtnFiltroAccion"> Aplicar Filtro </button>
+
+            </div>
+            <table class="tb_data table table-striped table-bordered table-hover">
+                <tr>
+                    <th>
+                        Fecha.
+                    </th>
+                    <th>
+                        Tabla.
+                    </th>
+                    <th class="cl_hidden">
+                        Accion.
+                    </th>
+                </tr>
+                @if (Model.ListaAuditorias!.Any() && Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)
+                {
+                    foreach (var auditoria in Model.ListaAuditorias!)
+                    {
+                        <tr>
+                            <td>
+                                @auditoria.Fecha
+                            </td>
+                            <td>
+                                @auditoria.Tabla
+                            </td>
+                            <td class="cl_hidden">
+                                @auditoria.Accion
+                            </td>
+                        </tr>
+                    }
+                }
+
+                @if (Model.ListaAuditoriasTabla!.Any() && Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.FiltroTabla)
+                {
+                    foreach (var auditoria in Model.ListaAuditoriasTabla!)
+                    {
+                        <tr>
+                            <td>
+                                @auditoria.Fecha
+                            </td>
+                            <td>
+                                @auditoria.Tabla
+                            </td>
+                            <td class="cl_hidden">
+                                @auditoria.Accion
+                            </td>
+                        </tr>
+                    }
+                }
+
+                @if (Model.ListaAuditoriasAccion!.Any() && Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.FiltroAccion)
+                {
+                    foreach (var auditoria in Model.ListaAuditoriasAccion!)
+                    {
+                        <tr>
+                            <td>
+                                @auditoria.Fecha
+                            </td>
+                            <td>
+                                @auditoria.Tabla
+                            </td>
+                            <td class="cl_hidden">
+                                @auditoria.Accion
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+        
+    </form>
+</content>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

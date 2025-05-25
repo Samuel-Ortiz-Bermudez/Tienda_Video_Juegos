@@ -1,6 +1,5 @@
 ﻿using lib_aplicaciones.Interfaces;
 using lib_dominio.Entidades;
-using lib_dominio.Entidades.Auditorias;
 using lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,6 +26,10 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad!.Id == 0)
                 throw new Exception("lbNoSeGuardo");
 
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Borrar", Fecha = DateTime.Now, Tabla = "Clientes" }
+                );
+
             this.IConexion!.Clientes!.Remove(entidad);
             this.IConexion.SaveChanges();
             return entidad;
@@ -39,6 +42,10 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("lbYaSeGuardo");
 
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Guardar", Fecha = DateTime.Now, Tabla = "Clientes" }
+                );
+
             this.IConexion!.Clientes!.Add(entidad);
             this.IConexion.SaveChanges();
             return entidad;
@@ -46,11 +53,19 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<Clientes> Listar()
         {
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Listar", Fecha = DateTime.Now, Tabla = "Clientes" }
+                );
+            this.IConexion.SaveChanges();
             return this.IConexion!.Clientes!.Take(20).ToList();
         }
 
         public List<Clientes> PorCedula(Clientes? entidad)
         {
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "PorCedula", Fecha = DateTime.Now, Tabla = "Clientes" }
+                );
+            this.IConexion.SaveChanges();
             return this.IConexion!.Clientes!
                 .Where(x => x.Cedula!.Contains(entidad!.Cedula!))
                 .ToList();
@@ -62,6 +77,10 @@ namespace lib_aplicaciones.Implementaciones
                 throw new Exception("lbFaltaInformacion");
             if (entidad!.Id == 0)
                 throw new Exception("lbNoSeGuardo");
+
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Modificar", Fecha = DateTime.Now, Tabla = "Clientes" }
+                );
 
             var entry = this.IConexion!.Entry<Clientes>(entidad);
             entry.State = EntityState.Modified;

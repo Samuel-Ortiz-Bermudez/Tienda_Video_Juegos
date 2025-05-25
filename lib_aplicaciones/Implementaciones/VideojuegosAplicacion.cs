@@ -26,6 +26,10 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad!.Id == 0)
                 throw new Exception("lbNoSeGuardo");
 
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion="Borrar", Fecha= DateTime.Now, Tabla = "Videojuegos"}
+                );
+
             this.IConexion!.Videojuegos!.Remove(entidad);
             this.IConexion.SaveChanges();
             return entidad;
@@ -39,17 +43,32 @@ namespace lib_aplicaciones.Implementaciones
                 throw new Exception("lbYaSeGuardo");
 
             this.IConexion!.Videojuegos!.Add(entidad);
+            
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Guardar", Fecha = DateTime.Now, Tabla = "Videojuegos" }
+                );
+            
             this.IConexion.SaveChanges();
             return entidad;
         }
 
         public List<Videojuegos> Listar()
         {
+
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Listar", Fecha = DateTime.Now, Tabla = "Videojuegos" }
+            );
+            this.IConexion.SaveChanges(); 
+
             return this.IConexion!.Videojuegos!.Take(20).ToList();
         }
 
         public List<Videojuegos> PorCodigo(Videojuegos? entidad)
         {
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "PorCodigo", Fecha = DateTime.Now, Tabla = "Videojuegos" }
+                );
+            this.IConexion.SaveChanges();
             return this.IConexion!.Videojuegos!
                 .Where(x => x.Codigo!.Contains(entidad!.Codigo!))
                 .ToList();
@@ -61,7 +80,9 @@ namespace lib_aplicaciones.Implementaciones
                 throw new Exception("lbFaltaInformacion");
             if (entidad!.Id == 0)
                 throw new Exception("lbNoSeGuardo");
-
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Modificar", Fecha = DateTime.Now, Tabla = "Videojuegos" }
+                );
             var entry = this.IConexion!.Entry<Videojuegos>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();

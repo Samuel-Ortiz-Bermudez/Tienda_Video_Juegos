@@ -26,6 +26,10 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad!.Id == 0)
                 throw new Exception("lbNoSeGuardo");
 
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Borrar", Fecha = DateTime.Now, Tabla = "Inventarios" }
+                );
+
             this.IConexion!.Inventarios!.Remove(entidad);
             this.IConexion.SaveChanges();
             return entidad;
@@ -38,6 +42,10 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("lbYaSeGuardo");
 
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Guardar", Fecha = DateTime.Now, Tabla = "Inventarios" }
+                );
+
             this.IConexion!.Inventarios!.Add(entidad);
             this.IConexion.SaveChanges();
             return entidad;
@@ -45,11 +53,19 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<Inventarios> Listar()
         {
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Listar", Fecha = DateTime.Now, Tabla = "Inventarios" }
+                );
+            this.IConexion.SaveChanges();
             return this.IConexion!.Inventarios!.Take(20).ToList();
         }
 
         public List<Inventarios> PorCodigo(Inventarios? entidad)
         {
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "PorCodigo", Fecha = DateTime.Now, Tabla = "Inventarios" }
+                );
+            this.IConexion.SaveChanges();
             return this.IConexion!.Inventarios!
                 .Where(x => x.Codigo!.Contains(entidad!.Codigo!))
                 .ToList();
@@ -61,6 +77,10 @@ namespace lib_aplicaciones.Implementaciones
                 throw new Exception("lbFaltaInformacion");
             if (entidad!.Id == 0)
                 throw new Exception("lbNoSeGuardo");
+
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "Modificar", Fecha = DateTime.Now, Tabla = "Inventarios" }
+                );
 
             var entry = this.IConexion!.Entry<Inventarios>(entidad);
             entry.State = EntityState.Modified;
