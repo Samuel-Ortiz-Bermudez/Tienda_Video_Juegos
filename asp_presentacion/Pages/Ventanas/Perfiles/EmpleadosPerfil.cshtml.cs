@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace asp_presentacion.Pages.Ventanas.Perfiles
 {
-    [Authorize]
+    [Authorize(Roles ="Admin, Empleado")]
     public class EmpleadosPerfilModel : PageModel
     {
         private ICuentasEmpleadosPresentacion? iPresentacionCuenta = null;

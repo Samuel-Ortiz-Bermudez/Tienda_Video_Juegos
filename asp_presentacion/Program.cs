@@ -7,9 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(option =>
     {
-        option.LoginPath = "/ventanas/Liggins/IniciarSesion";
+        option.LoginPath = "/ventanas/Loggins/IniciarSesion";
         option.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-        option.AccessDeniedPath = "/Pages/Index";
+        option.AccessDeniedPath = "/Ventanas/Errores/AccesoDenegado";
     });
 
 

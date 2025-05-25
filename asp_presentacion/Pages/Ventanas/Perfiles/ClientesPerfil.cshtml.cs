@@ -9,7 +9,8 @@ using lib_dominio.Entidades;
 
 namespace asp_presentacion.Pages.Ventanas.Perfiles
 {
-    [Authorize]
+    [Authorize(Roles = "Cliente")]
+
     public class ClientesPerfilModel : PageModel
     {
         private ICuentasClientesPresentacion? iPresentacionCuenta = null;
@@ -52,9 +53,7 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
 
         public void OnGet()
         {
-
             OnPostIngreso();
-
         }
 
         public void OnPostIngreso()
