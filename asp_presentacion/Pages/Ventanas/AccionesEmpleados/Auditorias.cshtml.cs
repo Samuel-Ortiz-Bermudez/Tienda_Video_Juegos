@@ -4,6 +4,7 @@ using lib_presentaciones.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.IdentityModel.Tokens;
 
 namespace asp_presentacion.Pages.Ventanas.AccionesEmpleados
 {
@@ -59,10 +60,16 @@ namespace asp_presentacion.Pages.Ventanas.AccionesEmpleados
 
                 if (FiltroTabla == null)
                 {
-                    Mensaje = "No existe esa tabla.";
+                    OnPostIngreso();
                     return; 
                 }
                 ListaAuditoriasTabla = ListaAuditorias!.Where(x => x.Tabla!.ToUpper().Equals(FiltroTabla!.ToUpper())).ToList();
+                
+                if (ListaAuditoriasTabla.IsNullOrEmpty())
+                {
+                    Mensaje = "No existe esa tabla.";
+                    OnPostIngreso();
+                }
             }
             catch (Exception ex)
             {
@@ -79,11 +86,17 @@ namespace asp_presentacion.Pages.Ventanas.AccionesEmpleados
 
                 if (FiltroAccion == null)
                 {
-                    Mensaje = "No existe esa accion.";
+                    OnPostIngreso();
                     return;
                 }
 
                 ListaAuditoriasAccion = ListaAuditorias!.Where(x => x.Accion!.ToUpper().Equals(FiltroAccion!.ToUpper())).ToList();
+
+                if (ListaAuditoriasAccion.IsNullOrEmpty())
+                {
+                    Mensaje = "No existe esa accion.";
+                    OnPostIngreso();
+                }
             }
             catch (Exception ex)
             {

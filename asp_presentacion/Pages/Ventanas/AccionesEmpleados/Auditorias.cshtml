@@ -8,17 +8,25 @@
     <form method="POST">
         @Html.AntiForgeryToken()
         <div class="informacion">
-            <div>
+            <div style="display:flex; gap: 1.5vh;">
                 <input type="submit" name="Listar" value="Listar" class="acciones_Usuario_btns" asp-page-handler="Ingreso" />
                 <input type="submit" name="Volver" value="Volver al perfil" class="acciones_Usuario_btns" asp-page="/Ventanas/Perfiles/EmpleadosPerfil" asp-page-handler="Ingreso" />
 
-                <input type="text" name="FiltroTabla" placeholder="Filtro por tabla" asp-for="@Model.FiltroTabla" value="" />
-                <button type="submit" class="filtro_btn" asp-page-handler="BtnFiltroTabla"> Aplicar Filtro </button>
-
-                <input type="text" name="FiltroAccion" placeholder="Filtro por tabla" asp-for="@Model.FiltroAccion" value="" />
-                <button type="submit" class="filtro_btn" asp-page-handler="BtnFiltroAccion"> Aplicar Filtro </button>
+                <form method="post" >
+                    <input type="text" name="FiltroTabla" placeholder="Filtro por tabla" asp-for="@Model.FiltroTabla" value="" asp-for="@Model.FiltroAccion" />
+                    <button type="submit" class="acciones_Usuario_btns" asp-page-handler="BtnFiltroTabla"> Aplicar Filtro </button>
+                
+                    <input type="text" name="FiltroAccion" placeholder="Filtro por Accion" asp-for="@Model.FiltroAccion" value="" asp-for="@Model.FiltroAccion" />
+                    <button type="submit" class="acciones_Usuario_btns" asp-page-handler="BtnFiltroAccion"> Aplicar Filtro </button>
+                </form>
 
             </div>
+            @if (!string.IsNullOrEmpty(Model.Mensaje))
+            {
+                <p class="error_mensaje">
+                    @Model.Mensaje
+                </p>
+            }
             <table class="tb_data table table-striped table-bordered table-hover">
                 <tr>
                     <th>
