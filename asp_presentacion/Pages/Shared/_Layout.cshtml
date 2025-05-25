@@ -36,30 +36,32 @@
                                 Cesta
                             </a>
                         </li>
-                        @if(User.IsInRole("Cliente")){
-                            <li class="nav-item">
-                                <a class="nav-link text-dark"
-                                   asp-area=""
-
-                                   asp-page="/Ventanas/Perfiles/ClientesPerfil">
-                                    Perfil
-                                </a>
-                            </li>
-                        }
-                        @if(User.IsInRole("Admin") || User.IsInRole("Empleado")){
-                            <li class="nav-item">
-                                <a class="nav-link text-dark"
-                                   asp-area=""
-                                   asp-page="/Ventanas/Perfiles/EmpleadosPerfil">
-
-                                    Perfil
-                                </a>
-                            </li>
-                        }
+                        
                     </ul>
                 </div>
-
-                <a class="navbar-brand" asp-area="" asp-page="/Ventanas/Loggins/IniciarSesion">Iniciar Sesion</a>
+                @if (!User.IsInRole("Cliente") && !User.IsInRole("Admin") && !User.IsInRole("Empleado"))
+                {
+                    <a class="navbar-brand" asp-area="" asp-page="/Ventanas/Loggins/IniciarSesion">Iniciar Sesion</a>
+                }
+                else
+                {
+                    @if (User.IsInRole("Cliente"))
+                    {
+                        <a class="navbar-brand"
+                            asp-area=""
+                            asp-page="/Ventanas/Perfiles/ClientesPerfil">
+                            Perfil
+                        </a>
+                    }
+                    @if (User.IsInRole("Admin") || User.IsInRole("Empleado"))
+                    {
+                        <a class="navbar-brand"
+                            asp-area=""
+                            asp-page="/Ventanas/Perfiles/EmpleadosPerfil">
+                            Perfil
+                        </a>
+                    }
+                }
 
             </div>
         </nav>
