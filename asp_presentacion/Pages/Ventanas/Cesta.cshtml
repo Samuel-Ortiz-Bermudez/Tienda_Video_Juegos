@@ -1,7 +1,7 @@
 ﻿@page
 @model asp_presentacion.Pages.Ventanas.CestaModel
 @{
-	ViewData["Title"] = "Tu cesta";
+	ViewData["Titulo"] = "Tu cesta";
 }
 
 
@@ -21,10 +21,10 @@
                     <th>Cantidad</th>
                     <th>Precio unitario</th>
                     <th>Subtotal</th>
+                    <th>Accion</th>
                 </tr>
             </thead>
         
-
             <tbody>
                 @if (Model.Cesta != null)
                 {
@@ -35,11 +35,9 @@
                             <td>@item.Cantidad</td>
                             <td>@item._Videojuego?.Precio.ToString("C")</td>
                             <td>@item.Subtotal.ToString("C")</td>
-                            <td>
-                                <form method="post" >
-                                    <input type="hidden" name="id" value="@item.Videojuego" />
-                                    <button type="submit" class="btn-eliminar" asp-page-handler="EliminarDeCesta">Eliminar</button>
-                                </form>
+                            <td>                              
+                                <input type="hidden" name="id" value="@item.Videojuego" />
+                                <button type="submit" class="btn-eliminar" asp-route-id="@item._Videojuego!.Id" asp-page-handler="EliminarDeCesta">Eliminar</button>
                             </td>
                         </tr>
                     }   

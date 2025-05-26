@@ -4,7 +4,6 @@ using lib_presentaciones.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
 
 namespace asp_presentacion.Pages.Ventanas
@@ -17,7 +16,11 @@ namespace asp_presentacion.Pages.Ventanas
         private IDetallesComprasPresentacion? IPresentacionDetalles = null;
         private IInventariosPresentacion? IPresentacionInvetarios = null;
 
-        public CestaModel(IComprasPresentacion IcomprasPresentacion, IEmpleadosPresentacion IPresentacionEmpleados, IDetallesComprasPresentacion IPresentacionDetalles, IInventariosPresentacion IPresentacionInvetarios)
+        public CestaModel(
+            IComprasPresentacion IcomprasPresentacion, 
+            IEmpleadosPresentacion IPresentacionEmpleados, 
+            IDetallesComprasPresentacion IPresentacionDetalles, 
+            IInventariosPresentacion IPresentacionInvetarios)
         {
             try
             {
@@ -51,9 +54,12 @@ namespace asp_presentacion.Pages.Ventanas
                 if (Cesta.IsNullOrEmpty())
                 {
                     HttpContext.Response.Redirect("/Ventanas/Videojuegos");
+                    return;
                 }
                 Total = Cesta.Sum(c => c.Subtotal);
                 OnPostCargarSelect();
+
+                
             }
             catch(Exception ex)
             {
@@ -84,6 +90,15 @@ namespace asp_presentacion.Pages.Ventanas
             try
             {
                 var cesta = HttpContext.Session.GetObjectFromJson<List<DetallesCompras>>("Cesta") ?? new List<DetallesCompras>();
+                if (cesta.IsNullOrEmpty())
+                {
+                    return RedirectToPage();
+                }
+                if (!ModelState.IsValid)
+                {
+                    Mensaje = "Solicitud no válida.";
+                    return BadRequest(ModelState);
+                }
 
                 var item = cesta.FirstOrDefault(d => d.Videojuego == id);
                 if (item != null)
@@ -218,6 +233,7 @@ namespace asp_presentacion.Pages.Ventanas
                     
                     var ActualizacionTask = this.IPresentacionInvetarios!.Modificar(stock!);
                     ActualizacionTask.Wait();
+
                 }
                 CantidadBool = true;
                 return;

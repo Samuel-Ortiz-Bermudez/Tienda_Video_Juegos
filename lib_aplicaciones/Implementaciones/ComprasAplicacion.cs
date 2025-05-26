@@ -85,7 +85,7 @@ namespace lib_aplicaciones.Implementaciones
         public List<Compras> PorCliente(Compras? entidad)
         {
             this.IConexion!.Auditorias!.Add(
-                new Auditorias() { Accion = "PorCodigo", Fecha = DateTime.Now, Tabla = "Compras" }
+                new Auditorias() { Accion = "PorClientes", Fecha = DateTime.Now, Tabla = "Compras" }
                 );
             this.IConexion.SaveChanges();
 
