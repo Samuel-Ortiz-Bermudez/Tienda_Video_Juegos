@@ -1,3 +1,4 @@
+using System;
 using lib_dominio.Entidades;
 using lib_dominio.Nucleo;
 using lib_presentaciones.Interfaces;
@@ -22,7 +23,8 @@ namespace asp_presentacion.Pages.Ventanas
 
         [BindProperty]
         public List<Inventarios>? ListaInventarios { get; set; }
-
+        [BindProperty]
+        public Enumerables.Ventanas Accion { get; set; }
         [BindProperty]
         public string? Mensaje { get; set; }
 
@@ -79,6 +81,18 @@ namespace asp_presentacion.Pages.Ventanas
             return Page();
         }
 
+        public void OnPostMostrarCrear()
+        {
+            try
+            {
+                Accion = Enumerables.Ventanas.Crear;
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
+
         public IActionResult OnPostCrearInventario()
         {
             try
@@ -94,6 +108,7 @@ namespace asp_presentacion.Pages.Ventanas
                 crear.Wait();
 
                 Mensaje = "Inventario creado exitosamente.";
+                Accion = Enumerables.Ventanas.Listas;
             }
             catch (Exception ex)
             {
