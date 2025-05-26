@@ -34,10 +34,10 @@
                         <td>$@inv._Videojuego?.Precio</td>
                         <td>@inv.Cantidad</td>
                         <td>
-                            <form method="post" asp-page-handler="ActualizarStock">
+                        <form method="post" asp-page-handler="ActualizarStock" asp-route-codigo="@inv.Codigo">
                                 <input type="hidden" name="Id" value="@inv.Id" />
                                 <input type="number" name="NuevaCantidad" class="form-control" min="0" value="@inv.Cantidad" />
-                                <button type="submit" class="btn btn-primary btn-sm mt-1">Actualizar</button>
+                                <button type="submit" class="btn btn-primary btn-sm mt-1" >Actualizar</button>
                             </form>
                         </td>
                     </tr>
