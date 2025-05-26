@@ -46,6 +46,12 @@ namespace lib_aplicaciones.Implementaciones
                 new Auditorias() { Accion = "Guardar", Fecha = DateTime.Now, Tabla = "Compras" }
                 );
 
+            var ultimaCompraCodigo = this.IConexion!.Compras!.OrderByDescending(c => c.Id).FirstOrDefault()!.Codigo!.Split("-");
+
+            var numero = int.Parse(ultimaCompraCodigo[1]) + 1;
+
+            entidad.Codigo = ultimaCompraCodigo[0] +"-"+ numero.ToString();
+
             this.IConexion!.Compras!.Add(entidad);
             this.IConexion.SaveChanges();
             return entidad;
@@ -73,6 +79,18 @@ namespace lib_aplicaciones.Implementaciones
                 .Where(x => x.Codigo!.Contains(entidad!.Codigo!))
                 .Include(x => x._Cliente)
                 .Include(x => x._Empleado)
+                .ToList();
+        }
+
+        public List<Compras> PorCliente(Compras? entidad)
+        {
+            this.IConexion!.Auditorias!.Add(
+                new Auditorias() { Accion = "PorCodigo", Fecha = DateTime.Now, Tabla = "Compras" }
+                );
+            this.IConexion.SaveChanges();
+
+            return this.IConexion!.Compras!
+                .Where(x => x.Cliente! == entidad!.Cliente!)
                 .ToList();
         }
 

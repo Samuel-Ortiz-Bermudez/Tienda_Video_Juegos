@@ -4,44 +4,72 @@
 	ViewData["Title"] = "Tu cesta";
 }
 
-@if (Model.Cesta != null && Model.Cesta.Any())
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Juego</th>
-                <th>Cantidad</th>
-                <th>Precio unitario</th>
-                <th>Subtotal</th>
-            </tr>
-        </thead>
+<form method="POST">
+	@if (Model.Cesta != null && Model.Cesta.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Juego</th>
+                    <th>Cantidad</th>
+                    <th>Precio unitario</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
         
 
-        <tbody>
-            @foreach (var item in Model.Cesta)
-            {
-                <tr>
-                    <td>@item._Videojuego?.Nombre</td>
-                    <td>@item.Cantidad</td>
-                    <td>@item._Videojuego?.Precio.ToString("C")</td>
-                    <td>@item.Subtotal.ToString("C")</td>
-                    <td>
-                        <form method="post" asp-page-handler="EliminarDeCesta">
-                            <input type="hidden" name="id" value="@item.Videojuego" />
-                            <button type="submit" class="btn-eliminar">Eliminar</button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+            <tbody>
+                @foreach (var item in Model.Cesta)
+                {
+                    <tr>
+                        <td>@item._Videojuego?.Nombre</td>
+                        <td>@item.Cantidad</td>
+                        <td>@item._Videojuego?.Precio.ToString("C")</td>
+                        <td>@item.Subtotal.ToString("C")</td>
+                        <td>
+                            <form method="post" asp-page-handler="EliminarDeCesta">
+                                <input type="hidden" name="id" value="@item.Videojuego" />
+                                <button type="submit" class="btn-eliminar">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-    <h4>Total: @Model.Total.ToString("C")</h4>
+        <h4>Total: @Model.Total.ToString("C")</h4>
 
+        <div>
+            <form method="POST" >
 
-}
-else
-{
-    <p>No tienes productos en tu cesta.</p>
-}
+                <label>
+                    Metodo de pago
+                </label>
+                <select name="MetodoSeleccionado" asp-for="@Model.MetodoSeleccionado">
+                    <option value="Efectivo">Efectivo</option>
+                    <option value="Tarjeta">Tarjeta</option>
+                </select>
+                <label>
+                    Empleado
+                </label>
+                <select asp-for="@Model.EmpleadoSeleccionado">
+                    @foreach (var empleado in Model.ListaEmpleados!)
+                    {
+                        <option value="@empleado.Id">@empleado.Nombre</option>
+                    }
+                </select>
+                <button type="submit"
+                        class="acciones_Usuario_btns"
+                        asp-page-handler="ConfirmarCompra">
+                    Confirmar compra.
+                </button>
+            </form>
+
+        </div>
+    }
+    else
+    {
+        <p>No tienes productos en tu cesta.</p>
+    }
+</form>
 

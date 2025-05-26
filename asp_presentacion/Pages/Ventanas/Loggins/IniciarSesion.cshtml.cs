@@ -103,7 +103,8 @@ namespace asp_presentacion.Pages.Ventanas.Loggins
                         var claims = new List<Claim> {
                             new Claim(ClaimTypes.Name, partes[0]),
                             new Claim("Correo", EmpleadoSesion.Correo),
-                            new Claim(ClaimTypes.Role, EmpleadoCuenta[0].Rol!)
+                            new Claim(ClaimTypes.Role, EmpleadoCuenta[0].Rol!),
+                            new Claim("Id", EmpleadoCuenta[0].Empleado!.ToString())
                         };
 
                         var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -144,7 +145,9 @@ namespace asp_presentacion.Pages.Ventanas.Loggins
                     var claims = new List<Claim> {
                         new Claim(ClaimTypes.Name, partes[0]),
                         new Claim("Correo", ClienteSesion.Correo),
-                        new Claim(ClaimTypes.Role, "Cliente")
+                        new Claim(ClaimTypes.Role, "Cliente"),
+                        new Claim("Id", ClienteCuenta[0].Cliente!.ToString())
+
                     };
 
                     var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

@@ -6,6 +6,7 @@ namespace lib_presentaciones.Interfaces
     {
         Task<List<Compras>> Listar();
         Task<List<Compras>> PorCodigo(Compras? entidad);
+        Task<List<Compras>> PorCliente(Compras? entidad);
         Task<Compras?> Guardar(Compras? entidad);
         Task<Compras?> Modificar(Compras? entidad);
         Task<Compras?> Borrar(Compras? entidad);

@@ -1,21 +1,30 @@
 using lib_dominio.Entidades;
 using lib_dominio.Nucleo;
 using lib_presentaciones.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace asp_presentacion.Pages.Ventanas
 {
+    [Authorize]
     public class CestaModel : PageModel
     {
-        private IComprasPresentacion _comprasPresentacion = null;
+        private IComprasPresentacion? IcomprasPresentacion = null;
+        private IEmpleadosPresentacion? IPresentacionEmpleados = null;
+        private IDetallesComprasPresentacion? IPresentacionDetalles = null;
+        private IInventariosPresentacion? IPresentacionInvetarios = null;
 
-        public CestaModel(IComprasPresentacion _comprasPresentacion)
+        public CestaModel(IComprasPresentacion IcomprasPresentacion, IEmpleadosPresentacion IPresentacionEmpleados, IDetallesComprasPresentacion IPresentacionDetalles, IInventariosPresentacion IPresentacionInvetarios)
         {
             try
             {
-                this._comprasPresentacion = _comprasPresentacion;
+                this.IcomprasPresentacion = IcomprasPresentacion;
+                this.IPresentacionEmpleados = IPresentacionEmpleados;
+                this.IPresentacionDetalles = IPresentacionDetalles;
+                this.IPresentacionInvetarios = IPresentacionInvetarios;
 
+                Compra = new Compras();
             }
             catch (Exception ex)
             {
@@ -23,17 +32,29 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        [BindProperty] public List<DetallesCompras> Cesta { get; set; } = new();
+        [BindProperty] public List<DetallesCompras>? Cesta { get; set; }
+        [BindProperty] public List<Empleados>? ListaEmpleados { get; set; }
+        [BindProperty] public string? MetodoSeleccionado { get; set; }
+        [BindProperty] public int EmpleadoSeleccionado { get; set; }
+        public Compras? Compra { get; set; }
         public decimal Total { get; set; }
-        public string MetodoSeleccionado { get; set; }
-        public int clienteId { get; set; }
-        public int empleadoId { get; set; }
 
         public void OnGet()
         {
+            try
+            {
+                Cesta = HttpContext.Session.GetObjectFromJson<List<DetallesCompras>>("Cesta") ?? new List<DetallesCompras>();
+                Total = Cesta.Sum(c => c.Subtotal);
+                var taskEmpleados = this.IPresentacionEmpleados!.Listar();
+                taskEmpleados.Wait();
+
+                ListaEmpleados = taskEmpleados.Result.Where( x => x.Nombre != "Admin").ToList();
+            }
+            catch(Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
             
-            Cesta = HttpContext.Session.GetObjectFromJson<List<DetallesCompras>>("Cesta") ?? new List<DetallesCompras>();
-            Total = Cesta.Sum(c => c.Subtotal);
         }
 
 
@@ -58,6 +79,7 @@ namespace asp_presentacion.Pages.Ventanas
 
                     HttpContext.Session.SetObjectAsJson("Cesta", cesta);
                     TempData["Mensaje"] = "Cantidad actualizada en la cesta.";
+
                 }
                 else
                 {
@@ -73,7 +95,7 @@ namespace asp_presentacion.Pages.Ventanas
             return RedirectToPage();
         }
 
-        public async Task<IActionResult> OnPostConfirmarCompraAsync()
+        public void OnPostConfirmarCompra()
         {
             try
             {
@@ -81,36 +103,66 @@ namespace asp_presentacion.Pages.Ventanas
                 if (cesta == null || !cesta.Any())
                 {
                     TempData["Mensaje"] = "No hay productos en la cesta.";
-                    return RedirectToPage();
+                    RedirectToPage();
+                    return;
                 }
 
-                var compra = new Compras
-                {
-                    FechaVenta = DateTime.Now,
-                    MetodoPago = MetodoSeleccionado,
-                    Cliente = clienteId,
-                    Empleado = empleadoId,
-                    DetallesCompra = Cesta
-                };
 
-                compra.CalculoTotal();
+                Compra!.FechaVenta = DateTime.Now;
+                Compra!.MetodoPago = MetodoSeleccionado;
+                Compra!.Cliente = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "Id")?.Value!);
+                Compra!.Empleado = EmpleadoSeleccionado;
+                Compra!.DetallesCompra = cesta;
 
-                var resultado = await this._comprasPresentacion!.Guardar(compra);
+                Compra!.CalculoTotal();
+                Compra!.DetallesCompra = null;
+                var taskGuardar = this.IcomprasPresentacion!.Guardar(Compra);
+                taskGuardar.Wait();
 
-                // Limpia la sesión
+                OnPostGuardarDetalles();
+
                 HttpContext.Session.Remove("Cesta");
 
                 TempData["Mensaje"] = "Compra realizada exitosamente.";
+                RedirectToPage("/Ventanas/Videojuegos");
+                return;
             }
             catch (Exception ex)
             {
                 LogConversor.Log(ex, ViewData!);
                 TempData["Mensaje"] = "Error al confirmar la compra.";
             }
+            
+        }
 
-            return RedirectToPage("/Ventanas/Videojuegos");
+        public void OnPostGuardarDetalles()
+        {
+            try
+            {
+                var cesta = HttpContext.Session.GetObjectFromJson<List<DetallesCompras>>("Cesta");
+
+
+
+                var ultimaCompra = this.IcomprasPresentacion!.PorCliente(Compra);
+                ultimaCompra.Wait();
+                var idCompra = ultimaCompra.Result.OrderByDescending(c => c.Id).FirstOrDefault()!.Id;
+
+
+                foreach (var detalle in cesta!)
+                {
+                    detalle.Compra = idCompra;
+                    detalle._Videojuego = null;
+                    var guardarDetalle = this.IPresentacionDetalles!.Guardar(detalle);
+                    guardarDetalle.Wait();
+                }
+                
+                return;
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+                TempData["Mensaje"] = "Error al confirmar la compra.";
+            }
         }
     }
-
-
 }

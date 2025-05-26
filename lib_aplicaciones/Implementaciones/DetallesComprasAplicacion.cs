@@ -46,6 +46,12 @@ namespace lib_aplicaciones.Implementaciones
                 new Auditorias() { Accion = "Guardar", Fecha = DateTime.Now, Tabla = "DetallesCompras" }
                 );
 
+            var ultimaDetalleCodigo = this.IConexion!.DetallesCompras!.OrderByDescending(c => c.Id).FirstOrDefault()!.Codigo!.Split("-");
+
+            var numero = int.Parse(ultimaDetalleCodigo[1]) + 1;
+
+            entidad.Codigo = ultimaDetalleCodigo[0] + "-" + numero.ToString();
+
             this.IConexion!.DetallesCompras!.Add(entidad);
             this.IConexion.SaveChanges();
             return entidad;
@@ -65,7 +71,7 @@ namespace lib_aplicaciones.Implementaciones
         public List<DetallesCompras> PorCodigo(DetallesCompras? entidad)
         {
             this.IConexion!.Auditorias!.Add(
-                new Auditorias() { Accion = "PorCodigo", Fecha = DateTime.Now, Tabla = "DetallesCompras" }
+                new Auditorias() { Accion = "PorCliente", Fecha = DateTime.Now, Tabla = "DetallesCompras" }
                 );
             this.IConexion.SaveChanges();
             return this.IConexion!.DetallesCompras!
