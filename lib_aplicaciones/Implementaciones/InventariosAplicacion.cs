@@ -57,7 +57,7 @@ namespace lib_aplicaciones.Implementaciones
                 new Auditorias() { Accion = "Listar", Fecha = DateTime.Now, Tabla = "Inventarios" }
                 );
             this.IConexion.SaveChanges();
-            return this.IConexion!.Inventarios!.Take(20).ToList();
+            return this.IConexion!.Inventarios!.Take(20).Include(x => x._Videojuego).ToList();
         }
 
         public List<Inventarios> PorCodigo(Inventarios? entidad)
@@ -68,6 +68,7 @@ namespace lib_aplicaciones.Implementaciones
             this.IConexion.SaveChanges();
             return this.IConexion!.Inventarios!
                 .Where(x => x.Codigo!.Contains(entidad!.Codigo!))
+                .Include(x => x._Videojuego)
                 .ToList();
         }
 

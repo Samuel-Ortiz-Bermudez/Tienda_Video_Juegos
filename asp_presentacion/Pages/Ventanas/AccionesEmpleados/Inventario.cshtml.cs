@@ -1,11 +1,13 @@
 using lib_dominio.Entidades;
 using lib_dominio.Nucleo;
 using lib_presentaciones.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace asp_presentacion.Pages.Ventanas
 {
+    [Authorize(Roles ="Admin, Empleado")]
     public class InventariosModel : PageModel
     {
         [BindProperty]
