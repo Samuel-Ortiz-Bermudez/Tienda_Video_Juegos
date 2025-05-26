@@ -129,10 +129,8 @@ namespace asp_presentacion.Pages.Ventanas
                 
                 OnPostValidacionCantidad();
                 
-                if ( CantidadBool == false)
-                {
-                    return;
-                }
+                if ( CantidadBool == false) return;
+                
 
                 Compra!.FechaVenta = DateTime.Now;
                 Compra!.MetodoPago = MetodoSeleccionado;

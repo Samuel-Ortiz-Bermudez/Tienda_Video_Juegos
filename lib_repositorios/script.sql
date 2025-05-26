@@ -78,7 +78,7 @@ CREATE TABLE [Suministros] (
 CREATE TABLE [CuentasEmpleados] (
 	[Id] INT PRIMARY KEY IDENTITY (1,1),
 	[Correo] NVARCHAR (100),
-	[Contrasena] NVARCHAR (100),
+	[Contrasena] NVARCHAR (200),
 	[Rol] NVARCHAR (100),
 	
 	[Empleado] INT NOT NULL REFERENCES [Empleados]([Id])
@@ -87,7 +87,7 @@ CREATE TABLE [CuentasEmpleados] (
 CREATE TABLE [CuentasClientes] (
 	[Id] INT PRIMARY KEY IDENTITY (1,1),
 	[Correo] NVARCHAR (100),
-	[Contrasena] NVARCHAR (100),
+	[Contrasena] NVARCHAR (200),
 	
 	[Cliente] INT NOT NULL REFERENCES [Clientes]([Id])
 )
@@ -163,18 +163,18 @@ VALUES
 
 INSERT INTO [CuentasClientes] ( [Correo], [Contrasena], [Cliente])
 VALUES 
-( 'andres@gmail.com', '4561', 1),
-( 'alejandra@gmail.com', '12547', 2),
-( 'tomas@gmail.com', '12035', 3),
-( 'miguel@gmail.com', '12032', 4),
-( 'sara@gmail.com', '02147', 5);
+( 'andres@gmail.com', 'AQAAAAEAACcQAAAAEHlVZjqXsw5aJ3Xr7mKknHXgOqOVSWhznF+gC2iLW8iZVNzl+bw3Yz425Rg9G8Ii+g==', 1),
+( 'alejandra@gmail.com', 'AQAAAAEAACcQAAAAENcV6sgzXgLOI0HN1aJpnXZPOxIQ/JzNqNtRs6cDw8rS8NqXNeFGL9iA8MtxJHsA/A==', 2),
+( 'tomas@gmail.com', 'AQAAAAEAACcQAAAAEOzIILRRNe9Fzz8CiyTAqDyI4o/f/wDuTxcY8WXOElVtzQiG4xZNpGrZMtxCueUarQ==', 3),
+( 'miguel@gmail.com', 'AQAAAAEAACcQAAAAEIBLUx4cDvBVGxsGJamlpVBM7w8FiUudcaiyo5jwXp4RvtkS1Kmh2fUgIKbxEL34bQ==', 4),
+( 'sara@gmail.com', 'AQAAAAEAACcQAAAAEA2Cbo1qyOwsHEv47ot+krXeqoOeitdZuxsp+GbHPncBUsKswZXAW2mFpQT9NGAMNw==', 5);
 
 INSERT INTO [CuentasEmpleados] ( [Correo], [Contrasena], [Empleado], [Rol])
 VALUES 
-( 'juan@tienda.com', '1234', 1, 'Admin'),
-( 'esteban@tienda.com', '12567', 2, 'Empleado'),
-( 'Alex@tienda.com', '12035', 3, 'Empleado'),
-( 'Admin@tienda.com', '123', 4, 'Admin');
+( 'juan@tienda.com', 'AQAAAAEAACcQAAAAEMqDcz4ZR4qNOiem+wxan6GmganLw1sq9c7rfrxlZ3sBg3ktzw+h6G/JHW3RjWhWEA==', 1, 'Admin'),
+( 'esteban@tienda.com', 'AQAAAAEAACcQAAAAELhuQ1pqTGtHrueGvV/25ltquoJNHrJKJ9PgII52kg2ROcPIJUC7xPYCE6UKr+gLRg==', 2, 'Empleado'),
+( 'Alex@tienda.com', 'AQAAAAEAACcQAAAAEN/O8/rmxZMIYB3d47cpi3FAWXnsoxydsthMOdZUg6U+S0l73ldH5wA28BsGgamimw==', 3, 'Empleado'),
+( 'Admin@tienda.com', 'AQAAAAEAACcQAAAAEIEcE4wggzSYsJoUm/B5bgxgFEDzPIaAfrkvlWIaYgmOXKjYMzuDMzU2uPh2HGtQ+Q==', 4, 'Admin');
 
 Select * FROM [Videojuegos];
 Select * FROM [Clientes];

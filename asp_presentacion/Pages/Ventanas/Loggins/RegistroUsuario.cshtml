@@ -23,37 +23,37 @@
                 <label>
                     Nombre Completo.
                 </label>
-                <input type="text" name="Nombre" placeholder="Escribir Nombre" class="sesion_form_inputs" asp-for="@Model.Nombre"/>
+                <input type="text" name="Cliente.Nombre" placeholder="Escribir Nombre" class="sesion_form_inputs" asp-for="@Model.Cliente!.Nombre"/>
             </div>
             <div>
                 <label>
                     Cedula.
                 </label>
-                <input type="number" name="Cedula" placeholder="Escribir Cedula" class="sesion_form_inputs" asp-for="@Model.Cedula" />
+                <input type="number" name="Cliente.Cedula" placeholder="Escribir Cedula" class="sesion_form_inputs" asp-for="@Model.Cliente!.Cedula" />
             </div>
             <div>
                 <label>
                     Direccion.
                 </label>
-                <input type="text" name="Direccion" placeholder="Escribir Direccion" class="sesion_form_inputs" asp-for="@Model.Direccion" />
+                <input type="text" name="Cliente.Direccion" placeholder="Escribir Direccion" class="sesion_form_inputs" asp-for="@Model.Cliente!.Direccion" />
             </div>
             <div>
                 <label>
                     Telefono.
                 </label>
-                <input type="number" name="Telefono" placeholder="Escribir Telefono" class="sesion_form_inputs" asp-for="@Model.Telefono" />
+                <input type="number" name="Cliente.Telefono" placeholder="Escribir Telefono" class="sesion_form_inputs" asp-for="@Model.Cliente!.Telefono" />
             </div>
             <div>
                 <label>
                     Correo.
                 </label>
-                <input type="email" name="Correo" placeholder="Escribir correo" class="sesion_form_inputs" asp-for="@Model.Correo" />
+                <input type="email" name="Cuenta.Correo" placeholder="Escribir correo" class="sesion_form_inputs" asp-for="@Model.Cuenta!.Correo" />
             </div>
             <div>
                 <label>
                     Contraseña.
                 </label>
-                <input type="text" name="Contrasena" placeholder="Escribir contraseña" class="sesion_form_inputs" asp-for="@Model.Contrasena" />
+                <input type="text" name="Cuenta.Contrasena" placeholder="Escribir contraseña" class="sesion_form_inputs" asp-for="@Model.Cuenta!.Contrasena" />
             </div>
             
             <button type="submit" class="sesion_form_buttons" asp-page-handler="BtnRegistrar">Registrarse</button>

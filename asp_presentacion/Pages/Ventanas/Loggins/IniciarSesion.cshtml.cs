@@ -1,11 +1,13 @@
+using System.Security.Claims;
 using lib_dominio.Entidades;
 using lib_dominio.Nucleo;
 using lib_presentaciones.Interfaces;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
 
 namespace asp_presentacion.Pages.Ventanas.Loggins
 {
@@ -22,6 +24,8 @@ namespace asp_presentacion.Pages.Ventanas.Loggins
 
                 this.iPresentacionClientes = iPresentacionClientes;
                 ClienteSesion = new CuentasClientes();
+
+                Hasher = new PasswordHasher<string>();
             }
             catch (Exception ex)
             {
@@ -39,13 +43,17 @@ namespace asp_presentacion.Pages.Ventanas.Loggins
 
         [BindProperty] public CuentasEmpleados? EmpleadoSesion { get; set; }
         [BindProperty] public List<CuentasEmpleados>? EmpleadoCuenta { get; set; }
+        private PasswordHasher<string>? Hasher { get; set; }
+        private PasswordVerificationResult Resultado { get; set; }
+        private bool Validacion { get; set; }
+        private string[]? Partes { get; set; }
 
         public void OnGet()
         {
-            OnPostBtnInicio();
+            OnPostBtnIniciar();
         }
 
-        public void OnPostBtnClean()
+        public void OnPostClean()
         {
             try
             {
@@ -58,66 +66,44 @@ namespace asp_presentacion.Pages.Ventanas.Loggins
             }
         }
 
-        public async void OnPostBtnInicio()
+        public void OnPostBtnIniciar()
         {
             try
             {
                 if (string.IsNullOrEmpty(Correo) && string.IsNullOrEmpty(Contrasena))
                 {
-                    OnPostBtnClean();
+                    OnPostClean();
                     return;
                 }
 
-                string[] partes = Correo!.Split('@');
+                Partes = Correo!.Split('@');
 
-
-                //Validacion de que sea cuenta de empleado
-                if (partes[1] == "tienda.com")
+                
+                if (Partes[1] == "tienda.com")
                 {
-                    EmpleadoSesion!.Correo = Correo;
-                    EmpleadoSesion!.Contrasena = Contrasena;
-                    var taskEmpleadosSesion = iPresentacionEmpleados!.PorCorreo(EmpleadoSesion!);
-                    taskEmpleadosSesion.Wait();
-                    EmpleadoCuenta = taskEmpleadosSesion.Result;
-
-                    //Validacion de credenciales
-
-                    if (EmpleadoCuenta == null)
-                    {
-                        EmpleadoSesion = null;
-                        return;
-                    }
-
-                    if (!EmpleadoSesion.Correo.ToUpper().Equals(EmpleadoCuenta[0].Correo!.ToUpper()) || EmpleadoSesion.Contrasena != EmpleadoCuenta[0].Contrasena)
-                    {
-                        EmpleadoSesion = null;
-                        OnPostBtnClean();
-                        Mensaje = "Contraseña o Correo incorrectos.";
-                        return;
-                    }
-                    if (EmpleadoSesion.Correo.ToUpper().Equals(EmpleadoCuenta[0].Correo!.ToUpper()) && EmpleadoSesion.Contrasena == EmpleadoCuenta[0].Contrasena)
-                    {
-                        ViewData["Logged"] = true;
-                        HttpContext.Session.SetString(partes[0], Correo!);
-
-                        var claims = new List<Claim> {
-                            new Claim(ClaimTypes.Name, partes[0]),
-                            new Claim("Correo", EmpleadoSesion.Correo),
-                            new Claim(ClaimTypes.Role, EmpleadoCuenta[0].Rol!),
-                            new Claim("Id", EmpleadoCuenta[0].Empleado!.ToString())
-                        };
-
-                        var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimIdentity));
-
-                        HttpContext.Response.Redirect("/Ventanas/Videojuegos");
-                    }
-                    return;
+                    OnPostEmpleado();
+                    if (Validacion == true) return;
+                } 
+                else
+                {
+                    OnPostCliente();
+                    if (Validacion == true) return;
                 }
+                OnPostClean();
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
 
-
+        public async void OnPostCliente()
+        {
+            try
+            {
                 ClienteSesion!.Correo = Correo;
                 ClienteSesion!.Contrasena = Contrasena;
+
                 var taskClientesSesion = iPresentacionClientes!.PorCorreo(ClienteSesion!);
                 taskClientesSesion.Wait();
                 ClienteCuenta = taskClientesSesion.Result;
@@ -125,41 +111,100 @@ namespace asp_presentacion.Pages.Ventanas.Loggins
                 if (ClienteCuenta == null)
                 {
                     ClienteSesion = null;
+                    Validacion = false;
                     return;
                 }
 
+                if (string.IsNullOrEmpty(EmpleadoSesion!.Contrasena))
 
-                if (!ClienteSesion.Correo.ToUpper().Equals(ClienteCuenta[0].Correo!.ToUpper()) || ClienteSesion.Contrasena != ClienteCuenta[0].Contrasena)
+                Hasher = new PasswordHasher<string>();
+                Resultado = Hasher!.VerifyHashedPassword(null!, ClienteCuenta[0]!.Contrasena!, ClienteSesion!.Contrasena!);
+
+                if (!ClienteSesion!.Correo!.ToUpper().Equals(ClienteCuenta[0].Correo!.ToUpper()) || Resultado == PasswordVerificationResult.Failed)
                 {
                     ClienteSesion = null;
-                    OnPostBtnClean();
+                    OnPostClean();
                     Mensaje = "Contraseña o Correo incorrectos.";
+                    Validacion = false;
                     return;
                 }
 
-                if (ClienteSesion.Correo.ToUpper().Equals(ClienteCuenta[0].Correo!.ToUpper()) && ClienteSesion.Contrasena == ClienteCuenta[0].Contrasena)
+                if (ClienteSesion.Correo.ToUpper().Equals(ClienteCuenta[0].Correo!.ToUpper()) && (Resultado == PasswordVerificationResult.Success || Resultado == PasswordVerificationResult.SuccessRehashNeeded))
                 {
                     ViewData["Logged"] = true;
-                    HttpContext.Session.SetString(partes[0], Correo!);
+                    HttpContext.Session.SetString(Partes![0], Correo!);
 
                     var claims = new List<Claim> {
-                        new Claim(ClaimTypes.Name, partes[0]),
-                        new Claim("Correo", ClienteSesion.Correo),
-                        new Claim(ClaimTypes.Role, "Cliente"),
-                        new Claim("Id", ClienteCuenta[0].Cliente!.ToString())
-
+                    new Claim(ClaimTypes.Name, Partes[0]),
+                    new Claim("Correo", ClienteSesion.Correo),
+                    new Claim(ClaimTypes.Role, "Cliente"),
+                    new Claim("Id", ClienteCuenta[0].Cliente!.ToString())
                     };
+                    
+                    var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimIdentity));
+
+                    HttpContext.Response.Redirect("/Ventanas/Videojuegos");
+                    Validacion = true;
+                }
+                return;
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
+
+        public async void OnPostEmpleado()
+        {
+            try
+            {
+                EmpleadoSesion!.Correo = Correo;
+                EmpleadoSesion!.Contrasena = Contrasena;
+                var taskEmpleadosSesion = iPresentacionEmpleados!.PorCorreo(EmpleadoSesion!);
+                taskEmpleadosSesion.Wait();
+                EmpleadoCuenta = taskEmpleadosSesion.Result;
+
+                if (EmpleadoCuenta == null)
+                {
+                    EmpleadoSesion = null;
+                    Validacion = false;
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(EmpleadoSesion!.Contrasena))
+
+                Hasher = new PasswordHasher<string>();
+                Resultado = Hasher!.VerifyHashedPassword(null!, EmpleadoCuenta[0]!.Contrasena!, EmpleadoSesion!.Contrasena!);
+
+                if (!EmpleadoSesion!.Correo!.ToUpper().Equals(EmpleadoCuenta[0].Correo!.ToUpper()) || Resultado == PasswordVerificationResult.Failed)
+                {
+                    EmpleadoSesion = null;
+                    OnPostClean();
+                    Mensaje = "Contraseña o Correo incorrectos.";
+                    Validacion = false;
+                    return;
+                }
+
+                if (EmpleadoSesion.Correo.ToUpper().Equals(EmpleadoCuenta[0].Correo!.ToUpper()) && (Resultado == PasswordVerificationResult.Success || Resultado == PasswordVerificationResult.SuccessRehashNeeded))
+                {
+                    ViewData["Logged"] = true;
+                    HttpContext.Session.SetString(Partes![0], Correo!);
+
+                    var claims = new List<Claim> {
+                            new Claim(ClaimTypes.Name, Partes[0]),
+                            new Claim("Correo", EmpleadoSesion.Correo),
+                            new Claim(ClaimTypes.Role, EmpleadoCuenta[0].Rol!),
+                            new Claim("Id", EmpleadoCuenta[0].Empleado!.ToString())
+                        };
 
                     var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimIdentity));
 
-
                     HttpContext.Response.Redirect("/Ventanas/Videojuegos");
-                    return;
+                    Validacion = true;
                 }
-
-                HttpContext.Response.Redirect("/Ventanas/RegistroUsuario");
-                OnPostBtnClean();
+                return;
             }
             catch (Exception ex)
             {

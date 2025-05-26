@@ -30,16 +30,9 @@ namespace asp_presentacion.Pages.Ventanas.Loggins
                 LogConversor.Log(ex, ViewData!);
             }
         }
+        private bool validacion { get; set; }
 
         [BindProperty] public string? Mensaje { get; set; }
-        
-        [BindProperty] public string? Nombre { get; set; }
-        [BindProperty] public string? Cedula { get; set; }
-        [BindProperty] public string? Direccion { get; set; }
-        [BindProperty] public string? Telefono { get; set; }
-        [BindProperty] public string? Correo { get; set; }
-        [BindProperty] public string? Contrasena { get; set; }
-
         [BindProperty] public CuentasClientes? Cuenta { get; set; }
         [BindProperty] public List<CuentasClientes>? ExisteCuenta { get; set; }
         [BindProperty] public Clientes? Cliente { get; set; }
@@ -54,12 +47,12 @@ namespace asp_presentacion.Pages.Ventanas.Loggins
         {
             try
             {
-                Correo = string.Empty;
-                Contrasena = string.Empty;
-                Direccion = string.Empty;
-                Nombre = string.Empty;
-                Telefono = string.Empty;
-                Cedula = string.Empty;
+                Cuenta!.Correo = string.Empty;
+                Cuenta!.Contrasena = string.Empty;
+                Cliente!.Direccion = string.Empty;
+                Cliente!.Nombre = string.Empty;
+                Cliente!.Telefono = string.Empty;
+                Cliente!.Cedula = string.Empty;
             }
             catch (Exception ex)
             {
@@ -71,66 +64,28 @@ namespace asp_presentacion.Pages.Ventanas.Loggins
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(this.Nombre) ||
-                    string.IsNullOrWhiteSpace(this.Telefono) ||
-                    string.IsNullOrWhiteSpace(this.Cedula) ||
-                    string.IsNullOrWhiteSpace(this.Direccion) ||
-                    string.IsNullOrWhiteSpace(this.Contrasena) ||
-                    string.IsNullOrWhiteSpace(this.Correo))
-                {
-                    Mensaje = "Todos los campos son obligatorios.";
-                    return;
-                }
+                OnPostValidarCampos();
+                if (validacion == false) return;
 
-                if (!this.Correo.Contains(".com"))
-                {
-                    Mensaje = "El correo debe ser valido y completo.";
-                    return;
-                }
-
-                if (string.IsNullOrWhiteSpace(this.Contrasena) || !Regex.IsMatch(this.Contrasena, @"\d"))
-                {
-                    Mensaje = "La contraseña debe tener almenos un número.";
-                    return;
-                }
-
-                Cliente!.Nombre = this.Nombre;
-                Cliente!.Telefono = this.Telefono;
-                Cliente!.Cedula = this.Cedula;
-                Cliente!.Direccion = this.Direccion;
-
-                Cuenta!.Contrasena = this.Contrasena;
-                Cuenta!.Correo = this.Correo;
-
-                var taskExisteCliente = this.iPresentacionCliente!.PorCedula(Cliente!);
-                taskExisteCliente.Wait();
-                ExisteCliente = taskExisteCliente.Result;
-
-                var taskExisteCuenta = this.iPresentacionCuenta!.PorCorreo(Cuenta!);
-                taskExisteCuenta.Wait();
-                ExisteCuenta= taskExisteCuenta.Result;
-
-                if (ExisteCliente.Any() || ExisteCuenta.Any())
-                {
-                    Cliente = null;
-                    Cuenta = null;
-                    OnPostClean();
-                    Mensaje = "Cuenta ya registrada.";
-                    return;
-                }
+                OnPostExiste();
+                if (validacion == false) return;
 
                 this.iPresentacionCliente!.Guardar(Cliente!).Wait();
                 this.iPresentacionCuenta!.Guardar(Cuenta!).Wait();
 
-                string[] partes = this.Correo!.Split("@");
+                string[] partes = this.Cuenta!.Correo!.Split("@");
+                
+                var taskClienteId= this.iPresentacionCliente!.PorCedula(Cliente!);
+                taskClienteId.Wait();
 
                 ViewData["Logged"] = true;
-                HttpContext.Session.SetString(partes[0], Correo!);
+                HttpContext.Session.SetString(partes[0], this.Cuenta!.Correo!);
 
                 var claims = new List<Claim> {
                     new Claim(ClaimTypes.Name, partes[0]),
                     new Claim("Correo", Cuenta.Correo),
-                    new Claim(ClaimTypes.Role, "Cliente")
+                    new Claim(ClaimTypes.Role, "Cliente"),
+                    new Claim("Id", taskClienteId.Result.FirstOrDefault()!.Id.ToString())
                 };
 
                 var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -142,7 +97,71 @@ namespace asp_presentacion.Pages.Ventanas.Loggins
             catch (Exception ex)
             {
                 LogConversor.Log(ex, ViewData!);
+            }
+        }
 
+        public void OnPostValidarCampos()
+        {
+            try
+            {
+                if (Cliente == null && Cuenta == null)
+                {
+                    Mensaje = "Todos los campos son obligatorios.";
+                    validacion = false;
+                    return;
+                }
+
+                if (!this.Cuenta!.Correo!.Contains(".com"))
+                {
+                    Mensaje = "El correo debe ser valido y completo.";
+                    validacion = false;
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(this.Cuenta.Contrasena) || !Regex.IsMatch(this.Cuenta.Contrasena, @"\d"))
+                {
+                    Mensaje = "La contraseña debe tener almenos un número.";
+                    validacion = false;
+                    return;
+                }
+                validacion = true;
+                return;
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+                validacion = false;
+            }
+        }
+
+        public void OnPostExiste()
+        {
+            try
+            {
+                var taskExisteCliente = this.iPresentacionCliente!.PorCedula(Cliente!);
+                taskExisteCliente.Wait();
+                ExisteCliente = taskExisteCliente.Result;
+
+                var taskExisteCuenta = this.iPresentacionCuenta!.PorCorreo(Cuenta!);
+                taskExisteCuenta.Wait();
+                ExisteCuenta = taskExisteCuenta.Result;
+
+                if (ExisteCliente.Any() || ExisteCuenta.Any())
+                {
+                    Cliente = null;
+                    Cuenta = null;
+                    OnPostClean();
+                    Mensaje = "Cuenta ya registrada.";
+                    validacion = false;
+                    return;
+                }
+                validacion = true;
+                return;
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+                validacion = false;
             }
         }
     }

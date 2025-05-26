@@ -20,28 +20,26 @@
             }
             <div>
                 <label>Correo.</label>
-                <input type="email" 
-                    name="Correo" 
+                <input 
+                    type="email"
+                    name="Correo"
                     placeholder="Escribir correo"
                     class="sesion_form_inputs"
-                    onchange="keyUp(this)" 
-                    asp-for="@Model.Correo"
-                    />
+                    asp-for="@Model.Correo" />
             </div>
             <div>
                 <label>Contraseña.</label>
-                <input type="password" 
-                    name="Contrasena" 
+                <input 
+                    type="password"
+                    name="Contrasena"
                     placeholder="Escribir contraseña" 
-                    class="sesion_form_inputs" 
-                    onchange="keyUp(this)" 
-                    asp-for="@Model.Contrasena" 
-                    />
+                    class="sesion_form_inputs"
+                    asp-for="@Model.Contrasena" />
             </div>
             <button 
                 type="submit" 
                 class="sesion_form_buttons"
-                asp-page-handler="BtnInicio">
+                asp-page-handler="BtnIniciar">
                 Iniciar Sesion
             </button>
             <button 

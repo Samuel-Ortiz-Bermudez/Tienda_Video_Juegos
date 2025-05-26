@@ -148,6 +148,23 @@
                     asp-for="@Model.Cliente!.Telefono" />
                     <input type="hidden" asp-for="@Model.Cliente!.Id" />
                 </div>
+                <div>
+                    <label>Correo.</label>
+                    <input type="email"
+                           placeholder="Correo"
+                           class="sesion_form_inputs"
+                           asp-for="@Model.Cuenta!.Correo" />
+                    <input type="hidden" asp-for="@Model.Cliente!.Id" />
+                </div>
+                <div>
+                    <label>Contraseña.</label>
+                    <input type="text"
+                           placeholder="Contraseña"
+                           class="sesion_form_inputs"
+                           asp-for="@Model.Cuenta!.Contrasena" />
+                    <input type="hidden" asp-for="@Model.Cliente!.Id" />
+                    <input type="hidden" asp-for="@Model.Cuenta!.Id" />
+                </div>
             }
         </div>
 

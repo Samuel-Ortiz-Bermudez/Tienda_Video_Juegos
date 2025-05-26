@@ -61,7 +61,6 @@
         @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Crear)
         {
             <h2>Agregar Nuevo Inventario</h2>
-
             <form method="post" asp-page-handler="CrearInventario">
                 <div class="form-group">
                     <label for="NuevoInventario_Codigo">Código</label>
@@ -78,5 +77,4 @@
                 <button type="submit" class="acciones_Usuario_btns">Guardar Inventario</button>
             </form>
         }
-
     </table>

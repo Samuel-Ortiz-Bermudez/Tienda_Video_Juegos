@@ -1,6 +1,7 @@
 ﻿using lib_aplicaciones.Interfaces;
 using lib_dominio.Entidades;
 using lib_repositorios.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace lib_aplicaciones.Implementaciones
@@ -47,6 +48,14 @@ namespace lib_aplicaciones.Implementaciones
                 new Auditorias() { Accion = "Guardar", Fecha = DateTime.Now, Tabla = "CuentasClientes" }
                 );
 
+            
+            if (string.IsNullOrEmpty(entidad.Contrasena))
+                throw new Exception("La contraseña no puede estar vacía");
+
+            var hasher = new PasswordHasher<string>();
+            string hashedPassword = hasher.HashPassword(null!, entidad.Contrasena);
+            entidad.Contrasena = hashedPassword;
+
             int idCliente = this.IConexion!.Clientes!
                               .OrderByDescending(x => x.Id)
                               .FirstOrDefault()?.Id ?? 0;
@@ -88,10 +97,17 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad!.Id == 0)
                 throw new Exception("lbNoSeGuardo");
 
-
             this.IConexion!.Auditorias!.Add(
                 new Auditorias() { Accion = "Modificar", Fecha = DateTime.Now, Tabla = "CuentasClientes" }
                 );
+
+            if (string.IsNullOrEmpty(entidad.Contrasena))
+                throw new Exception("La contraseña no puede estar vacía");
+
+            var hasher = new PasswordHasher<string>();
+            string hashedPassword = hasher.HashPassword(null!, entidad.Contrasena);
+            entidad.Contrasena = hashedPassword;
+
             var entry = this.IConexion!.Entry<CuentasClientes>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();

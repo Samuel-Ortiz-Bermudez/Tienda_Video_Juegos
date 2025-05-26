@@ -66,8 +66,9 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
                 var cliente = this.iPresentacionCuenta!.PorCorreo(Cuenta);
                 cliente.Wait();
                 CuentaCliente = cliente.Result;
-
+                
                 Cliente = CuentaCliente[0]._Cliente;
+                Cuenta!.Id = CuentaCliente[0].Id;
                 Accion = Enumerables.Ventanas.Listas;
 
 
@@ -100,9 +101,13 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
         {
             try
             {
-                var guardar = this.iPresentacionCliente!.Modificar(Cliente);
-                guardar.Wait();
-                Cliente = guardar.Result;
+                var guardarCliente = this.iPresentacionCliente!.Modificar(Cliente);
+                guardarCliente.Wait();
+                Cuenta!.Cliente = Cliente!.Id;
+                var guardarCuenta = this.iPresentacionCuenta!.Modificar(Cuenta);
+                guardarCuenta.Wait();
+                Cliente = guardarCliente.Result;
+                Cuenta = guardarCuenta.Result;
                 Accion = Enumerables.Ventanas.Listas;
                 OnPostIngreso();
             }
