@@ -8,6 +8,9 @@ namespace asp_presentacion.Pages.Ventanas
 {
     public class InventariosModel : PageModel
     {
+        [BindProperty]
+        public Inventarios NuevoInventario { get; set; } = new Inventarios();
+
         private readonly IInventariosPresentacion _InventariosPresentacion;
 
         public InventariosModel(IInventariosPresentacion InventariosPresentacion)
@@ -73,5 +76,32 @@ namespace asp_presentacion.Pages.Ventanas
             CargarInventarios();
             return Page();
         }
+
+        public IActionResult OnPostCrearInventario()
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(NuevoInventario.Codigo) || NuevoInventario.Videojuego == 0)
+                {
+                    Mensaje = "Todos los campos son requeridos.";
+                    CargarInventarios();
+                    return Page();
+                }
+
+                var crear = _InventariosPresentacion.Guardar(NuevoInventario);
+                crear.Wait();
+
+                Mensaje = "Inventario creado exitosamente.";
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+                Mensaje = "Error al crear el inventario.";
+            }
+
+            CargarInventarios();
+            return Page();
+        }
+
     }
 }

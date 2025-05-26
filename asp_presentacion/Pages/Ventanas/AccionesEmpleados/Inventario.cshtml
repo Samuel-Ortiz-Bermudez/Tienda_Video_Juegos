@@ -50,4 +50,23 @@
                 </tr>
             }
         </tbody>
+
+    <h2>Agregar Nuevo Inventario</h2>
+
+        <form method="post" asp-page-handler="CrearInventario">
+            <div class="form-group">
+                <label for="NuevoInventario_Codigo">Código</label>
+                <input type="text" name="NuevoInventario.Codigo" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="NuevoInventario_Videojuego">ID Videojuego</label>
+                <input type="number" name="NuevoInventario.Videojuego" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="NuevoInventario_Cantidad">Cantidad</label>
+                <input type="number" name="NuevoInventario.Cantidad" class="form-control" min="0" />
+            </div>
+            <button type="submit" class="btn btn-success mt-2">Crear Inventario</button>
+        </form>
+
     </table>
