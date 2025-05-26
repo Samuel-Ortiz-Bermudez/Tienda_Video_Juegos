@@ -32,11 +32,6 @@
                     asp-page-handler="BtnCambiar" 
                     name="CambiarDatos"
                     >Actualizar datos.</button>
-                    <button 
-                    type="submit"
-                    class="acciones_Usuario_btn_cerrar"
-                    asp-page-handler="BtnEliminar"
-                    >Eliminar Cuenta.</button>
                 }
 
                 @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar) {
@@ -167,32 +162,6 @@
                 </div>
             }
         </div>
-
-        @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
-        {
-            <div class='popup'>
-                <div class='pp_del_inner'>
-                    <div style='width:95%'>
-                        <h2 align="left">
-                            Mensaje
-                        </h2>
-
-                        <h4 align="left">
-                            Desea borrar la entidad?
-                        </h4>
-
-                        <input type="submit"
-                        value="Borrar"
-                        asp-page-handler="BtBorrar"
-                        class="btn btn-secondary" />
-                        <input type="submit"
-                        value="Cerrar"
-                        asp-page-handler="BtCancelar"
-                        class="btn btn-secondary" />
-                    </div>
-                </div>
-            </div>
-        }
 
         @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Detalles && Model.DetallesCompraLista != null)
         {

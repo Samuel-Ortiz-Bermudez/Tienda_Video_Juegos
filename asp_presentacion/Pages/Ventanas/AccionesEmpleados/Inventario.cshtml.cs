@@ -12,17 +12,21 @@ namespace asp_presentacion.Pages.Ventanas
     public class InventariosModel : PageModel
     {
         [BindProperty]
-        public Inventarios NuevoInventario { get; set; } = new Inventarios();
+        public Inventarios? NuevoInventario { get; set; } = new Inventarios();
 
-        private readonly IInventariosPresentacion _InventariosPresentacion;
+        private readonly IInventariosPresentacion? _InventariosPresentacion;
+        private readonly IVideojuegosPresentacion? _PresentacionJuegos;
 
-        public InventariosModel(IInventariosPresentacion InventariosPresentacion)
+        public InventariosModel(IInventariosPresentacion InventariosPresentacion, IVideojuegosPresentacion _PresentacionJuegos)
         {
-            _InventariosPresentacion = InventariosPresentacion;
+            this._InventariosPresentacion = InventariosPresentacion;
+            this._PresentacionJuegos = _PresentacionJuegos;
         }
 
         [BindProperty]
         public List<Inventarios>? ListaInventarios { get; set; }
+        [BindProperty]
+        public List<Videojuegos>? ListaJuegos { get; set; }
         [BindProperty]
         public Enumerables.Ventanas Accion { get; set; }
         [BindProperty]
@@ -37,7 +41,7 @@ namespace asp_presentacion.Pages.Ventanas
         {
             try
             {
-                var tarea = _InventariosPresentacion.Listar();
+                var tarea = _InventariosPresentacion!.Listar();
                 tarea.Wait();
                 ListaInventarios = tarea.Result;
 
@@ -55,7 +59,7 @@ namespace asp_presentacion.Pages.Ventanas
         {
             try
             {
-                var tarea = _InventariosPresentacion.PorCodigo(new Inventarios { Codigo = Codigo });
+                var tarea = _InventariosPresentacion!.PorCodigo(new Inventarios { Codigo = Codigo });
                 tarea.Wait();
 
                 var Inventarios = tarea.Result.FirstOrDefault();
@@ -86,6 +90,9 @@ namespace asp_presentacion.Pages.Ventanas
             try
             {
                 Accion = Enumerables.Ventanas.Crear;
+                var taskjuegos = this._PresentacionJuegos!.Listar();
+                taskjuegos.Wait();
+                ListaJuegos = taskjuegos.Result;
             }
             catch (Exception ex)
             {
@@ -97,14 +104,16 @@ namespace asp_presentacion.Pages.Ventanas
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(NuevoInventario.Codigo) || NuevoInventario.Videojuego == 0)
+                if (string.IsNullOrWhiteSpace(NuevoInventario!.Codigo) || NuevoInventario.Videojuego == 0)
                 {
                     Mensaje = "Todos los campos son requeridos.";
                     CargarInventarios();
                     return Page();
                 }
 
-                var crear = _InventariosPresentacion.Guardar(NuevoInventario);
+
+
+                var crear = _InventariosPresentacion!.Guardar(NuevoInventario);
                 crear.Wait();
 
                 Mensaje = "Inventario creado exitosamente.";

@@ -23,7 +23,7 @@ CREATE TABLE [Empleados] (
 CREATE TABLE [Compras] (
 	[Id] INT PRIMARY KEY IDENTITY (1,1),
 	[MetodoPago] NVARCHAR (100),
-	[FechaVenta] DATE,
+	[FechaVenta] DATETIME,
 	[Total] DECIMAL (10,2),
 	[Codigo] NVARCHAR (100),
 

@@ -117,20 +117,6 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
             }
         }
 
-        public void OnPostBtnEliminar()
-        {
-            try
-            {
-                Accion = Enumerables.Ventanas.Borrar;
-                OnPostIngreso();
-
-            }
-            catch (Exception ex)
-            {
-                LogConversor.Log(ex, ViewData!);
-            }
-        }
-
         public virtual void OnPostBtnDetalles(string data)
         {
             try
