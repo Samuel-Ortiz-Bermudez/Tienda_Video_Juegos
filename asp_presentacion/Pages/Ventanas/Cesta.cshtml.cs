@@ -4,6 +4,8 @@ using lib_presentaciones.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Identity.Client;
+using Microsoft.IdentityModel.Tokens;
 
 namespace asp_presentacion.Pages.Ventanas
 {
@@ -36,19 +38,22 @@ namespace asp_presentacion.Pages.Ventanas
         [BindProperty] public List<Empleados>? ListaEmpleados { get; set; }
         [BindProperty] public string? MetodoSeleccionado { get; set; }
         [BindProperty] public int EmpleadoSeleccionado { get; set; }
+        [BindProperty] public string? Mensaje { get; set; }
         public Compras? Compra { get; set; }
         public decimal Total { get; set; }
+        public bool CantidadBool { get; set; }
 
         public void OnGet()
         {
             try
             {
                 Cesta = HttpContext.Session.GetObjectFromJson<List<DetallesCompras>>("Cesta") ?? new List<DetallesCompras>();
+                if (Cesta.IsNullOrEmpty())
+                {
+                    HttpContext.Response.Redirect("/Ventanas/Videojuegos");
+                }
                 Total = Cesta.Sum(c => c.Subtotal);
-                var taskEmpleados = this.IPresentacionEmpleados!.Listar();
-                taskEmpleados.Wait();
-
-                ListaEmpleados = taskEmpleados.Result.Where( x => x.Nombre != "Admin").ToList();
+                OnPostCargarSelect();
             }
             catch(Exception ex)
             {
@@ -57,6 +62,22 @@ namespace asp_presentacion.Pages.Ventanas
             
         }
 
+        public void OnPostCargarSelect()
+        {
+
+            try
+            {
+                var taskEmpleados = this.IPresentacionEmpleados!.Listar();
+                taskEmpleados.Wait();
+
+                ListaEmpleados = taskEmpleados.Result.Where(x => x.Nombre != "Admin").ToList();
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+            
+        }
 
         public IActionResult OnPostEliminarDeCesta(int id)
         {
@@ -78,18 +99,18 @@ namespace asp_presentacion.Pages.Ventanas
                     }
 
                     HttpContext.Session.SetObjectAsJson("Cesta", cesta);
-                    TempData["Mensaje"] = "Cantidad actualizada en la cesta.";
+                    Mensaje = "Cantidad actualizada en la cesta.";
 
                 }
                 else
                 {
-                    TempData["Mensaje"] = "Juego no encontrado en la cesta.";
+                    Mensaje = "Juego no encontrado en la cesta.";
                 }
             }
             catch (Exception ex)
             {
                 LogConversor.Log(ex, ViewData!);
-                TempData["Mensaje"] = "Error al actualizar la cesta.";
+                Mensaje = "Error al actualizar la cesta.";
             }
 
             return RedirectToPage();
@@ -102,11 +123,16 @@ namespace asp_presentacion.Pages.Ventanas
                 var cesta = HttpContext.Session.GetObjectFromJson<List<DetallesCompras>>("Cesta");
                 if (cesta == null || !cesta.Any())
                 {
-                    TempData["Mensaje"] = "No hay productos en la cesta.";
-                    RedirectToPage();
+                    Mensaje = "No hay productos en la cesta.";
                     return;
                 }
-
+                
+                OnPostValidacionCantidad();
+                
+                if ( CantidadBool == false)
+                {
+                    return;
+                }
 
                 Compra!.FechaVenta = DateTime.Now;
                 Compra!.MetodoPago = MetodoSeleccionado;
@@ -120,28 +146,97 @@ namespace asp_presentacion.Pages.Ventanas
                 taskGuardar.Wait();
 
                 OnPostGuardarDetalles();
-
+                OnPostActualizarInventario();
                 HttpContext.Session.Remove("Cesta");
 
-                TempData["Mensaje"] = "Compra realizada exitosamente.";
-                RedirectToPage("/Ventanas/Videojuegos");
+                Mensaje = "Compra realizada exitosamente.";
                 return;
             }
             catch (Exception ex)
             {
                 LogConversor.Log(ex, ViewData!);
-                TempData["Mensaje"] = "Error al confirmar la compra.";
+                Mensaje = "Error al confirmar la compra.";
             }
             
         }
 
-        public void OnPostGuardarDetalles()
+        public void OnPostValidacionCantidad()
         {
             try
             {
                 var cesta = HttpContext.Session.GetObjectFromJson<List<DetallesCompras>>("Cesta");
 
+                var InventariosTask = this.IPresentacionInvetarios!.Listar();
+                InventariosTask.Wait();
+                var InventarioLista = InventariosTask.Result;
 
+                foreach (var detalle in cesta!)
+                {
+                    var stock = InventarioLista.FirstOrDefault(x => x.Videojuego == detalle.Videojuego);
+                    if (stock == null)
+                    {
+                        Mensaje = "No hay stock de " + detalle._Videojuego!.Nombre;
+                        CantidadBool = false;
+                        return;
+                    }
+                    if (stock.Cantidad <= 0 )
+                    {
+                        Mensaje = "No hay stock de " + detalle._Videojuego!.Nombre;
+                        CantidadBool = false;
+                        return;
+                    }
+                    if (detalle.Cantidad > stock.Cantidad)
+                    {
+                        Mensaje = "No hay suficiente stock de " + detalle._Videojuego!.Nombre;
+                        CantidadBool = false;
+                        return;
+                    }
+                }
+                CantidadBool = true;
+                return;
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+                Mensaje = "Error al confirmar la compra.";
+                CantidadBool = false;
+                return;
+            }
+        }
+        public void OnPostActualizarInventario()
+        {
+            try
+            {
+                var cesta = HttpContext.Session.GetObjectFromJson<List<DetallesCompras>>("Cesta");
+
+                var InventariosTask = this.IPresentacionInvetarios!.Listar();
+                InventariosTask.Wait();
+                var InventarioLista = InventariosTask.Result;
+
+                foreach (var detalle in cesta!)
+                {
+                    var stock = InventarioLista.FirstOrDefault(x => x.Videojuego == detalle.Videojuego);
+                    stock!.Cantidad = stock.Cantidad - detalle!.Cantidad;
+                    
+                    var ActualizacionTask = this.IPresentacionInvetarios!.Modificar(stock!);
+                    ActualizacionTask.Wait();
+                }
+                CantidadBool = true;
+                return;
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+                Mensaje = "Error al confirmar la compra.";
+                CantidadBool = false;
+                return;
+            }
+        }
+        public void OnPostGuardarDetalles()
+        {
+            try
+            {
+                var cesta = HttpContext.Session.GetObjectFromJson<List<DetallesCompras>>("Cesta");
 
                 var ultimaCompra = this.IcomprasPresentacion!.PorCliente(Compra);
                 ultimaCompra.Wait();
@@ -161,8 +256,10 @@ namespace asp_presentacion.Pages.Ventanas
             catch (Exception ex)
             {
                 LogConversor.Log(ex, ViewData!);
-                TempData["Mensaje"] = "Error al confirmar la compra.";
+                Mensaje = "Error al confirmar la compra.";
             }
         }
+
+        
     }
 }

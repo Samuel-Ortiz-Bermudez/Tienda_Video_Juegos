@@ -4,9 +4,16 @@
 	ViewData["Title"] = "Tu cesta";
 }
 
-<form method="POST">
-	@if (Model.Cesta != null && Model.Cesta.Any())
-    {
+
+@if (!string.IsNullOrEmpty(Model.Mensaje))
+{
+    <div class="error_mensaje">
+        @Model.Mensaje
+    </div>
+}
+@if (Model.Cesta != null && Model.Cesta.Any())
+{
+    <form method="POST">
         <table class="table">
             <thead>
                 <tr>
@@ -19,20 +26,23 @@
         
 
             <tbody>
-                @foreach (var item in Model.Cesta)
+                @if (Model.Cesta != null)
                 {
-                    <tr>
-                        <td>@item._Videojuego?.Nombre</td>
-                        <td>@item.Cantidad</td>
-                        <td>@item._Videojuego?.Precio.ToString("C")</td>
-                        <td>@item.Subtotal.ToString("C")</td>
-                        <td>
-                            <form method="post" asp-page-handler="EliminarDeCesta">
-                                <input type="hidden" name="id" value="@item.Videojuego" />
-                                <button type="submit" class="btn-eliminar">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
+                    @foreach (var item in Model.Cesta)
+                    {
+                        <tr>
+                            <td>@item._Videojuego?.Nombre</td>
+                            <td>@item.Cantidad</td>
+                            <td>@item._Videojuego?.Precio.ToString("C")</td>
+                            <td>@item.Subtotal.ToString("C")</td>
+                            <td>
+                                <form method="post" >
+                                    <input type="hidden" name="id" value="@item.Videojuego" />
+                                    <button type="submit" class="btn-eliminar" asp-page-handler="EliminarDeCesta">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }   
                 }
             </tbody>
         </table>
@@ -66,10 +76,12 @@
             </form>
 
         </div>
-    }
-    else
-    {
-        <p>No tienes productos en tu cesta.</p>
-    }
-</form>
+    
+    </form>
+}
+else
+{
+    <p>No tienes productos en tu cesta.</p>
+}
+
 
