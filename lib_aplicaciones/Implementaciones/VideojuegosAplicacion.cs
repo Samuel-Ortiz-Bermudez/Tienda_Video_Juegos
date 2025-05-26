@@ -42,11 +42,17 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("lbYaSeGuardo");
 
-            this.IConexion!.Videojuegos!.Add(entidad);
-            
             this.IConexion!.Auditorias!.Add(
                 new Auditorias() { Accion = "Guardar", Fecha = DateTime.Now, Tabla = "Videojuegos" }
                 );
+
+            var ultimoJuegoCodigo = this.IConexion!.Videojuegos!.OrderByDescending(c => c.Id).FirstOrDefault()!.Codigo!.Split("-");
+
+            var numero = int.Parse(ultimoJuegoCodigo[1]) + 1;
+
+            entidad.Codigo = ultimoJuegoCodigo[0] + "-" + numero.ToString();
+
+            this.IConexion!.Videojuegos!.Add(entidad);
             
             this.IConexion.SaveChanges();
             return entidad;

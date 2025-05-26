@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace asp_presentacion.Pages.Ventanas.AccionesEmpleados
 {
-    [Authorize(Roles ="Empleado,Admin")]
+    [Authorize(Roles = "Empleado,Admin")]
     public class OperarVideojuegosModel : PageModel
     {
         private IVideojuegosPresentacion? IPresentacionJuegos = null;

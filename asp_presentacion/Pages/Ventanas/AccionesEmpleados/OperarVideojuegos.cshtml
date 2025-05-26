@@ -89,10 +89,13 @@
                                placeholder="Precio"
                                asp-for="@Model.Actual!.Precio" />
                         <label>Codigo</label>
-                        <input type="text"
-                               name="Actual.Codigo"
-                               placeholder="Codigo"
-                               asp-for="@Model.Actual!.Codigo" />
+                        @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar)
+                            {
+                            <input type="text"
+                                   name="Actual.Codigo"
+                                   placeholder="Codigo"
+                                   asp-for="@Model.Actual!.Codigo" />
+                            }
                         <label>Desarrolladora</label>
                         <input type="text"
                                name="Actual.Desarrolladora"

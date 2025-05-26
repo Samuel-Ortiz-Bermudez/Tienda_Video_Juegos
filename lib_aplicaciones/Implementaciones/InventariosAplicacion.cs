@@ -46,6 +46,12 @@ namespace lib_aplicaciones.Implementaciones
                 new Auditorias() { Accion = "Guardar", Fecha = DateTime.Now, Tabla = "Inventarios" }
                 );
 
+            var ultimoInventarioCodigo = this.IConexion!.Inventarios!.OrderByDescending(c => c.Id).FirstOrDefault()!.Codigo!.Split("-");
+
+            var numero = int.Parse(ultimoInventarioCodigo[1]) + 1;
+
+            entidad.Codigo = ultimoInventarioCodigo[0] + "-" + numero.ToString();
+
             this.IConexion!.Inventarios!.Add(entidad);
             this.IConexion.SaveChanges();
             return entidad;

@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace asp_presentacion.Pages.Ventanas
 {
-    [Authorize]
+    [Authorize(Roles = "Cliente")]
     public class CestaModel : PageModel
     {
         private IComprasPresentacion? IcomprasPresentacion = null;

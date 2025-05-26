@@ -46,10 +46,9 @@
                         <p>$@juego.Precio</p>
                         
                     </div>
-                    
                         <form method="post" asp-page-handler="AgregarACesta">   
                             <input type="hidden" name="Codigo" value="@juego.Codigo" />
-                            <div class="card m-2 p-2">
+                            <div class="card m-2 p-2 align-items-center">
                                 <h5>@juego.Nombre</h5>
                                 <p>Precio: @juego.Precio</p>
                                 <button type="submit" class="btn-AgregarCesta">Añadir a la cesta</button>

@@ -104,7 +104,7 @@ namespace asp_presentacion.Pages.Ventanas
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(NuevoInventario!.Codigo) || NuevoInventario.Videojuego == 0)
+                if (NuevoInventario!.Videojuego == 0)
                 {
                     Mensaje = "Todos los campos son requeridos.";
                     CargarInventarios();
