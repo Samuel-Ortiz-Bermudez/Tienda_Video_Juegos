@@ -61,6 +61,14 @@
                             Perfil
                         </a>
                     }
+                    @if (User.IsInRole("Admin") || User.IsInRole("Empleado"))
+                    {
+                        <a class="navbar-brand"
+                           asp-area=""
+                           asp-page="/Ventanas/AccionesEmpleados/Inventario">
+                            Inventario
+                        </a>
+                    }
                 }
 
             </div>

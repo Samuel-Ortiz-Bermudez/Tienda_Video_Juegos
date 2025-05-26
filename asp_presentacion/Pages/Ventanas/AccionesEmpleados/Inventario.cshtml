@@ -1,0 +1,72 @@
+﻿@page
+@model asp_presentacion.Pages.Ventanas.InventariosModel
+@{
+    ViewData["Title"] = "Gestión de Inventarios";
+}
+
+<h1>Gestión de Inventarios</h1>
+
+    @if (!string.IsNullOrEmpty(Model.Mensaje))
+    {
+        <div class="alert alert-info">
+         @Model.Mensaje
+        </div>
+    }
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Nombre del Videojuego</th>
+                <th>Desarrolladora</th>
+                <th>Precio</th>
+                <th>Cantidad en Inventario</th>
+                <th>Actualizar Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.ListaInventarios != null && Model.ListaInventarios.Any())
+            {
+                foreach (var inv in Model.ListaInventarios)
+                {
+                    <tr>
+                        <td>@inv._Videojuego?.Nombre</td>
+                        <td>@inv._Videojuego?.Desarrolladora</td>
+                        <td>$@inv._Videojuego?.Precio</td>
+                        <td>@inv.Cantidad</td>
+                        <td>
+                        <form method="post" asp-page-handler="ActualizarStock" asp-route-codigo="@inv.Codigo">
+                                <input type="hidden" name="Id" value="@inv.Id" />
+                                <input type="number" name="NuevaCantidad" class="form-control" min="0" value="@inv.Cantidad" />
+                                <button type="submit" class="btn btn-primary btn-sm mt-1" >Actualizar</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5">No hay registros de inventario disponibles.</td>
+                </tr>
+            }
+        </tbody>
+
+    <h2>Agregar Nuevo Inventario</h2>
+
+        <form method="post" asp-page-handler="CrearInventario">
+            <div class="form-group">
+                <label for="NuevoInventario_Codigo">Código</label>
+                <input type="text" name="NuevoInventario.Codigo" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="NuevoInventario_Videojuego">ID Videojuego</label>
+                <input type="number" name="NuevoInventario.Videojuego" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="NuevoInventario_Cantidad">Cantidad</label>
+                <input type="number" name="NuevoInventario.Cantidad" class="form-control" min="0" />
+            </div>
+            <button type="submit" class="btn btn-success mt-2">Crear Inventario</button>
+        </form>
+
+    </table>
