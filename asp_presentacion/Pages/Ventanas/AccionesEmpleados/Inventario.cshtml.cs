@@ -129,5 +129,18 @@ namespace asp_presentacion.Pages.Ventanas
             return Page();
         }
 
+        public void OnPostBtnCerrar()
+        {
+            try
+            {
+                Accion = Enumerables.Ventanas.Listas;
+                CargarInventarios();
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
+
     }
 }

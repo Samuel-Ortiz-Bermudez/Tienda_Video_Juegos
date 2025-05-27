@@ -37,11 +37,18 @@
                 @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar) {
                     <center>
                         <button 
-                        type="submit"
-                        class="acciones_Usuario_btn_cerrar"
-                        asp-page-handler="BtnGuardar" 
-                        name="GuardarCambios"
-                        >Guardar cambios.</button>
+                            type="submit"
+                            class="acciones_Usuario_btn_cerrar"
+                            asp-page-handler="BtnGuardar" 
+                            name="GuardarCambios"
+                        >Guardar cambios.
+                        </button>
+                        <button 
+                            type="submit"
+                            class="acciones_Usuario_btns"
+                            asp-page-handler="BtnCerrar">
+                            Volver.
+                        </button>
                     </center>
                 }
             </div>
@@ -103,7 +110,7 @@
                                     <input type="submit"
                                     value="detalles"
                                     asp-page-handler="BtnDetalles"
-                                    class="btn btn-secondary"
+                                    class="btn btn-primary btn-sm mt-1"
                                     asp-route-data="@compra.Id"
                                     />
                                 </td>

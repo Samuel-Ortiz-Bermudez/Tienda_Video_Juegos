@@ -65,8 +65,8 @@
                                 @elemento.Id
                             </td>
                             <td>
-                                <input type="submit" name="Actualizar" value="Editar juego" asp-page-handler="BtnEditar" asp-route-data="@elemento!.Id"/>
-                                <input type="submit" name="Eliminar" value="Borrar juego" asp-page-handler="BtnBorrar" asp-route-data="@elemento!.Id" />
+                                <input type="submit" name="Actualizar" value="Editar juego" class="btn btn-primary btn-sm mt-1" asp-page-handler="BtnEditar" asp-route-data="@elemento!.Id" />
+                                <input type="submit" name="Eliminar" value="Borrar juego" class="btn btn-danger btn-sm mt-1" asp-page-handler="BtnBorrar" asp-route-data="@elemento!.Id" />
                             </td>
                         </tr>
                     }

@@ -7,7 +7,7 @@
 
 @if (!string.IsNullOrEmpty(Model.Mensaje))
 {
-    <div class="error_mensaje">
+    <div class="alert alert-info error_mensaje">
         @Model.Mensaje
     </div>
 }
@@ -47,25 +47,27 @@
 
         <h4>Total: @Model.Total.ToString("C")</h4>
 
-        <div>
-            <form method="POST" >
+        <div style="gap: 3.5vh; display: flex; flex-direction: column;">
+            <form method="POST" sstyle="gap: 0.5vh;">
 
-                <label>
-                    Metodo de pago
-                </label>
-                <select name="MetodoSeleccionado" asp-for="@Model.MetodoSeleccionado">
-                    <option value="Efectivo">Efectivo</option>
-                    <option value="Tarjeta">Tarjeta</option>
-                </select>
-                <label>
-                    Empleado
-                </label>
-                <select asp-for="@Model.EmpleadoSeleccionado">
-                    @foreach (var empleado in Model.ListaEmpleados!)
-                    {
-                        <option value="@empleado.Id">@empleado.Nombre</option>
-                    }
-                </select>
+                <div style="display: flex; flex-direction: column; gap: 0.5vh;">
+                    <label>
+                        Metodo de pago
+                    </label>
+                    <select name="MetodoSeleccionado" asp-for="@Model.MetodoSeleccionado">
+                        <option value="Efectivo">Efectivo</option>
+                        <option value="Tarjeta">Tarjeta</option>
+                    </select>
+                    <label>
+                        Empleado
+                    </label>
+                    <select asp-for="@Model.EmpleadoSeleccionado">
+                        @foreach (var empleado in Model.ListaEmpleados!)
+                        {
+                            <option value="@empleado.Id">@empleado.Nombre</option>
+                        }
+                    </select>
+                </div>
                 <button type="submit"
                         class="acciones_Usuario_btns"
                         asp-page-handler="ConfirmarCompra">
@@ -76,10 +78,6 @@
         </div>
     
     </form>
-}
-else
-{
-    <p>No tienes productos en tu cesta.</p>
 }
 
 

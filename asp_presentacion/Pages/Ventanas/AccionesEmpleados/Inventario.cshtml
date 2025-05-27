@@ -12,11 +12,11 @@
          @Model.Mensaje
         </div>
     }
-    <table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped">
         @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)
         {
             <form method="post" asp-page-handler="MostrarCrear">
-                <button type="submit" class="btn btn-success mt-2" >Crear Nuevo inventario</button>
+                <button type="submit" class="btn btn-primary mt-2; mb-4" >Crear Nuevo inventario</button>
             </form>
         }
         
@@ -66,22 +66,26 @@
         @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Crear)
         {
             <h2>Agregar Nuevo Inventario</h2>
-            <form method="post" asp-page-handler="CrearInventario">
-                
-                <div class="form-group">
-                    <label for="NuevoInventario_Videojuego"> Videojuego</label>
-                    <select name="NuevoInventario.Videojuego">
-                        @foreach (var juego in Model.ListaJuegos!)
-                        {
-                            <option value="@juego.Id">@juego.Nombre</option>
-                        }
-                    </select>
+            <form method="post" asp-page-handler="CrearInventario" >
+
+                <div style="display: flex; flex-direction: column; gap: 2vh;">
+                    <div class="form-group" style="display: flex; flex-direction: column; gap: 1vh;">
+                        <label for="NuevoInventario_Videojuego"> Videojuego</label>
+                        <select name="NuevoInventario.Videojuego">
+                            @foreach (var juego in Model.ListaJuegos!)
+                            {
+                                <option value="@juego.Id">@juego.Nombre</option>
+                            }
+                        </select>
+                        <label for="NuevoInventario_Cantidad">Cantidad</label>
+                        <input type="number" name="NuevoInventario.Cantidad" class="form-control" min="0" />
+                    </div>
+
+                    <div>
+                        <button type="submit" class="acciones_Usuario_btns"> Guardar Inventario</button>
+                        <button type="submit" class="acciones_Usuario_btn_cerrar" asp-page-handler="BtnCerrar">Volver</button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="NuevoInventario_Cantidad">Cantidad</label>
-                    <input type="number" name="NuevoInventario.Cantidad" class="form-control" min="0" />
-                </div>
-                <button type="submit" class="acciones_Usuario_btns">Guardar Inventario</button>
             </form>
         }
-    </table>
+ </table>

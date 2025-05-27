@@ -385,7 +385,7 @@ input[type="number"] {
 .btn-eliminar {
     width: 70%;
     padding: 3px;
-    background-color: #2069ff;
+    background-color: red;
     color: white;
     border: none;
     border-radius: 5px;
