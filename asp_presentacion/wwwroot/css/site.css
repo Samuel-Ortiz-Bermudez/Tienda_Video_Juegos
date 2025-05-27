@@ -402,6 +402,22 @@ input[type="number"] {
     transform: scale(1.05);
     }
 
-
+.pp_del_inner_modificar {
+    position: absolute;
+    left: 50px;
+    right: 50px;
+    top: 50px;
+    min-width: 320px;
+    max-width: 60%;
+    height: auto;
+    margin: auto;
+    background: white;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
 

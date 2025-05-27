@@ -64,12 +64,33 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
         {
             try
             {
-                var guardarProveedor = iPresentacionProveedor!.Modificar(Proveedor);
+
+                Task<Proveedores>? guardarProveedor = null;
+                if (Proveedor!.Id == 0)
+                {
+                    guardarProveedor = this.iPresentacionProveedor!.Guardar(Proveedor!)!;
+                }
+                else
+                {
+                    guardarProveedor = this.iPresentacionProveedor!.Modificar(Proveedor!)!;
+                }
                 guardarProveedor.Wait();
                 Proveedor = guardarProveedor.Result;
 
                 Accion = Enumerables.Ventanas.Listas;
                 OnPostIngreso();
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
+
+        public void OnPostBtnNuevo()
+        {
+            try
+            {
+                Accion = Enumerables.Ventanas.Crear;
             }
             catch (Exception ex)
             {
@@ -88,12 +109,6 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
             {
                 LogConversor.Log(ex, ViewData!);
             }
-        }
-
-        public async Task<IActionResult> OnPostBtnCerrarSesion()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToPage("/Ventanas/Videojuegos");
         }
     }
 }
