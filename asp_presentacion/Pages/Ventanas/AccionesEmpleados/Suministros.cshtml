@@ -1,0 +1,88 @@
+﻿@page
+@model asp_presentacion.Pages.Ventanas.Perfiles.SuministrosModel
+@{
+    ViewData["Title"] = "Gestión de Suministros";
+}
+
+    <div id="datos-Suministros">
+        @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)
+        {
+            <h4>Lista de Suministros</h4>
+            @if (!Model.Lista!.Any())
+            {
+                <p class="error_mensaje">No hay Suministros registrados.</p>
+            }
+            else
+            {
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Fecha de Suministro</th>
+                            <th>Proveedor</th>
+                            <th>Videojuego</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var suministro in Model.Lista!)
+                        {
+                            <tr>
+                                <td>@suministro.Codigo</td>
+                                <td>@suministro.FechaSuministro</td>
+                                <td>@suministro._Proveedor?.Nombre</td>
+                                <td>@suministro._Videojuego?.Nombre</td>                                
+                                <td>
+                                    <form method="post">
+                                        <input type="hidden" name="id" value="@suministro.Id" />
+                                        <button type="submit" asp-page-handler="BtnEditar" class="btn btn-secondary">Editar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        }
+        else if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar)
+        {
+            <h4>Editar Suministro</h4>
+            <form method="post">
+                <input type="hidden" asp-for="Suministro.Id" />
+                <div>
+                    <label asp-for="Suministro.Codigo">Codigo</label>
+                    <input asp-for="Suministro.Codigo" class="form-control" />
+                </div>
+                <div>
+                    <label asp-for="Suministro.FechaSuministro">Fecha de Suministro</label>
+                    <input asp-for="Suministro.FechaSuministro" class="form-control" />
+                </div>
+                <div>
+                    <label for="Suministro_Proveedor">Proveedor</label>
+                    <select asp-for="Suministro.Proveedor" class="form-control">
+                        @foreach (var proveedor in Model.ListaProveedores!)
+                        {
+                            <option value="@proveedor.Id" selected="@(proveedor.Id == Model.Suministro?.Proveedor)">
+                                @proveedor.Nombre
+                            </option>
+                        }
+                    </select>
+                </div>
+
+                <div>
+                    <label for="Suministro_Videojuego">Videojuego</label>
+                    <select asp-for="Suministro.Videojuego" class="form-control">
+                        @foreach (var videojuego in Model.ListaVideojuegos!)
+                        {
+                            <option value="@videojuego.Id" selected="@(videojuego.Id == Model.Suministro?.Videojuego)">
+                                @videojuego.Nombre
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div style="height: 25px;"></div>
+                <button type="submit" asp-page-handler="BtnGuardar" class="btn btn-primary">Guardar</button>
+                <button type="submit" asp-page-handler="BtnCerrar" class="btn btn-secondary">Cancelar</button>
+            </form>
+        }
+    </div>

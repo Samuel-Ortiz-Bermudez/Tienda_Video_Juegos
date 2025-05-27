@@ -1,0 +1,67 @@
+﻿@page
+@model asp_presentacion.Pages.Ventanas.Perfiles.ProveedoresModel
+@{
+    ViewData["Title"] = "Gestión de Proveedores";
+}
+
+    <div id="datos-proveedores">
+        @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)
+        {
+            <h4>Lista de Proveedores</h4>
+            @if (!Model.Lista!.Any())
+            {
+                <p class="error_mensaje">No hay proveedores registrados.</p>
+            }
+            else
+            {
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Teléfono</th>
+                            <th>Dirección</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var proveedor in Model.Lista!)
+                        {
+                            <tr>
+                                <td>@proveedor.Nombre</td>
+                                <td>@proveedor.Telefono</td>
+                                <td>@proveedor.Direccion</td>
+                                <td>
+                                    <form method="post">
+                                        <input type="hidden" name="id" value="@proveedor.Id" />
+                                        <button type="submit" asp-page-handler="BtnEditar" class="btn btn-secondary ">Editar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        }
+        else if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar)
+        {
+            <h4>Editar Proveedor</h4>
+            <form method="post">
+                <input type="hidden" asp-for="Proveedor.Id" />
+                <div>
+                    <label asp-for="Proveedor.Nombre">Nombre</label>
+                    <input asp-for="Proveedor.Nombre" class="form-control" />
+                </div>
+                <div>
+                    <label asp-for="Proveedor.Telefono">Teléfono</label>
+                    <input asp-for="Proveedor.Telefono" class="form-control" />
+                </div>
+                <div>
+                    <label asp-for="Proveedor.Direccion">Dirección</label>
+                    <input asp-for="Proveedor.Direccion" class="form-control" />
+                </div>
+                <div style="height: 25px;"></div>
+                <button type="submit" asp-page-handler="BtnGuardar" class="btn btn-primary">Guardar</button>
+                <button type="submit" asp-page-handler="BtnCerrar" class="btn btn-secondary">Cancelar</button>
+            </form>
+        }
+    </div>
