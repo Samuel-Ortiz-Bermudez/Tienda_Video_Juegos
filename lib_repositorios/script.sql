@@ -1,3 +1,4 @@
+
 CREATE DATABASE db_tienda_videojuegos
 
 GO
@@ -113,7 +114,11 @@ VALUES
 ('Satisfactory', 'Epicgames', 50, 'VJ-002', 1, '/images/satisfactory.jpeg'),
 ('FIFA', 'EA', 50, 'VJ-003', 1, '/images/fifa.jpg'), 
 ('Sims4', 'EA', 60, 'VJ-004', 1, '/images/sims4.jpg'),
-('EFT', 'BSG', 120, 'VJ-005', 1,'/images/Tarkov.jpg'); 
+('EFT', 'BSG', 120, 'VJ-005', 1,'/images/Tarkov.jpg'), 
+('Bully', 'Rockstar Games', 40, 'VJ-006', 1, '/images/bully.jpg'),
+('GTA 6', 'Rockstar Games', 80, 'VJ-008', 1, '/images/gta6.jpg');
+
+
 
 
 INSERT INTO [Compras] ([Cliente], [FechaVenta], [MetodoPago], [Empleado], [Total], [Codigo]) 

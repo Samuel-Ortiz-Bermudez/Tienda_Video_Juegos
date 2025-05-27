@@ -253,6 +253,8 @@ input[type="number"] {
     gap: 20px;
     justify-content: center;
     margin-top: 30px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .card-juego {
@@ -399,5 +401,7 @@ input[type="number"] {
     background-color: #104fbb;
     transform: scale(1.05);
     }
+
+
 
 
