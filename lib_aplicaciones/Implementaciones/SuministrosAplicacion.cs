@@ -42,9 +42,14 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad.Id != 0)
                 throw new Exception("lbYaSeGuardo");
 
+            
             this.IConexion!.Auditorias!.Add(
                 new Auditorias() { Accion = "Guardar", Fecha = DateTime.Now, Tabla = "Suministros" }
-                );
+                ); 
+
+            var ultimoSuministroCodigo = this.IConexion!.Suministros!.OrderByDescending(c => c.Id).FirstOrDefault()!.Codigo!.Split("-");
+            var numero = int.Parse(ultimoSuministroCodigo[1]) + 1;
+            entidad.Codigo = ultimoSuministroCodigo[0] + "-" + numero.ToString();
 
             this.IConexion!.Suministros!.Add(entidad);
             this.IConexion.SaveChanges();
@@ -68,7 +73,6 @@ namespace lib_aplicaciones.Implementaciones
             this.IConexion.SaveChanges();
             return this.IConexion!.Suministros!
                 .Where(x => x.Codigo!.Contains(entidad!.Codigo!))
-                .Include(s => s._Proveedor)
                 .Include(s => s._Videojuego)
                 .Take(20)
                 .ToList();

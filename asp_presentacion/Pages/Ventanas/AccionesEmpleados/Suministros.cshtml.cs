@@ -1,8 +1,6 @@
 using lib_dominio.Entidades;
 using lib_dominio.Nucleo;
 using lib_presentaciones.Interfaces;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,7 +11,7 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
 
     public class SuministrosModel : PageModel
     {
-        
+
 
         private ISuministrosPresentacion? iPresentacionSuministro = null;
         private IProveedoresPresentacion? iPresentacionProveedor = null;
@@ -26,7 +24,7 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
             this.iPresentacionProveedor = iPresentacionProveedor;
             this.iPresentacionVideojuego = iPresentacionVideojuego;
             Suministro = new Suministros();
-            
+
         }
 
         [BindProperty] public Enumerables.Ventanas Accion { get; set; }
@@ -68,7 +66,25 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
             }
         }
 
+        public void OnPostCargarSelect()
+        {
+            try
+            {
 
+                var ProveedoresTask = iPresentacionProveedor!.Listar();
+                var VideojuegosTask = iPresentacionVideojuego!.Listar();
+
+                Task.WaitAll(ProveedoresTask, VideojuegosTask);
+
+                ListaProveedores = ProveedoresTask.Result;
+                ListaVideojuegos = VideojuegosTask.Result;
+
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
         public void OnPostBtnEditar(int id)
         {
             try
@@ -87,12 +103,37 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
         {
             try
             {
-                var guardarSuministro = iPresentacionSuministro!.Modificar(Suministro);
+
+                Accion = Enumerables.Ventanas.Crear;
+                Task<Suministros>? guardarSuministro = null;
+                if (Suministro!.Id == 0)
+                {
+                    Suministro.Codigo = "";
+                    guardarSuministro = this.iPresentacionSuministro!.Guardar(Suministro!)!;
+                }
+                else
+                {
+
+                    guardarSuministro = this.iPresentacionSuministro!.Modificar(Suministro!)!;
+                }
                 guardarSuministro.Wait();
                 Suministro = guardarSuministro.Result;
 
                 Accion = Enumerables.Ventanas.Listas;
                 OnPostIngreso();
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
+
+        public void OnPostBtnNuevo()
+        {
+            try
+            {
+                OnPostCargarSelect();
+                Accion = Enumerables.Ventanas.Crear;
             }
             catch (Exception ex)
             {
@@ -111,12 +152,6 @@ namespace asp_presentacion.Pages.Ventanas.Perfiles
             {
                 LogConversor.Log(ex, ViewData!);
             }
-        }
-
-        public async Task<IActionResult> OnPostBtnCerrarSesion()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToPage("/Ventanas/Videojuegos");
         }
     }
 }
