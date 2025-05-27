@@ -45,6 +45,28 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark"
                                    asp-area=""
+                                   asp-page="/Ventanas/AccionesEmpleados/Proveedores">
+                                    Proveedores
+                                </a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("Admin") || User.IsInRole("Empleado"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark"
+                                   asp-area=""
+                                   asp-page="/Ventanas/AccionesEmpleados/Suministros">
+                                    Suministros
+                                </a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("Admin") || User.IsInRole("Empleado"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark"
+                                   asp-area=""
                                    asp-page="/Ventanas/AccionesEmpleados/Inventario">
                                     Inventario
                                 </a>

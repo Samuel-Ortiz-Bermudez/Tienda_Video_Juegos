@@ -68,6 +68,9 @@ namespace lib_aplicaciones.Implementaciones
             this.IConexion.SaveChanges();
             return this.IConexion!.Suministros!
                 .Where(x => x.Codigo!.Contains(entidad!.Codigo!))
+                .Include(s => s._Proveedor)
+                .Include(s => s._Videojuego)
+                .Take(20)
                 .ToList();
         }
 
